@@ -21,7 +21,7 @@ public class EdgeCurve<E, V> extends CubicCurve implements EdgeView<E, V>{
     private double randomAngleFactor = 0;
     
     /* Styling proxy */
-    private final StyleImplementing styleProxy;
+    public StyleImplementing styleProxy;
 
     public EdgeCurve(Edge<E, V> edge, VertexNode inbound, VertexNode outbound) {
         this(edge, inbound, outbound, 0);

@@ -16,7 +16,7 @@ public interface Graph<V, E> {
 	// Tra ve collection gom cac dinh cua do thi
 	
 	public Collection<Edge<E,V>> EdgeList();
-	// Tra ve collection gom cac canh cua do thi
+	// Tra ve collection gom cvvac canh cua do thi
 	
 	public Collection<Edge<E,V>> incidentEdges(Vertex<V> v);
 	// Tra ve collection gom cac canh noi lien voi v

@@ -3,23 +3,32 @@ STYLESHEET FOR JAVAFXGRAPH VISUALIZATION
 */
 
 .graph {
-    -fx-background-color: #F4FFFB;    
+    -fx-background-color: #ffffff;    
 }
 
 .vertex {
     -fx-stroke-width: 3;
-    -fx-stroke: #61B5F1;
+    -fx-stroke: #45597e;
     -fx-stroke-type: inside; /* you should keep this if using arrows */
-    -fx-fill: #B1DFF7;
+    -fx-fill: #96d1cd;
 }
 
 .vertex-label {
-    -fx-font: bold 8pt "sans-serif";
+    -fx-font: bold 10pt "sans-serif";
+    -fx-fill: #45597e;
 }
 
 .edge {
     -fx-stroke-width: 2;
-    -fx-stroke: #FF6D66;  
+    -fx-stroke: #45597e;  
+    /*-fx-stroke-dash-array: 2 5 2 5; /* remove for clean edges */  
+    -fx-fill: transparent; /*important for curved edges */
+    -fx-stroke-line-cap: round;
+    -fx-opacity: 0.8;
+}
+.usingedge {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;  
     /*-fx-stroke-dash-array: 2 5 2 5; /* remove for clean edges */  
     -fx-fill: transparent; /*important for curved edges */
     -fx-stroke-line-cap: round;
@@ -32,12 +41,10 @@ STYLESHEET FOR JAVAFXGRAPH VISUALIZATION
 
 .arrow {
     -fx-stroke-width: 2;
-    -fx-stroke: #FF6D66;  
+    -fx-stroke: #45597e;  
     -fx-opacity: 0.8;
 }
 
-/* Custom vertex. You should revert any unwanted styling in the default element, 
-   style, since custom styles will be appended to the default style */
 .myVertex {
     -fx-stroke-width: 5;
     -fx-stroke: green;

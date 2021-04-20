@@ -17,7 +17,7 @@ public class EdgeLine<E,V> extends Line implements EdgeView<E,V>{
     private Label attachedLabel = null;
     private Arrow attachedArrow = null;
     
-    private final StyleImplementing styleProxy;
+    public StyleImplementing styleProxy;
 
     public EdgeLine(Edge<E, V> edge, VertexNode inbound, VertexNode outbound) {
         if( inbound == null || outbound == null) {

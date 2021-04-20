@@ -1,5 +1,6 @@
 package nhom2.graphview;
 
+import java.util.concurrent.TimeUnit;
 import javafx.scene.*;
 import nhom2.graph.*;
 import static nhom2.graphview.UtilitiesPoint2D.attractiveForce;
@@ -42,12 +43,9 @@ public class GraphPanel<V, E> extends Pane{
 	
 	private final PlacementStrategy placementStrategy;
 	
-	private final Graph<V, E> theGraph;
+	private final GraphEdgeList<V, E> theGraph;
 	private final Map<Vertex<V>, VertexNode<V>> vertexNodes;
 	private final Map<Edge<E, V>, EdgeView<E,V>> edgeNodes;
-	
-	private Consumer<VertexView<V>> vertexClickConsumer = null;
-	private Consumer<EdgeView<E,V>> edgeClickConsumer = null;
 	
 	public AnimationTimer timer;
 	
@@ -58,16 +56,16 @@ public class GraphPanel<V, E> extends Pane{
     private final boolean edgesWithArrows;
     private final boolean needLabel;
 	
-    public GraphPanel(Graph<V, E> theGraph) {
-        this(theGraph, null, false, true);
+    public GraphPanel(GraphEdgeList<V, E> theGraph) {
+        this(theGraph, null, true);
     }
     
-	public GraphPanel(Graph<V, E> theGraph, URI cssFile, boolean isDirectedGraph, boolean Label) {
+	public GraphPanel(GraphEdgeList<V, E> theGraph, URI cssFile, boolean Label) {
 		
-		this.placementStrategy = new RandomPlacementStrategy();
+		this.placementStrategy = new CircularSortedPlacementStrategy();
 		this.theGraph = theGraph;
 		
-		edgesWithArrows = isDirectedGraph;
+		edgesWithArrows = theGraph.isDirected;
 		needLabel = Label;
 
 		// Doc file css va add vao style
@@ -88,7 +86,7 @@ public class GraphPanel<V, E> extends Pane{
         
         attractionForce = 30;
         attractionScale = 10;
-        repulsionForce = 25000;
+        repulsionForce = 100000;
         
         vertexNodes = new HashMap<>();
         edgeNodes = new HashMap<>(); 
@@ -104,7 +102,7 @@ public class GraphPanel<V, E> extends Pane{
 	}
 	
 	private void runLayoutIteration() {
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 1; i++) {
             resetForces();
             computeForces();
             updateForces();
@@ -135,10 +133,10 @@ public class GraphPanel<V, E> extends Pane{
                     deltaForceX = attractiveForce.getX() + repellingForce.getX();
                     deltaForceY = attractiveForce.getY() + repellingForce.getY();
                 } else {
-                	Point2D attractiveForce = attractiveForce(v.getUpdatedPosition(), other.getUpdatedPosition(),
-                            vertexNodes.size(), 1, 1);
-                	deltaForceX = attractiveForce.getX() + repellingForce.getX();
-                    deltaForceY = attractiveForce.getY() + repellingForce.getY();
+//                	Point2D attractiveForce = attractiveForce(v.getUpdatedPosition(), other.getUpdatedPosition(),
+//                            vertexNodes.size(), 1.5, 2);
+                	deltaForceX += repellingForce.getX();
+                    deltaForceY += repellingForce.getY();
                 }
                 
                 v.addForceVector(deltaForceX, deltaForceY);
@@ -185,10 +183,18 @@ public class GraphPanel<V, E> extends Pane{
         if (getTotalEdgesBetween(graphVertexInbound.getUnderlyingVertex(), graphVertexOutbound.getUnderlyingVertex()) > 1
         		|| graphVertexInbound == graphVertexOutbound) {
         	EdgeCurve NewEdgeView = new EdgeCurve(edge, graphVertexInbound, graphVertexOutbound, edgeIndex);
+        	if (((String)(edge.Vertices()[0].element())).equals("A")) {
+        		NewEdgeView.styleProxy.removeStyleClass("edge");
+        		NewEdgeView.styleProxy.addStyleClass("usingedge");
+        	}
             graphEdge = NewEdgeView;
             this.getChildren().add(0, (Node)NewEdgeView);
         } else {
         	EdgeLine NewEdgeView = new EdgeLine<>(edge, graphVertexInbound, graphVertexOutbound);
+        	if (((String)(edge.Vertices()[0].element())).equals("A")) {
+        		NewEdgeView.styleProxy.addStyleClass("usingedge");
+        		NewEdgeView.styleProxy.removeStyleClass("edge");
+        	}
             graphEdge = NewEdgeView;
             this.getChildren().add(0, (Node)NewEdgeView);
         }
@@ -197,15 +203,12 @@ public class GraphPanel<V, E> extends Pane{
     }
     
     public void init(){
-        this.placementStrategy.place(this.widthProperty().doubleValue(),
-                    this.heightProperty().doubleValue(),
-                    this.theGraph,
-                    this.vertexNodes.values());
-
-        //start automatic layout
+        this.placementStrategy.place(this.widthProperty().doubleValue(), this.heightProperty().doubleValue(), this.theGraph,this.vertexNodes.values());
       }
     public void start_automatic_layout() {
     	timer.start();
+    	int count = 0;
+    	for (int i = 1; i <= 1000000000; i++) {count++;}
     }
     
     private void initNodes() {
@@ -215,9 +218,6 @@ public class GraphPanel<V, E> extends Pane{
     		VertexNode<V> NewVertexNode = new VertexNode(vertex, 0, 0, 20, true);
             vertexNodes.put(vertex, NewVertexNode);
         }
-
-        /* create edges graphical representations between existing vertices */
-        //this is used to guarantee that no duplicate edges are ever inserted
 
         for (Vertex<V> vertex : vertexNodes.keySet()) {
 
@@ -245,7 +245,6 @@ public class GraphPanel<V, E> extends Pane{
 
         }
 
-        /* place vertices above lines */
         for (Vertex<V> vertex : vertexNodes.keySet()) {
             VertexNode<V> v = vertexNodes.get(vertex);
             this.getChildren().add(v);
@@ -257,38 +256,4 @@ public class GraphPanel<V, E> extends Pane{
             }
         }
     }
-    
-    /*public static void main(String[] args) {
-    	Graph<String, String> p = build_sample_digraph();
-    	GraphPanel firstPanel = new GraphPanel(p, null, true, true, 200, 499);
-    	//firstPanel.computeForces();
-    	Scene scene = new Scene(firstPanel, 202, 500);
-    }
-    
-    private static Graph<String, String> build_sample_digraph() {
-
-    	GraphEdgeList<String ,String> g = new GraphEdgeList<String,String>();
-
-        g.insertVertex("A");
-        g.insertVertex("B");
-        g.insertVertex("C");
-        g.insertVertex("D");
-        g.insertVertex("E");
-        g.insertVertex("F");
-
-        g.insertEdge("A", "B", "AB");
-        g.insertEdge("B", "A", "AB2");
-        g.insertEdge("A", "C", "AC");
-        g.insertEdge("A", "D", "AD");
-        g.insertEdge("B", "C", "BC");
-        g.insertEdge("C", "D", "CD");
-        g.insertEdge("B", "E", "BE");
-        g.insertEdge("F", "D", "DF");
-        g.insertEdge("F", "D", "DF2");
-
-        //yep, its a loop!
-        g.insertEdge("A", "A", "Loop");
-
-        return g;
-    }*/
 }

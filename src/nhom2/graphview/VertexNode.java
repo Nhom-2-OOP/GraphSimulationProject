@@ -231,8 +231,10 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	public void attachLabel(Label label) {
 		// TODO Auto-generated method stub
 		this.attachedLabel = label;
-        label.xProperty().bind(centerXProperty().subtract(label.getLayoutBounds().getWidth() / 2.0));
-        label.yProperty().bind(centerYProperty().add(getRadius() + label.getLayoutBounds().getHeight()));
+//        label.xProperty().bind(centerXProperty().subtract(label.getLayoutBounds().getWidth() / 2.0));
+//        label.yProperty().bind(centerYProperty().add(getRadius() + label.getLayoutBounds().getHeight()));
+        label.xProperty().bind(centerXProperty().subtract(3.7));
+        label.yProperty().bind(centerYProperty().add(3.7));
 	}
 
 	@Override

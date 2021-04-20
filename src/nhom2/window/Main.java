@@ -1,5 +1,6 @@
 package nhom2.window;
 
+import java.util.concurrent.TimeUnit;
 import javafx.scene.control.CheckBox;
 import java.util.Random;
 import java.util.logging.Level;
@@ -14,21 +15,19 @@ import nhom2.graphview.*;
 
 
 public class Main extends Application {
+	GraphEdgeList<String, String> g = build_sample_digraph();
+	GraphPanel<String, String> graphView = new GraphPanel<>(g);
+	Scene scene = new Scene(graphView, 200, 500);
 
-    @Override
-    public void start(Stage stage) {
-    	Graph<String, String> g = build_sample_digraph();
-        //Graph<String, String> g = build_flower_graph();
-        System.out.println(g);
-        
-        //SmartPlacementStrategy strategy = new SmartCircularSortedPlacementStrategy();
-        GraphPanel<String, String> graphView = new GraphPanel<>(g);
-       
-        Scene scene = new Scene(graphView, 200, 500);
+	public void init() {
         graphView.init();
         graphView.start_automatic_layout();
-        stage = new Stage(StageStyle.DECORATED);
-        stage.setTitle("JavaFX SmartGraph Visualization");
+	}
+    @Override
+    public void start(Stage stage) {
+
+        stage = new Stage();
+        stage.setTitle("Graph Visualization");
         stage.setMinHeight(500);
         stage.setMinWidth(800);
         stage.setScene(scene);
@@ -39,7 +38,7 @@ public class Main extends Application {
         launch(args);
     }
 
-    private Graph<String, String> build_sample_digraph() {
+    private GraphEdgeList<String, String> build_sample_digraph() {
 
     	GraphEdgeList<String ,String> g = new GraphEdgeList<String,String>();
 
@@ -49,8 +48,7 @@ public class Main extends Application {
         g.insertVertex("D");
         g.insertVertex("E");
         g.insertVertex("F");
-        g.insertVertex("G");
-        g.insertVertex("H");
+
 
         g.insertEdge("A", "B", "AB");
         g.insertEdge("B", "A", "AB2");
@@ -59,12 +57,9 @@ public class Main extends Application {
         g.insertEdge("B", "C", "BC");
         g.insertEdge("C", "D", "CD");
         g.insertEdge("B", "E", "BE");
-        g.insertEdge("F", "D", "DF");
+        g.insertEdge("F", "D", "DF"); 
         g.insertEdge("F", "D", "DF2");
-        g.insertEdge("G", "H", "GH");
-
-        //yep, its a loop!
-        g.insertEdge("A", "A", "Loop");
+        g.insertEdge("B", "F", "BF");
 
         return g;
     }

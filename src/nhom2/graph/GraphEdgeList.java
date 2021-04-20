@@ -7,11 +7,16 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 
 	private Map<V, Vertex<V>> vertices;
 	private Map<E, Edge<E, V>> edges;
+	public boolean isDirected = true;
 	
 	public GraphEdgeList() {
     	this.vertices = new HashMap<>();
     	this.edges = new HashMap<>();
     }
+	
+	public void setIsDirected(boolean value) {
+		this.isDirected = value;
+	}
 	
 	@Override
 	public int NumOfVertex() {
