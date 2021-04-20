@@ -41,7 +41,7 @@ import java.util.concurrent.FutureTask;
 
 public class GraphPanel<V, E> extends Pane{
 	
-	private final PlacementStrategy placementStrategy;
+	public PlacementStrategy placementStrategy;
 	
 	private final GraphEdgeList<V, E> theGraph;
 	private final Map<Vertex<V>, VertexNode<V>> vertexNodes;
@@ -62,7 +62,7 @@ public class GraphPanel<V, E> extends Pane{
     
 	public GraphPanel(GraphEdgeList<V, E> theGraph, URI cssFile, boolean Label) {
 		
-		this.placementStrategy = new CircularSortedPlacementStrategy();
+		this.placementStrategy = new RandomPlacementStrategy();
 		this.theGraph = theGraph;
 		
 		edgesWithArrows = theGraph.isDirected;
@@ -84,9 +84,9 @@ public class GraphPanel<V, E> extends Pane{
             Logger.getLogger(GraphPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        attractionForce = 30;
+        attractionForce = 20;
         attractionScale = 10;
-        repulsionForce = 100000;
+        repulsionForce = 10000;
         
         vertexNodes = new HashMap<>();
         edgeNodes = new HashMap<>(); 

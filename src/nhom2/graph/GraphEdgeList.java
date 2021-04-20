@@ -130,7 +130,7 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		}
 		
 		public boolean contains(Vertex<V> v) {
-            return (vertexU == v || vertexV == v);
+            return (vertexV == v);
         }
 		
 	}
