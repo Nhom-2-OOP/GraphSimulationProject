@@ -1,9 +1,12 @@
 package nhom2.graphview;
 
 import java.util.*;
+import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import nhom2.graph.*;
@@ -42,6 +45,14 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 
         styleProxy = new StyleImplementing(this);
         styleProxy.addStyleClass("vertex");
+        
+        // Khoi tao menu
+        MenuItem item1 = new MenuItem("About");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("About");
+            }
+        });
 
         if (allowMove) {
             enableDrag();
@@ -62,7 +73,15 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 
 	private void enableDrag() {
         final Point dragDelta = new Point(0, 0);
-
+        
+        this.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+        	
+            @Override
+            public void handle(ContextMenuEvent event) {
+            	//contextMenu.show(this.getClass(), event.getScreenX(), event.getScreenY());
+            }
+        });
+        	
         setOnMousePressed((MouseEvent mouseEvent) -> {
             if (mouseEvent.isPrimaryButtonDown()) {
                 // record a delta distance for the drag and drop operation.
@@ -73,11 +92,6 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 
                 mouseEvent.consume();
             }
-            else 
-            	if (mouseEvent.isSecondaryButtonDown()) {
-            		System.out.println("Vietnam vo dich");
-            	}
-
         });
 
         setOnMouseReleased((MouseEvent mouseEvent) -> {
@@ -115,7 +129,8 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 
         });
     }
-	
+
+
 	public void addAdjacentVertex(VertexNode<T> v) {
         this.adjacentVertices.add(v);
     }

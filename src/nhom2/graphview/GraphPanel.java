@@ -169,6 +169,7 @@ public class GraphPanel<V, E> extends Pane{
         int edgeIndex = 1;
 
         EdgeView graphEdge;
+        //O(m) -> O(1)
 
         if (getTotalEdgesBetween(graphVertexInbound.getUnderlyingVertex(), graphVertexOutbound.getUnderlyingVertex()) > 1
         		|| graphVertexInbound == graphVertexOutbound) {
@@ -204,6 +205,13 @@ public class GraphPanel<V, E> extends Pane{
     	for (Vertex<V> vertex : theGraph.VertexList()) {
     		VertexNode<V> NewVertexNode = new VertexNode(vertex, 0, 0, 10, true);
             vertexNodes.put(vertex, NewVertexNode);
+            this.getChildren().add(NewVertexNode);
+            if (needLabel) {
+            	Label label = new Label((String)vertex.element());
+                label.addStyleClass("vertex-label");
+                this.getChildren().add(label);
+                NewVertexNode.attachLabel(label);
+            }
         }
 
         for (Vertex<V> vertex : vertexNodes.keySet()) {
@@ -230,18 +238,6 @@ public class GraphPanel<V, E> extends Pane{
                 edgeNodes.put(edge, graphEdge);
             }
 
-        }
-
-        // Attach label cho cac dinh
-        for (Vertex<V> vertex : vertexNodes.keySet()) {
-            VertexNode<V> v = vertexNodes.get(vertex);
-            this.getChildren().add(v);
-            if (needLabel) {
-            	Label label = new Label((String)vertex.element());
-                label.addStyleClass("vertex-label");
-                this.getChildren().add(label);
-                v.attachLabel(label);
-            }
         }
     }
 }
