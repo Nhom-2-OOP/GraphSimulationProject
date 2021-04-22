@@ -3,6 +3,7 @@ package nhom2.graphview;
 import java.util.*;
 import javafx.geometry.*;
 import javafx.scene.*;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import nhom2.graph.*;
@@ -13,6 +14,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	private final Set<VertexNode<T>> adjacentVertices;
 	private Label attachedLabel = null;
 	private boolean isDragging = false;
+	private ContextMenu contextMenu = new ContextMenu();
 	
 	private class Point{
 
@@ -71,6 +73,10 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 
                 mouseEvent.consume();
             }
+            else 
+            	if (mouseEvent.isSecondaryButtonDown()) {
+            		System.out.println("Vietnam vo dich");
+            	}
 
         });
 

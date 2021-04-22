@@ -14,7 +14,7 @@ STYLESHEET FOR JAVAFXGRAPH VISUALIZATION
 }
 
 .vertex-label {
-    -fx-font: bold 10pt "sans-serif";
+    -fx-font: bold 5pt "sans-serif";
     -fx-fill: #45597e;
 }
 

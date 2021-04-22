@@ -133,8 +133,7 @@ public class GraphPanel<V, E> extends Pane{
                     deltaForceX = attractiveForce.getX() + repellingForce.getX();
                     deltaForceY = attractiveForce.getY() + repellingForce.getY();
                 } else {
-//                	Point2D attractiveForce = attractiveForce(v.getUpdatedPosition(), other.getUpdatedPosition(),
-//                            vertexNodes.size(), 1.5, 2);
+//                	Point2D attractiveForce = attractiveForce(v.getUpdatedPosition(), other.getUpdatedPosition(),vertexNodes.size(), 1, 2);
                 	deltaForceX += repellingForce.getX();
                     deltaForceY += repellingForce.getY();
                 }
@@ -163,16 +162,7 @@ public class GraphPanel<V, E> extends Pane{
     }
     
     private int getTotalEdgesBetween(Vertex<V> v, Vertex<V> u) {
-        //TODO: It may be necessary to adjust this method if you use another Graph
-        //variant, e.g., Digraph (directed graph)
-        int count = 0;
-        for (Edge<E, V> edge : theGraph.EdgeList()) {
-            if (edge.Vertices()[0] == v && edge.Vertices()[1] == u
-                    || edge.Vertices()[0] == u && edge.Vertices()[1] == v) {
-                count++;
-            }
-        }
-        return count;
+        return theGraph.TotalEdgesBetween(u, v);
     }
     
     private EdgeView CreateAndAddEdge(Edge<E, V> edge, VertexNode<V> graphVertexInbound, VertexNode<V> graphVertexOutbound) {
@@ -207,15 +197,12 @@ public class GraphPanel<V, E> extends Pane{
       }
     public void start_automatic_layout() {
     	timer.start();
-    	int count = 0;
-    	for (int i = 1; i <= 1000000000; i++) {count++;}
     }
     
     private void initNodes() {
-
-        // Them cac vertex vao vertexNodes
+        // Them cac vertex vao vertexNodes. DPT O(n + m)
     	for (Vertex<V> vertex : theGraph.VertexList()) {
-    		VertexNode<V> NewVertexNode = new VertexNode(vertex, 0, 0, 20, true);
+    		VertexNode<V> NewVertexNode = new VertexNode(vertex, 0, 0, 10, true);
             vertexNodes.put(vertex, NewVertexNode);
         }
 
@@ -245,6 +232,7 @@ public class GraphPanel<V, E> extends Pane{
 
         }
 
+        // Attach label cho cac dinh
         for (Vertex<V> vertex : vertexNodes.keySet()) {
             VertexNode<V> v = vertexNodes.get(vertex);
             this.getChildren().add(v);
