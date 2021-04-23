@@ -48,6 +48,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
         
         // Khoi tao menu
         MenuItem item1 = new MenuItem("About");
+        contextMenu.getItems().addAll(item1);
         item1.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 System.out.println("About");
@@ -78,7 +79,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
         	
             @Override
             public void handle(ContextMenuEvent event) {
-            	//contextMenu.show(this.getClass(), event.getScreenX(), event.getScreenY());
+            	contextMenu.show(attachedLabel, event.getScreenX(), event.getScreenY());
             }
         });
         	
