@@ -17,7 +17,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	private final Set<VertexNode<T>> adjacentVertices;
 	private Label attachedLabel = null;
 	private boolean isDragging = false;
-	private ContextMenu contextMenu = new ContextMenu();
+	public ContextMenu contextMenu = new ContextMenu();
 	
 	private class Point{
 
@@ -50,9 +50,10 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
         MenuItem item1 = new MenuItem("About");
         item1.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                System.out.println("About");
+                System.out.println((String)v.element());
             }
         });
+        contextMenu.getItems().add(item1);
 
         if (allowMove) {
             enableDrag();
@@ -74,14 +75,6 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	private void enableDrag() {
         final Point dragDelta = new Point(0, 0);
         
-        this.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-        	
-            @Override
-            public void handle(ContextMenuEvent event) {
-            	//contextMenu.show(this.getClass(), event.getScreenX(), event.getScreenY());
-            }
-        });
-        	
         setOnMousePressed((MouseEvent mouseEvent) -> {
             if (mouseEvent.isPrimaryButtonDown()) {
                 // record a delta distance for the drag and drop operation.

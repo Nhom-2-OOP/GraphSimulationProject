@@ -22,10 +22,12 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -169,7 +171,6 @@ public class GraphPanel<V, E> extends Pane{
         int edgeIndex = 1;
 
         EdgeView graphEdge;
-        //O(m) -> O(1)
 
         if (getTotalEdgesBetween(graphVertexInbound.getUnderlyingVertex(), graphVertexOutbound.getUnderlyingVertex()) > 1
         		|| graphVertexInbound == graphVertexOutbound) {
@@ -211,7 +212,23 @@ public class GraphPanel<V, E> extends Pane{
                 label.addStyleClass("vertex-label");
                 this.getChildren().add(label);
                 NewVertexNode.attachLabel(label);
+                label.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+					@Override
+					public void handle(ContextMenuEvent event) {
+						// TODO Auto-generated method stub
+						NewVertexNode.contextMenu.show(NewVertexNode, event.getScreenX(), event.getScreenY());
+					}           	
+                }
+                );
             }
+            NewVertexNode.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+ 
+            @Override
+            public void handle(ContextMenuEvent event) {
+                NewVertexNode.contextMenu.show(NewVertexNode, event.getScreenX(), event.getScreenY());;
+            }
+        });
         }
 
         for (Vertex<V> vertex : vertexNodes.keySet()) {
