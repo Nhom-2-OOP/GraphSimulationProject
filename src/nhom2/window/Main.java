@@ -116,10 +116,13 @@ public class Main extends Application {
         g.insertEdge("DD", "JJ", "DJ1");
         
         
-        g.insertEdge("BB", "B", "BBB");
+        g.insertEdge("BB", "B", "BBB1");
+        g.insertEdge("BB", "B", "BBB2");
+        g.insertEdge("BB", "B", "BBB3");
         g.insertEdge("I", "BB", "ADD1");
         g.insertEdge("I", "H", "HII");
         g.insertEdge("C", "H", "HCII");
+        g.insertEdge("BB", "H", "BHBB");
         return g;
     }
 

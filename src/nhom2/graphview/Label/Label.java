@@ -1,6 +1,8 @@
-package nhom2.graphview;
+package nhom2.graphview.Label;
 
 import javafx.scene.text.Text;
+import nhom2.graphview.Styling.StylableObject;
+import nhom2.graphview.Styling.StyleImplementing;
 
 public class Label extends Text implements StylableObject{
 	private final StyleImplementing style;

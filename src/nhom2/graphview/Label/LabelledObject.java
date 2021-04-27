@@ -1,4 +1,4 @@
-package nhom2.graphview;
+package nhom2.graphview.Label;
 
 public interface LabelledObject {
 	// Gan label vao object

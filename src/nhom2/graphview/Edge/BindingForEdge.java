@@ -1,4 +1,4 @@
-package nhom2.graphview;
+package nhom2.graphview.Edge;
 
 import static javafx.beans.binding.Bindings.createDoubleBinding;
 import javafx.beans.binding.DoubleBinding;

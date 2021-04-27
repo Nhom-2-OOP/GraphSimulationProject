@@ -1,6 +1,7 @@
-package nhom2.graphview;
+package nhom2.graphview.Vertex;
 
 import nhom2.graph.*;
+import nhom2.graphview.Styling.StylableObject;
 
 public interface VertexView<V> extends StylableObject{
 	

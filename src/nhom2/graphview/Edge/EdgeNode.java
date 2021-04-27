@@ -1,13 +1,18 @@
-package nhom2.graphview;
+package nhom2.graphview.Edge;
 
 import nhom2.graph.*;
+import nhom2.graphview.Arrow;
+import nhom2.graphview.UtilitiesPoint2D;
+import nhom2.graphview.Label.Label;
+import nhom2.graphview.Styling.StyleImplementing;
+import nhom2.graphview.Vertex.VertexNode;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.*;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
-public class EdgeCurve<E, V> extends CubicCurve implements EdgeView<E, V>{
+public class EdgeNode<E, V> extends CubicCurve implements EdgeView<E, V>{
 	private static final double MAX_EDGE_CURVE_ANGLE = 20;
 
     private final Edge<E, V> underlyingEdge;
@@ -20,16 +25,15 @@ public class EdgeCurve<E, V> extends CubicCurve implements EdgeView<E, V>{
 
     private double randomAngleFactor = 0;
     
-    /* Styling proxy */
+    public boolean IsLine;
+    
     public StyleImplementing styleProxy;
 
-    public EdgeCurve(Edge<E, V> edge, VertexNode inbound, VertexNode outbound) {
-        this(edge, inbound, outbound, 0);
-    }
 
-    public EdgeCurve(Edge<E, V> edge, VertexNode inbound, VertexNode outbound, int edgeIndex) {
+    public EdgeNode(Edge<E, V> edge, VertexNode inbound, VertexNode outbound, int edgeIndex, boolean IsLine) {
         this.inbound = inbound;
         this.outbound = outbound;
+        this.IsLine = IsLine;
 
         this.underlyingEdge = edge;
 
@@ -51,7 +55,6 @@ public class EdgeCurve<E, V> extends CubicCurve implements EdgeView<E, V>{
     
     private void update() {                
         if (inbound == outbound) {
-            /* Make a loop using the control points proportional to the vertex radius */
             
             //TODO: take into account several "self-loops" with randomAngleFactor
             double midpointX1 = outbound.getCenterX() - inbound.getRadius() * 5;
@@ -75,14 +78,11 @@ public class EdgeCurve<E, V> extends CubicCurve implements EdgeView<E, V>{
             Point2D startpoint = new Point2D(inbound.getCenterX(), inbound.getCenterY());
             Point2D endpoint = new Point2D(outbound.getCenterX(), outbound.getCenterY());
 
-            //TODO: improvement lower max_angle_placement according to distance between vertices
             double angle = MAX_EDGE_CURVE_ANGLE;
 
             double distance = startpoint.distance(endpoint);
 
-            //TODO: remove "magic number" 1500 and provide a distance function for the 
-            //decreasing angle with distance
-            angle = angle - (distance / 1500 * angle);
+            angle = IsLine ? 0 : angle - (distance / 1500 * angle);
 
             midpoint = UtilitiesPoint2D.rotate(midpoint, startpoint,(-angle) + randomAngleFactor * (angle - (-angle)));
 

@@ -3,6 +3,12 @@ package nhom2.graphview;
 import java.util.concurrent.TimeUnit;
 import javafx.scene.*;
 import nhom2.graph.*;
+import nhom2.graphview.Edge.EdgeNode;
+import nhom2.graphview.Label.Label;
+import nhom2.graphview.Placement.PlacementStrategy;
+import nhom2.graphview.Placement.RandomPlacementStrategy;
+import nhom2.graphview.Vertex.VertexNode;
+
 import static nhom2.graphview.UtilitiesPoint2D.attractiveForce;
 import static nhom2.graphview.UtilitiesPoint2D.repellingForce;
 import java.io.File;
@@ -31,6 +37,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -47,7 +54,8 @@ public class GraphPanel<V, E> extends Pane{
 	
 	private final GraphEdgeList<V, E> theGraph;
 	private final Map<Vertex<V>, VertexNode<V>> vertexNodes;
-	private final Map<Edge<E, V>, EdgeView<E,V>> edgeNodes;
+	private final Map<Edge<E, V>, EdgeNode<E,V>> edgeNodes;
+	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
 	
 	public AnimationTimer timer;
 	
@@ -92,6 +100,7 @@ public class GraphPanel<V, E> extends Pane{
         
         vertexNodes = new HashMap<>();
         edgeNodes = new HashMap<>(); 
+        NumOfEdge = new HashMap<>();
         initNodes();
         
         timer = new AnimationTimer() {
@@ -110,8 +119,12 @@ public class GraphPanel<V, E> extends Pane{
             updateForces();
         }
         applyForces();
+        updateEdges();
     }
 	
+	private void updateEdges() {
+		
+	}
 	private boolean areAdjacent(VertexNode<V> v, VertexNode<V> u) {
         return v.isAdjacentTo(u);
     }
@@ -120,10 +133,9 @@ public class GraphPanel<V, E> extends Pane{
         for (VertexNode<V> v : vertexNodes.values()) {
             for (VertexNode<V> other : vertexNodes.values()) {
                 if (v == other) {
-                    continue; //NOP
+                    continue; 
                 }
 
-                //double k = Math.sqrt(getWidth() * getHeight() / graphVertexMap.size());
                 Point2D repellingForce = repellingForce(v.getUpdatedPosition(), other.getUpdatedPosition(), this.repulsionForce);
 
                 double deltaForceX = 0, deltaForceY = 0;
@@ -135,7 +147,7 @@ public class GraphPanel<V, E> extends Pane{
                     deltaForceX = attractiveForce.getX() + repellingForce.getX();
                     deltaForceY = attractiveForce.getY() + repellingForce.getY();
                 } else {
-//                	Point2D attractiveForce = attractiveForce(v.getUpdatedPosition(), other.getUpdatedPosition(),vertexNodes.size(), 1, 2);
+                	Point2D attractiveForce = attractiveForce(v.getUpdatedPosition(), other.getUpdatedPosition(),vertexNodes.size(), 1, 2);
                 	deltaForceX += repellingForce.getX();
                     deltaForceY += repellingForce.getY();
                 }
@@ -167,26 +179,35 @@ public class GraphPanel<V, E> extends Pane{
         return theGraph.TotalEdgesBetween(u, v);
     }
     
-    private EdgeView CreateAndAddEdge(Edge<E, V> edge, VertexNode<V> graphVertexInbound, VertexNode<V> graphVertexOutbound) {
-        int edgeIndex = 1;
+    private EdgeNode CreateAndAddEdge(Edge<E, V> edge, VertexNode<V> graphVertexInbound, VertexNode<V> graphVertexOutbound) {
 
-        EdgeView graphEdge;
-
-        if (getTotalEdgesBetween(graphVertexInbound.getUnderlyingVertex(), graphVertexOutbound.getUnderlyingVertex()) > 1
-        		|| graphVertexInbound == graphVertexOutbound) {
-        	EdgeCurve NewEdgeView = new EdgeCurve(edge, graphVertexInbound, graphVertexOutbound, edgeIndex);
-        	if (((String)(edge.Vertices()[0].element())).equals("A")) {
-        		NewEdgeView.styleProxy.removeStyleClass("edge");
-        		NewEdgeView.styleProxy.addStyleClass("usingedge");
-        	}
+        EdgeNode graphEdge;
+        
+        Vertex<V> inVertex = graphVertexInbound.getUnderlyingVertex();
+        Vertex<V> outVertex = graphVertexOutbound.getUnderlyingVertex();
+        
+        Integer NewNum;
+        if (NumOfEdge.get(outVertex).get(inVertex) == null) {
+        	NewNum = new Integer(1);
+        	NumOfEdge.get(outVertex).put(inVertex, NewNum);
+        	NumOfEdge.get(inVertex).put(outVertex, NewNum);
+        }
+        else {
+        	NewNum = new Integer(NumOfEdge.get(outVertex).get(inVertex).intValue() + 1);
+        	NumOfEdge.get(outVertex).put(inVertex, NewNum);
+        	NumOfEdge.get(inVertex).put(outVertex, NewNum);
+        }
+        
+        int count = getTotalEdgesBetween(graphVertexInbound.getUnderlyingVertex(), graphVertexOutbound.getUnderlyingVertex());
+        //System.out.println(NewNum.intValue() + " " + count + " " + (String)inVertex.element() + " " + (String)outVertex.element());
+        int index = NewNum.intValue() - 1;
+        
+        if (count > 1 || graphVertexInbound == graphVertexOutbound) {
+        	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexInbound, graphVertexOutbound, index, false);
             graphEdge = NewEdgeView;
             this.getChildren().add(0, (Node)NewEdgeView);
         } else {
-        	EdgeLine NewEdgeView = new EdgeLine<>(edge, graphVertexInbound, graphVertexOutbound);
-        	if (((String)(edge.Vertices()[0].element())).equals("A")) {
-        		NewEdgeView.styleProxy.addStyleClass("usingedge");
-        		NewEdgeView.styleProxy.removeStyleClass("edge");
-        	}
+        	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexInbound, graphVertexOutbound, index, true);
             graphEdge = NewEdgeView;
             this.getChildren().add(0, (Node)NewEdgeView);
         }
@@ -228,33 +249,29 @@ public class GraphPanel<V, E> extends Pane{
             public void handle(ContextMenuEvent event) {
                 NewVertexNode.contextMenu.show(NewVertexNode, event.getScreenX(), event.getScreenY());;
             }
-        });
+            });
+            Map<Vertex<V>, Integer> newMap = new HashMap<>();
+    		NumOfEdge.put(NewVertexNode.getUnderlyingVertex(), newMap);
         }
+    	for (Edge<E, V> edge : theGraph.edges.values()) {
+            Vertex<V> vertex = edge.Vertices()[0];
+            Vertex<V> oppositeVertex = edge.Vertices()[1];
 
-        for (Vertex<V> vertex : vertexNodes.keySet()) {
+            VertexNode<V> graphVertexIn = vertexNodes.get(vertex);
+            VertexNode<V> graphVertexOppositeOut = vertexNodes.get(oppositeVertex);
 
-            Iterable<Edge<E, V>> incidentEdges = theGraph.incidentEdges(vertex);
+            graphVertexIn.addAdjacentVertex(graphVertexOppositeOut);
+            graphVertexOppositeOut.addAdjacentVertex(graphVertexIn);
 
-            for (Edge<E, V> edge : incidentEdges) {
-
-                Vertex<V> oppositeVertex = theGraph.opposite(vertex, edge);
-
-                VertexNode<V> graphVertexIn = vertexNodes.get(vertex);
-                VertexNode<V> graphVertexOppositeOut = vertexNodes.get(oppositeVertex);
-
-                graphVertexIn.addAdjacentVertex(graphVertexOppositeOut);
-                graphVertexOppositeOut.addAdjacentVertex(graphVertexIn);
-
-                EdgeView<E,V> graphEdge = CreateAndAddEdge(edge, graphVertexIn, graphVertexOppositeOut);
+            EdgeNode<E,V> graphEdge = CreateAndAddEdge(edge, graphVertexIn, graphVertexOppositeOut);
                 
-                if (this.edgesWithArrows) {
-                    Arrow arrow = new Arrow();
-                    graphEdge.attachArrow(arrow);
-                    this.getChildren().add(arrow);
-                }
-                edgeNodes.put(edge, graphEdge);
+            if (this.edgesWithArrows) {
+            	Arrow arrow = new Arrow();
+                graphEdge.attachArrow(arrow);
+                this.getChildren().add(arrow);
             }
+            edgeNodes.put(edge, graphEdge);
+    	}
 
-        }
     }
 }

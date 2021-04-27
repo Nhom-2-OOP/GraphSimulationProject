@@ -1,6 +1,8 @@
-package nhom2.graphview;
+package nhom2.graphview.Placement;
 
 import nhom2.graph.*;
+import nhom2.graphview.Vertex.VertexView;
+
 import java.util.Collection;
 import java.util.Random;
 

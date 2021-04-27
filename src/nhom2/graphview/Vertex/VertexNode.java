@@ -1,4 +1,4 @@
-package nhom2.graphview;
+package nhom2.graphview.Vertex;
 
 import java.util.*;
 import javafx.event.*;
@@ -10,6 +10,9 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import nhom2.graph.*;
+import nhom2.graphview.Label.Label;
+import nhom2.graphview.Label.LabelledObject;
+import nhom2.graphview.Styling.StyleImplementing;
 
 public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObject{
 	

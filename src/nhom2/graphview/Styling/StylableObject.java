@@ -1,4 +1,4 @@
-package nhom2.graphview;
+package nhom2.graphview.Styling;
 
 // Doi tuong nao la stylabe thi se co file css properties theo runtime
 

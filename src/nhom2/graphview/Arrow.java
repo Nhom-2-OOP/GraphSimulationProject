@@ -1,6 +1,8 @@
 package nhom2.graphview;
 
 import javafx.scene.shape.*;
+import nhom2.graphview.Styling.StylableObject;
+import nhom2.graphview.Styling.StyleImplementing;
 
 public class Arrow extends Path implements StylableObject{
 	private final StyleImplementing styleProxy;

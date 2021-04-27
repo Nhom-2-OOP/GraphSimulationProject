@@ -1,4 +1,4 @@
-package nhom2.graphview;
+package nhom2.graphview.Styling;
 
 import javafx.scene.shape.Shape;
 

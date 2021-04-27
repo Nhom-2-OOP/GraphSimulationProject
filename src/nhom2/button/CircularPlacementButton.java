@@ -3,8 +3,8 @@ package nhom2.button;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import nhom2.graphview.CircularSortedPlacementStrategy;
 import nhom2.graphview.GraphPanel;
+import nhom2.graphview.Placement.CircularSortedPlacementStrategy;
 
 public class CircularPlacementButton extends Button{
 	private GraphPanel graph;

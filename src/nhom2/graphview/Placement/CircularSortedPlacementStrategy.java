@@ -1,4 +1,4 @@
-package nhom2.graphview;
+package nhom2.graphview.Placement;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.List;
 import javafx.geometry.Point2D;
 import nhom2.graph.*;
+import nhom2.graphview.UtilitiesPoint2D;
+import nhom2.graphview.Vertex.VertexView;
 
 public class CircularSortedPlacementStrategy implements PlacementStrategy {
 

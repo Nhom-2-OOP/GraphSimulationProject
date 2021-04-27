@@ -5,8 +5,8 @@ import nhom2.graph.*;
 
 public class GraphEdgeList<V,E> implements Graph<V,E>{
 
-	private Map<V, Vertex<V>> vertices;
-	private Map<E, Edge<E, V>> edges;
+	public Map<V, Vertex<V>> vertices;
+	public Map<E, Edge<E, V>> edges;
 	public Map<Vertex<V>, Map<Vertex<V>,Edge<E,V>>> adjList;
 	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
 	public boolean isDirected;
