@@ -28,10 +28,12 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
@@ -243,6 +245,13 @@ public class GraphPanel<V, E> extends Pane{
                 }
                 );
             }
+            MenuItem item1 = new MenuItem("Xóa");
+            item1.setOnAction(new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent e) {
+                	
+                }
+            });
+            NewVertexNode.contextMenu.getItems().add(item1);
             NewVertexNode.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
  
             @Override

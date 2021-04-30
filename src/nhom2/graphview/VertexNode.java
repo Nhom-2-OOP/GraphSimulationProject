@@ -1,4 +1,4 @@
-package nhom2.graphview.Vertex;
+package nhom2.graphview;
 
 import java.util.*;
 import javafx.event.*;
@@ -10,9 +10,11 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import nhom2.graph.*;
+import nhom2.graphview.*;
 import nhom2.graphview.Label.Label;
 import nhom2.graphview.Label.LabelledObject;
 import nhom2.graphview.Styling.StyleImplementing;
+import nhom2.graphview.Vertex.VertexView;
 
 public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObject{
 	
@@ -20,7 +22,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	private final Set<VertexNode<T>> adjacentVertices;
 	private Label attachedLabel = null;
 	private boolean isDragging = false;
-	public ContextMenu contextMenu = new ContextMenu();
+	private ContextMenu contextMenu = new ContextMenu();
 	
 	private class Point{
 
@@ -50,13 +52,13 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
         styleProxy.addStyleClass("vertex");
         
         // Khoi tao menu
-//        MenuItem item1 = new MenuItem("About");
-//        item1.setOnAction(new EventHandler<ActionEvent>() {
-//            public void handle(ActionEvent e) {
-//            	
-//            }
-//        });
-//        contextMenu.getItems().add(item1);
+        MenuItem item1 = new MenuItem("About");
+        contextMenu.getItems().addAll(item1);
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("About");
+            }
+        });
 
         if (allowMove) {
             enableDrag();
@@ -78,6 +80,14 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	private void enableDrag() {
         final Point dragDelta = new Point(0, 0);
         
+        this.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+        	
+            @Override
+            public void handle(ContextMenuEvent event) {
+            	contextMenu.show(attachedLabel, event.getScreenX(), event.getScreenY());
+            }
+        });
+        	
         setOnMousePressed((MouseEvent mouseEvent) -> {
             if (mouseEvent.isPrimaryButtonDown()) {
                 // record a delta distance for the drag and drop operation.
@@ -257,6 +267,8 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	@Override
 	public Label getAttachedLabel() {
 		// TODO Auto-generated method stub
-		return attachedLabel;
+		return null;
 	}
+
+
 }

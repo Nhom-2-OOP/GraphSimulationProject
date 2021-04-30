@@ -170,7 +170,7 @@ public class EdgeNode<E, V> extends CubicCurve implements EdgeView<E, V>{
         Translate t = new Translate(-outbound.getRadius(), 0);
         arrow.getTransforms().add(t);
 	}
-
+																	
 	@Override
 	public Arrow getAttachedArrow() {
 		// TODO Auto-generated method stub

@@ -35,10 +35,12 @@ public class CaptureGraphPanel extends Button{
 				
 				// Tao FileChooser luu anh
 				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("Chọn địa chỉ lưu");
+				fileChooser.setInitialFileName("Ảnh đồ thị" + ".png");
 				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
-	            fileChooser.getExtensionFilters().add(extFilter);
-	            File file = fileChooser.showSaveDialog(stage);
-	            
+		        fileChooser.getExtensionFilters().add(extFilter);
+		        File file = fileChooser.showSaveDialog(stage);
+			
 				try {
 	                ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
 	            } catch (IOException ex) {
