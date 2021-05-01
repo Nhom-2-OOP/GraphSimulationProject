@@ -16,21 +16,22 @@ import javafx.stage.StageStyle;
 import nhom2.button.AutoPlacementButton;
 import nhom2.button.CaptureGraphPanel;
 import nhom2.button.CircularPlacementButton;
+import nhom2.button.InputButton;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 
 
 public class Main extends Application {
-
+	public static GraphEdgeList<String, String> g= build_sample_digraph();
+	public static GraphPanel<String, String> graphView;
     @Override
     public void start(Stage stage) {
     	
     	// Tao scene bieu dien do thi
-    	GraphEdgeList<String, String> g = build_sample_digraph();
-    	GraphPanel<String, String> graphView = new GraphPanel<>(g);
+    	graphView = new GraphPanel<>(g);
     	SubScene subSceneOne = new SubScene(graphView,500,500);
     	graphView.init();
-        graphView.start_automatic_layout();
+        //graphView.start_automatic_layout();
         
         // Tao nut sap dinh theo vong tron
     	CircularPlacementButton ButtonOne = new CircularPlacementButton(graphView);
@@ -47,9 +48,14 @@ public class Main extends Application {
     	ButtonThree.setText("Lưu ảnh đồ thị");
     	SubScene subSceneFour = new SubScene(ButtonThree,150,30);
     	
+    	// Tao nut input do thi
+    	InputButton ButtonFour = new InputButton(stage);
+    	ButtonFour.setText("Input đồ thị");
+    	SubScene subSceneFive = new SubScene(ButtonFour,150,30);
+    	
     	// Tao layout VBox
     	VBox root = new VBox(10);
-    	root.getChildren().addAll(subSceneOne, subSceneTwo, subSceneThree, subSceneFour);
+    	root.getChildren().addAll(subSceneOne, subSceneTwo, subSceneThree, subSceneFour, subSceneFive);
     	
     	Scene scene = new Scene(root, 521, 650);
         stage = new Stage();
@@ -64,32 +70,9 @@ public class Main extends Application {
         launch(args);
     }
 
-    private GraphEdgeList<String, String> build_sample_digraph() {
+    private static GraphEdgeList<String, String> build_sample_digraph() {
 
-    	GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(false);
-
-        g.insertVertex("A");
-        g.insertVertex("B");
-        g.insertVertex("C");
-        g.insertVertex("D");
-        g.insertVertex("E");
-        g.insertVertex("F");
-        
-        g.insertVertex("G");
-        g.insertVertex("H");
-        g.insertVertex("I");
-        g.insertVertex("J");
-        g.insertVertex("AA");
-        g.insertVertex("BB");
-        g.insertVertex("CC");
-        g.insertVertex("DD");
-        g.insertVertex("EE");
-        g.insertVertex("FF");
-        
-        g.insertVertex("GG");
-        g.insertVertex("HH");
-        g.insertVertex("II");
-        g.insertVertex("JJ");
+    	GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(true);
 
         g.insertEdge("A", "B", "AB1");
         g.insertEdge("A", "C", "AC");
@@ -118,13 +101,16 @@ public class Main extends Application {
         
         g.insertEdge("BB", "B", "BBB1");
         g.insertEdge("BB", "B", "BBB2");
-        g.insertEdge("BB", "B", "BBB3");
+        g.insertEdge("B", "BB", "BBB3");
         g.insertEdge("I", "BB", "ADD1");
         g.insertEdge("I", "H", "HII");
         g.insertEdge("C", "H", "HCII");
         g.insertEdge("BB", "H", "BHBB");
         return g;
     }
-
+    public static void setGraph(GraphEdgeList<String, String> NewGraph) {
+    	g = NewGraph;
+    	graphView.Renew(NewGraph, true); 
+    }
 }
 

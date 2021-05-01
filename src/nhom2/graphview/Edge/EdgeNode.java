@@ -47,7 +47,8 @@ public class EdgeNode<E, V> extends CubicCurve implements EdgeView<E, V>{
         this.endYProperty().bind(inbound.centerYProperty());
 
         //TODO: improve this solution taking into account even indices, etc.
-        randomAngleFactor = edgeIndex == 0 ? 0 : 1.0 / edgeIndex; //Math.random();
+        randomAngleFactor = edgeIndex == 0 ? 0 : (1.0 / edgeIndex); //Math.random();
+        //System.out.println(randomAngleFactor);
 
         //update();
         enableListeners();

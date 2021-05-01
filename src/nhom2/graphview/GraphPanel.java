@@ -54,9 +54,9 @@ public class GraphPanel<V, E> extends Pane{
 	
 	public PlacementStrategy placementStrategy;
 	
-	private final GraphEdgeList<V, E> theGraph;
-	private final Map<Vertex<V>, VertexNode<V>> vertexNodes;
-	private final Map<Edge<E, V>, EdgeNode<E,V>> edgeNodes;
+	private GraphEdgeList<V, E> theGraph;
+	private Map<Vertex<V>, VertexNode<V>> vertexNodes;
+	private Map<Edge<E, V>, EdgeNode<E,V>> edgeNodes;
 	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
 	
 	public AnimationTimer timer;
@@ -65,8 +65,8 @@ public class GraphPanel<V, E> extends Pane{
 	private final double attractionForce;
     private final double attractionScale;
     
-    private final boolean edgesWithArrows;
-    private final boolean needLabel;
+    private boolean edgesWithArrows;
+    private boolean needLabel;
 	
     public GraphPanel(GraphEdgeList<V, E> theGraph) {
         this(theGraph, null, true);
@@ -77,7 +77,7 @@ public class GraphPanel<V, E> extends Pane{
 		this.placementStrategy = new RandomPlacementStrategy();
 		this.theGraph = theGraph;
 		
-		edgesWithArrows = theGraph.isDirected;
+		if (theGraph != null) edgesWithArrows = theGraph.isDirected;
 		needLabel = Label;
 
 		// Doc file css va add vao style
@@ -112,6 +112,23 @@ public class GraphPanel<V, E> extends Pane{
                 runLayoutIteration();
             }
         };
+	}
+	
+	public void Renew(GraphEdgeList<V, E> theGraph, boolean Label) {
+		timer.stop();
+		this.placementStrategy = new RandomPlacementStrategy();
+		this.theGraph = theGraph;
+		
+		edgesWithArrows = theGraph.isDirected;
+		needLabel = Label;
+		vertexNodes.clear();;
+        edgeNodes.clear();; 
+		this.getChildren().clear();
+       
+        initNodes();
+        this.init();
+        
+        this.start_automatic_layout();
 	}
 	
 	private void runLayoutIteration() {
@@ -201,15 +218,16 @@ public class GraphPanel<V, E> extends Pane{
         }
         
         int count = getTotalEdgesBetween(graphVertexInbound.getUnderlyingVertex(), graphVertexOutbound.getUnderlyingVertex());
-        //System.out.println(NewNum.intValue() + " " + count + " " + (String)inVertex.element() + " " + (String)outVertex.element());
         int index = NewNum.intValue() - 1;
         
         if (count > 1 || graphVertexInbound == graphVertexOutbound) {
-        	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexInbound, graphVertexOutbound, index, false);
-            graphEdge = NewEdgeView;
+        	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexOutbound, graphVertexInbound, index, true);
+        	System.out.println(index + " " + count + " " + graphVertexInbound.getUnderlyingVertex().element() + " " + graphVertexOutbound.getUnderlyingVertex().element());
+        	//System.out.print(NewEdgeView.getControlX1() + " " + NewEdgeView.getControlY1()+ " " + NewEdgeView.getControlX2() + " " + NewEdgeView.getControlY2());
+        	graphEdge = NewEdgeView;
             this.getChildren().add(0, (Node)NewEdgeView);
         } else {
-        	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexInbound, graphVertexOutbound, index, true);
+        	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexOutbound, graphVertexInbound, index, true);
             graphEdge = NewEdgeView;
             this.getChildren().add(0, (Node)NewEdgeView);
         }
@@ -226,6 +244,7 @@ public class GraphPanel<V, E> extends Pane{
     
     private void initNodes() {
         // Them cac vertex vao vertexNodes. DPT O(n + m)
+    	if (this.theGraph == null) return;
     	for (Vertex<V> vertex : theGraph.VertexList()) {
     		VertexNode<V> NewVertexNode = new VertexNode(vertex, 0, 0, 10, true);
             vertexNodes.put(vertex, NewVertexNode);
@@ -268,6 +287,8 @@ public class GraphPanel<V, E> extends Pane{
 
             VertexNode<V> graphVertexIn = vertexNodes.get(vertex);
             VertexNode<V> graphVertexOppositeOut = vertexNodes.get(oppositeVertex);
+            
+            //System.out.println(vertex.element() + " " + oppositeVertex.element() + " " + edge.element());
 
             graphVertexIn.addAdjacentVertex(graphVertexOppositeOut);
             graphVertexOppositeOut.addAdjacentVertex(graphVertexIn);
@@ -281,6 +302,5 @@ public class GraphPanel<V, E> extends Pane{
             }
             edgeNodes.put(edge, graphEdge);
     	}
-
     }
 }

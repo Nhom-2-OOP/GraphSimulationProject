@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nhom2.button.input.InputController">
+   <children>
+      <Button fx:id="FromExternal" layoutX="449.0" layoutY="355.0" mnemonicParsing="false" onAction="#inputFromExternal" prefHeight="31.0" prefWidth="127.0" text="Mở file txt" />
+      <TextArea fx:id="Input" layoutX="29.0" layoutY="78.0" prefHeight="200.0" prefWidth="371.0" />
+      <Text layoutX="170.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập đồ thị" wrappingWidth="201.9831027984619" />
+      <Button fx:id="save" layoutX="254.0" layoutY="301.0" mnemonicParsing="false" onAction="#input" prefHeight="31.0" prefWidth="127.0" text="Lưu" />
+   </children>
+</AnchorPane>

@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.SubScene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
@@ -31,23 +32,38 @@ public class CaptureGraphPanel extends Button{
 			@Override
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+				boolean isCaptured = true;
+				try {
 				WritableImage writableImage = view.snapshot(new SnapshotParameters(), null);
 				
 				// Tao FileChooser luu anh
 				FileChooser fileChooser = new FileChooser();
-				fileChooser.setTitle("Chọn địa chỉ lưu");
-				fileChooser.setInitialFileName("Ảnh đồ thị" + ".png");
 				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
-		        fileChooser.getExtensionFilters().add(extFilter);
-		        File file = fileChooser.showSaveDialog(stage);
-			
-				try {
-	                ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
-	            } catch (IOException ex) {
-	                Logger.getLogger(CaptureGraphPanel.class.getName()).log(Level.SEVERE, null, ex);
+	            fileChooser.getExtensionFilters().add(extFilter);
+	            File file = fileChooser.showSaveDialog(stage);
+	            
+				
+	            ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
+	            } catch (Exception ex) {
+	            	isCaptured = false;
+	            	informNull();
 	            }
+				if(isCaptured) {
+					informSuccess();
+				}
 			}
 			
 		});
+		
+	}
+	private static void informSuccess() {
+		Alert inform = new Alert(Alert.AlertType.INFORMATION);
+		inform.setHeaderText("Lưu ảnh đồ thị thành công!");
+		inform.showAndWait();
+	}
+	private static void informNull() {
+		Alert inform = new Alert(Alert.AlertType.INFORMATION);
+		inform.setHeaderText("Chưa lưu ảnh!");
+		inform.showAndWait();
 	}
 }

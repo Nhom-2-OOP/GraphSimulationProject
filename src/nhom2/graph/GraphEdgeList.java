@@ -87,6 +87,7 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 	@Override
 	public Vertex<V> insertVertex(V vElement) {
 		// DPT O(1)
+		if (vertices.get(vElement) != null) return null;
 		MyVertex NewVertex = new MyVertex(vElement);
 		vertices.put(vElement, NewVertex);
 		Map<Vertex<V>,Edge<E,V>> newMapOne = new HashMap<>();
@@ -133,8 +134,12 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 	@Override
 	public Edge<E, V> insertEdge(V vElement1, V vElement2, E edgeElement) {
 		// DPT O(1)
+		if(!vertices.containsKey(vElement1)) this.insertVertex(vElement1);
+		if(!vertices.containsKey(vElement2)) this.insertVertex(vElement2);
 		MyVertex outVertex = (MyVertex)vertices.get(vElement1);
         MyVertex inVertex = (MyVertex)vertices.get(vElement2);
+        
+        if (!this.isDirected && adjList.get(outVertex).get(inVertex) != null) return null;
         
         MyEdge newEdge = new MyEdge(edgeElement, outVertex, inVertex);
         if (NumOfEdge.get(outVertex).get(inVertex) == null) {
