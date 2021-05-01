@@ -30,6 +30,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -44,6 +45,10 @@ import nhom2.graph.*;
 import nhom2.window.*;
 public class InputController  implements Initializable {
 	@FXML
+	private CheckBox yesBox;
+	@FXML
+	private CheckBox noBox;
+	@FXML
 	private Button Save;
 	@FXML
 	private Button FromExternal;
@@ -51,6 +56,7 @@ public class InputController  implements Initializable {
 	private TextArea Input;
 	@FXML 
 	private DialogPane dialog;
+	private static boolean IsDirected = false;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
@@ -60,7 +66,7 @@ public class InputController  implements Initializable {
 		String data = "";
 		Input.commitValue();
 		data = Input.getText();
-	    Input.clear(); 
+	    Input.clear();
 	    dataToGraph(data);
 	    informSuccess();
 	}
@@ -95,6 +101,20 @@ public class InputController  implements Initializable {
 			informSuccess();
 		}
 	}
+	@FXML 
+	void handleYesBox(ActionEvent e) {
+		if(yesBox.isSelected()) {
+			noBox.setSelected(false);
+			IsDirected = true;
+		}
+	}
+	@FXML
+	void handleNoBox(ActionEvent e) {
+		if(noBox.isSelected()) {
+			yesBox.setSelected(false);
+			IsDirected = false;
+		}
+	}
 	private void dataToGraph(String data) {
 		 
 	    ArrayList<String> rows = new ArrayList<String>();
@@ -102,7 +122,8 @@ public class InputController  implements Initializable {
 	    for(String s: split) {
 	    	rows.add(s);
 	    }
-	    GraphEdgeList<String, String> g= new GraphEdgeList<String,String>(true);
+	 
+	    GraphEdgeList<String, String> g= new GraphEdgeList<String,String>(IsDirected);
 	    for(String s: rows) {
 	    	String[] t = s.split(" ");
 	    	g.insertVertex(t[0]);
@@ -110,13 +131,14 @@ public class InputController  implements Initializable {
 	    	for(int i=1;i<size;i++) {
 	    		g.insertEdge(t[0],t[i],t[0] + t[i]);
 	    	}
-	    	
 	    }
 	    Main.setGraph(g);
 	}
 	private static void informSuccess() {
 		Alert inform = new Alert(Alert.AlertType.INFORMATION);
-		inform.setHeaderText("Lưu đồ thị thành công!");
+	
+		if( IsDirected ) inform.setHeaderText("Lưu đồ thị (có hướng) thành công!");
+		else inform.setHeaderText("Lưu đồ thị (vô hướng) thành công!");
 		inform.showAndWait();
 	}
 	private static void informNull() {
