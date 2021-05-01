@@ -54,9 +54,9 @@ public class GraphPanel<V, E> extends Pane{
 	
 	public PlacementStrategy placementStrategy;
 	
-	private GraphEdgeList<V, E> theGraph;
-	private Map<Vertex<V>, VertexNode<V>> vertexNodes;
-	private Map<Edge<E, V>, EdgeNode<E,V>> edgeNodes;
+	public GraphEdgeList<V, E> theGraph;
+	public Map<Vertex<V>, VertexNode<V>> vertexNodes;
+	public Map<Edge<E, V>, EdgeNode<E,V>> edgeNodes;
 	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
 	
 	public AnimationTimer timer;
