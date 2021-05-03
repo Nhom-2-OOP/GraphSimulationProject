@@ -21,7 +21,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	private final Set<VertexNode<T>> adjacentVertices;
 	private Label attachedLabel = null;
 	private boolean isDragging = false;
-	private ContextMenu contextMenu = new ContextMenu();
+	public ContextMenu contextMenu = new ContextMenu();
 	
 	private class Point{
 
