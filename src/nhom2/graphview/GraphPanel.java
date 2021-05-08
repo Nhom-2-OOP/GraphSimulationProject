@@ -8,11 +8,11 @@ import nhom2.graphview.Label.Label;
 import nhom2.graphview.Placement.PlacementStrategy;
 import nhom2.graphview.Placement.RandomPlacementStrategy;
 import nhom2.graphview.Vertex.VertexNode;
-
 import static nhom2.graphview.UtilitiesPoint2D.attractiveForce;
 import static nhom2.graphview.UtilitiesPoint2D.repellingForce;
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,19 +32,20 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
-import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.geometry.Point2D;
-import javafx.scene.Scene;
+
 import java.net.URI;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -154,7 +155,6 @@ public class GraphPanel<V, E> extends Pane{
                 if (v == other) {
                     continue; 
                 }
-
                 Point2D repellingForce = repellingForce(v.getUpdatedPosition(), other.getUpdatedPosition(), this.repulsionForce);
 
                 double deltaForceX = 0, deltaForceY = 0;
@@ -184,6 +184,7 @@ public class GraphPanel<V, E> extends Pane{
 
     private void applyForces() {
         vertexNodes.values().forEach((v) -> {
+        	//if (v.getUnderlyingVertex().element().equals("E")) System.out.println("yes");
             v.moveFromForces();
         });
     }
@@ -222,9 +223,10 @@ public class GraphPanel<V, E> extends Pane{
         
         if (count > 1 || graphVertexInbound == graphVertexOutbound) {
         	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexOutbound, graphVertexInbound, index, true);
-        	System.out.println(index + " " + count + " " + graphVertexInbound.getUnderlyingVertex().element() + " " + graphVertexOutbound.getUnderlyingVertex().element());
-        	//System.out.print(NewEdgeView.getControlX1() + " " + NewEdgeView.getControlY1()+ " " + NewEdgeView.getControlX2() + " " + NewEdgeView.getControlY2());
+//        	System.out.println(index + " " + count + " " + graphVertexInbound.getUnderlyingVertex().element() + " " + graphVertexOutbound.getUnderlyingVertex().element());
+//        	//System.out.print(NewEdgeView.getControlX1() + " " + NewEdgeView.getControlY1()+ " " + NewEdgeView.getControlX2() + " " + NewEdgeView.getControlY2());
         	graphEdge = NewEdgeView;
+        	
             this.getChildren().add(0, (Node)NewEdgeView);
         } else {
         	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexOutbound, graphVertexInbound, index, true);
@@ -242,6 +244,28 @@ public class GraphPanel<V, E> extends Pane{
     	timer.start();
     }
     
+    public void deleteVertex(VertexNode v) {
+    	timer.stop();
+    	this.getChildren().remove(v.getAttachedLabel());
+    	this.getChildren().remove(v);
+    	ArrayList<Edge> deleteList = new ArrayList<Edge>();
+    	for (Edge e: theGraph.edges.values()) 
+    		if (e.Vertices()[0] == v.getUnderlyingVertex() || e.Vertices()[1] == v.getUnderlyingVertex()){
+    			deleteList.add(e);
+    		}
+    	for (Edge e: deleteList)
+    		{
+    			if (theGraph.isDirected) {
+    				this.getChildren().remove(edgeNodes.get(e).getAttachedArrow());
+    			}
+    			this.getChildren().remove(edgeNodes.get(e));
+    			edgeNodes.remove(e);
+    		}
+    	deleteList.removeAll(deleteList);
+    	vertexNodes.remove(v.getUnderlyingVertex());
+    	theGraph.removeVertex(v.getUnderlyingVertex());
+    }
+    
     private void initNodes() {
         // Them cac vertex vao vertexNodes. DPT O(n + m)
     	if (this.theGraph == null) return;
@@ -252,6 +276,12 @@ public class GraphPanel<V, E> extends Pane{
             if (needLabel) {
             	Label label = new Label((String)vertex.element());
                 label.addStyleClass("vertex-label");
+                label.setOnMouseEntered((MouseEvent mouseEvent) -> {
+                    if (!mouseEvent.isPrimaryButtonDown()) {
+                        getScene().setCursor(Cursor.HAND);
+                    }
+
+                });
                 this.getChildren().add(label);
                 NewVertexNode.attachLabel(label);
                 label.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
@@ -264,13 +294,24 @@ public class GraphPanel<V, E> extends Pane{
                 }
                 );
             }
-            MenuItem item1 = new MenuItem("X�a");
+            MenuItem item1 = new MenuItem("Thông tin đỉnh");
             item1.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent e) {
-                	
+                	Alert inform = new Alert(Alert.AlertType.INFORMATION);
+            		inform.setHeaderText("Tên đỉnh: " + vertex.element());
+            		inform.showAndWait();
                 }
             });
-            NewVertexNode.contextMenu.getItems().add(item1);
+            MenuItem item2 = new MenuItem("Xóa đỉnh");
+            item2.setOnAction(new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent e) {
+                	deleteVertex(NewVertexNode);
+            		Alert inform = new Alert(Alert.AlertType.INFORMATION);
+            		inform.setHeaderText("Xóa đỉnh thành công");
+            		inform.showAndWait();
+                }
+            });
+            NewVertexNode.contextMenu.getItems().addAll(item1, item2);
             NewVertexNode.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
  
             @Override

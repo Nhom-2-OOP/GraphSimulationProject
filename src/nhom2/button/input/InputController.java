@@ -126,10 +126,12 @@ public class InputController  implements Initializable {
 	    GraphEdgeList<String, String> g= new GraphEdgeList<String,String>(IsDirected);
 	    for(String s: rows) {
 	    	String[] t = s.split(" ");
+	    	System.out.println(t[0] + " ");
 	    	g.insertVertex(t[0]);
 	    	int size = t.length;
 	    	for(int i=1;i<size;i++) {
 	    		g.insertEdge(t[0],t[i],t[0] + t[i]);
+	    		System.out.println(t[0] + " " + t[i]);
 	    	}
 	    }
 	    Main.setGraph(g);

@@ -172,4 +172,23 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		else return Pointer.intValue();
 	}
 	
+	public void removeVertex(Vertex v) {
+		Collection<Edge<E, V>> list = edges.values();
+		ArrayList<Edge> deleteList = new ArrayList<Edge>();
+    	for (Edge e: list) 
+    		if (e.Vertices()[0] == v || e.Vertices()[1] == v){
+    			deleteList.add(e);
+    		}
+		for (Edge e: deleteList) 
+			{
+				edges.remove(e.element());
+				adjList.get(e.Vertices()[0]).remove(e.Vertices()[1]);
+				if (!this.isDirected) {
+					adjList.get(e.Vertices()[1]).remove(e.Vertices()[0]);
+				}
+			}
+		deleteList.removeAll(deleteList);
+		vertices.remove(v.element());
+	}
+	
 }

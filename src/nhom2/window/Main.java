@@ -77,8 +77,7 @@ public class Main extends Application {
         g.insertEdge("A", "B", "AB1");
         g.insertEdge("A", "C", "AC");
         g.insertEdge("A", "G", "AG");
-        g.insertEdge("A", "H", "AH");
-        
+        g.insertEdge("A", "H", "AH");    
         g.insertEdge("A", "D", "AD");
         
         g.insertEdge("D", "E", "DE");
@@ -106,6 +105,7 @@ public class Main extends Application {
         g.insertEdge("I", "H", "HII");
         g.insertEdge("C", "H", "HCII");
         g.insertEdge("BB", "H", "BHBB");
+        
         return g;
     }
     public static void setGraph(GraphEdgeList<String, String> NewGraph) {

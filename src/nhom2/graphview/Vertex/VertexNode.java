@@ -49,15 +49,6 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 
         styleProxy = new StyleImplementing(this);
         styleProxy.addStyleClass("vertex");
-        
-        // Khoi tao menu
-        MenuItem item1 = new MenuItem("About");
-        contextMenu.getItems().addAll(item1);
-        item1.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                System.out.println("About");
-            }
-        });
 
         if (allowMove) {
             enableDrag();
@@ -226,13 +217,22 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	public void moveFromForces() {
 
         //limit movement to parent bounds
-        double height = getParent().getLayoutBounds().getHeight();
-        double width = getParent().getLayoutBounds().getWidth();
+		try {
+			double height = getParent().getLayoutBounds().getHeight();
+	        double width = getParent().getLayoutBounds().getWidth();
+	        updatedPosition.x = boundCenterCoordinate(updatedPosition.x, 0, width);
+	        updatedPosition.y = boundCenterCoordinate(updatedPosition.y, 0, height);
 
-        updatedPosition.x = boundCenterCoordinate(updatedPosition.x, 0, width);
-        updatedPosition.y = boundCenterCoordinate(updatedPosition.y, 0, height);
+	        setPosition(updatedPosition.x, updatedPosition.y);
+		}
+        catch (Exception e) {
+        	//System.out.println(this.getUnderlyingVertex().element());
+        }
 
-        setPosition(updatedPosition.x, updatedPosition.y);
+//        updatedPosition.x = boundCenterCoordinate(updatedPosition.x, 0, width);
+//        updatedPosition.y = boundCenterCoordinate(updatedPosition.y, 0, height);
+//
+//        setPosition(updatedPosition.x, updatedPosition.y);
     }
 
 	@Override
@@ -266,7 +266,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	@Override
 	public Label getAttachedLabel() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.attachedLabel;
 	}
 
 
