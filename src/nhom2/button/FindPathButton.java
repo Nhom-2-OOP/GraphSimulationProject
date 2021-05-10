@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -43,8 +44,9 @@ public class FindPathButton<V, E> extends Button {
 		// lay ra danh sach dinh ke, canh ke
 		Map<Vertex<V>, Edge<E, V>> unknown = graphView.theGraph.adjList.get(v);
 		Set<Vertex<V>> adjVertex = unknown.keySet();
-
+		
 		ChoiceBox<String> listNextVertex = new ChoiceBox();
+		
 		int cntV = 0; // so dinh ke hien thi ra
 		// ObservableList<String> nextList = FXCollections.observableArrayList();
 
@@ -57,7 +59,7 @@ public class FindPathButton<V, E> extends Button {
 				break;
 		}
 
-		listNextVertex.setMinWidth(50);
+		listNextVertex.setMinWidth(100);
 		grid.add(listNextVertex, 3, 1);
 
 		// sự kiện click chon dinh
@@ -89,10 +91,14 @@ public class FindPathButton<V, E> extends Button {
 		Button btFind = new Button("Find");
 		Button btn = new Button("OK");
 		Button reset = new Button("Reset");
+		
+		btFind.setMinWidth(80);
+		btn.setMinWidth(100);
+		reset.setMinWidth(100);
 		btn.setVisible(false);
 		reset.setVisible(false);
-
 		textPath.setEditable(false);
+		textPath.setMinWidth(100);
 		tfStartVertex.setPromptText("Dinh bat dau");
 		tfStartVertex.setPrefWidth(85);
 		tfStartVertex.setMaxWidth(85);
@@ -105,15 +111,15 @@ public class FindPathButton<V, E> extends Button {
 		grid.add(new Label("EndVertex"), 0, 1);
 		grid.add(tfEndVertex, 1, 1);
 		grid.add(btFind, 1, 2);
-		grid.add(new Label("Path"), 0,3);
-		grid.add(textPath, 1, 3);
+		grid.add(new Label("Path"), 0, 5);
+		grid.add(textPath, 1, 4, 3 ,4);
 		grid.add(btn, 3, 2);
 		grid.add(reset, 3, 3);
 		grid.setHgap(10);
 		grid.setVgap(10);
-		grid.setPadding(new Insets(10, 10, 100, 10));
-		grid.setMinSize(500, 200);
-
+		grid.setPadding(new Insets(20, 20, 100, 20));
+		grid.setMinSize(400, 200);
+		
 		try {
 			Parent root = grid;
 			this.View = new Scene(root);
@@ -132,6 +138,15 @@ public class FindPathButton<V, E> extends Button {
 		btFind.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
+				// reset status graphPanel
+				for (VertexNode<V> tmp : graphView.vertexNodes.values())
+					tmp.setStyle("-fx-fill: #96d1cd");
+				for (EdgeNode<E, V> tmp : graphView.edgeNodes.values()) {
+					tmp.setStyle("-fx-stroke: #45597e");
+					tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+				}
+				textPath.clear();
+				
 				tfStartVertex.commitValue();
 				String dataStart = tfStartVertex.getText();
 				tfEndVertex.commitValue();
@@ -158,6 +173,7 @@ public class FindPathButton<V, E> extends Button {
 				grid.add(new Label("Choose next vertex then click OK"), 3, 0);
 				btn.setVisible(true);
 				reset.setVisible(true);
+				
 				a(grid, graphView, currentVertex);
 			}
 		});
@@ -177,7 +193,6 @@ public class FindPathButton<V, E> extends Button {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setContentText("Done!");
 					alert.showAndWait();
-					stage.close();
 					return;
 				}
 				// TODO Auto-generated method stub
