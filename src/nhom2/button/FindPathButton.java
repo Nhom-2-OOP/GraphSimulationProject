@@ -48,10 +48,9 @@ public class FindPathButton<V, E> extends Button {
 		ChoiceBox<String> listNextVertex = new ChoiceBox();
 		
 		int cntV = 0; // so dinh ke hien thi ra
-		// ObservableList<String> nextList = FXCollections.observableArrayList();
+
 
 		for (Vertex<V> iterator : adjVertex) {
-			// nextList.add(iterator.element().toString());
 			String mi = new String(iterator.element().toString());
 			listNextVertex.getItems().add(mi);
 			cntV++;
@@ -76,7 +75,7 @@ public class FindPathButton<V, E> extends Button {
 				// thay đổi màu đỉnh và cạnh
 				inputVertexNode.setStyle("-fx-fill: yellow");
 				inputEdgeNode.setStyle("-fx-stroke: blue");
-				inputEdgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
+				if(graphView.edgesWithArrows) inputEdgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
 				textPath.appendText(input + " ->");
 				currentVertex = inputVertex;
 			}
@@ -143,7 +142,7 @@ public class FindPathButton<V, E> extends Button {
 					tmp.setStyle("-fx-fill: #96d1cd");
 				for (EdgeNode<E, V> tmp : graphView.edgeNodes.values()) {
 					tmp.setStyle("-fx-stroke: #45597e");
-					tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+					if(graphView.edgesWithArrows) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
 				}
 				textPath.clear();
 				
@@ -208,7 +207,7 @@ public class FindPathButton<V, E> extends Button {
 					tmp.setStyle("-fx-fill: #96d1cd");
 				for (EdgeNode<E, V> tmp : graphView.edgeNodes.values()) {
 					tmp.setStyle("-fx-stroke: #45597e");
-					tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+					if(graphView.edgesWithArrows) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
 				}
 				countStep =0;
 				textPath.setText("");
