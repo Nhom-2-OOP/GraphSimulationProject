@@ -66,7 +66,7 @@ public class GraphPanel<V, E> extends Pane{
 	private final double attractionForce;
     private final double attractionScale;
     
-    private boolean edgesWithArrows;
+    public boolean edgesWithArrows;
     private boolean needLabel;
 	
     public GraphPanel(GraphEdgeList<V, E> theGraph) {
