@@ -59,7 +59,7 @@ public class InputController  implements Initializable {
 	private static boolean IsDirected = false;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		noBox.setSelected(true);
 	}
 	@FXML 
 	private void input(ActionEvent e) {
@@ -72,7 +72,7 @@ public class InputController  implements Initializable {
 	}
 	@FXML
 	private void inputFromExternal(ActionEvent e) {
-		String data ="";
+		char [] data = new char [10000];
 		boolean isOpened = true;
 		try {
 			FileChooser fileChooser = new FileChooser();
@@ -81,9 +81,7 @@ public class InputController  implements Initializable {
 			if(fileChooser != null) {
 				isOpened = true;
 				try (BufferedReader reader = new BufferedReader(new FileReader(file))){
-			        String line;
-			        while ((line = reader.readLine()) != null)
-			            data+=line;
+					reader.read(data);
 			    }
 				catch (IOException ex) {
 					ex.printStackTrace();
@@ -97,7 +95,12 @@ public class InputController  implements Initializable {
 		}
 		
 		if(isOpened) {
-			dataToGraph(data);
+			Input.setText(String.valueOf(data));
+			String datas = "";
+			Input.commitValue();
+			datas = Input.getText();
+		    Input.clear();
+		    dataToGraph(datas);
 			informSuccess();
 		}
 	}
@@ -119,19 +122,18 @@ public class InputController  implements Initializable {
 		 
 	    ArrayList<String> rows = new ArrayList<String>();
 	    String[] split = data.split("\n");
-	    for(String s: split) {
+	    for(String s: split){
 	    	rows.add(s);
 	    }
-	 
+	    
 	    GraphEdgeList<String, String> g= new GraphEdgeList<String,String>(IsDirected);
-	    for(String s: rows) {
+	    for(String s: rows)  {
 	    	String[] t = s.split(" ");
-	    	System.out.println(t[0] + " ");
-	    	g.insertVertex(t[0]);
+	    
 	    	int size = t.length;
-	    	for(int i=1;i<size;i++) {
+	    	for(int i=1;i<size;i++) { 
+	    		//System.out.println(t[0]);
 	    		g.insertEdge(t[0],t[i],t[0] + t[i]);
-	    		System.out.println(t[0] + " " + t[i]);
 	    	}
 	    }
 	    Main.setGraph(g);

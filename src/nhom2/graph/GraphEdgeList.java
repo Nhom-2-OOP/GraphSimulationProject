@@ -191,4 +191,10 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		vertices.remove(v.element());
 	}
 	
+	public void TEST() {
+		for (Vertex v: this.adjList.get(this.vertices.get("A")).keySet()){
+			System.out.println(v.element());
+		}
+	}
+	
 }

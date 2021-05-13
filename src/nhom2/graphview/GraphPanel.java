@@ -66,7 +66,7 @@ public class GraphPanel<V, E> extends Pane{
 	private final double attractionForce;
     private final double attractionScale;
     
-    private boolean edgesWithArrows;
+    public boolean edgesWithArrows;
     private boolean needLabel;
 	
     public GraphPanel(GraphEdgeList<V, E> theGraph) {
@@ -129,11 +129,11 @@ public class GraphPanel<V, E> extends Pane{
         initNodes();
         this.init();
         
-        this.start_automatic_layout();
+        //this.start_automatic_layout();
 	}
 	
 	private void runLayoutIteration() {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 10; i++) {
             resetForces();
             computeForces();
             updateForces();

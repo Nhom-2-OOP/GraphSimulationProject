@@ -20,6 +20,7 @@ import nhom2.button.CaptureGraphPanel;
 import nhom2.button.CircularPlacementButton;
 import nhom2.button.FindPathButton;
 import nhom2.button.InputButton;
+import nhom2.button.RandomPlacementButton;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 
@@ -32,10 +33,15 @@ public class Main extends Application {
     	
     	// Tao scene bieu dien do thi
     	graphView = new GraphPanel<>(g);
-    	SubScene subSceneGraphPanel = new SubScene(graphView,600,600);
+    	SubScene subSceneGraphPanel = new SubScene(graphView,800,600);
     	graphView.init();
         //graphView.start_automatic_layout();
         
+    	//Tap nut sap xep dinh ngau nhien
+    	RandomPlacementButton btnRanPla = new RandomPlacementButton(graphView);
+    	btnRanPla.setText("Sắp đỉnh ngẫu nhiên");
+    	SubScene subSceneRanPla = new SubScene(btnRanPla,150,30);
+    	
         // Tao nut sap dinh theo vong tron
     	CircularPlacementButton btnCircularPla = new CircularPlacementButton(graphView);
     	btnCircularPla.setText("Sắp đỉnh theo vòng tròn");
@@ -62,9 +68,14 @@ public class Main extends Application {
     	SubScene subSceneFindPath = new SubScene(btnFindPath,150,30);
 
     	// Tao layout VBox
-    	VBox buttonArea = new VBox(10);
-    	buttonArea.getChildren().addAll(subSceneCircularPla, subSceneAutoPla, subSceneCaptureGP, subSceneInput, subSceneFindPath);
-    	buttonArea.setAlignment(Pos.CENTER);
+    	GridPane buttonArea = new GridPane();
+    	buttonArea.add(subSceneInput, 0, 0);
+    	buttonArea.add(subSceneCaptureGP, 0, 1);
+    	buttonArea.add(subSceneRanPla, 0, 2);
+    	buttonArea.add(subSceneAutoPla, 0, 3);
+    	buttonArea.add(subSceneCircularPla, 0, 4);
+    	buttonArea.add(subSceneFindPath, 0, 5);
+    	buttonArea.setVgap(10);
 
     	GridPane root = new GridPane();
     	root.add(buttonArea, 0, 0);
@@ -72,7 +83,7 @@ public class Main extends Application {
     	root.setHgap(20);
     	root.setPadding(new Insets(10, 10, 100, 10));
     	
-    	Scene scene = new Scene(root, 650, 650);
+    	Scene scene = new Scene(root, 1000, 650);
         stage = new Stage();
         stage.setTitle("Graph Visualization");
         stage.setMinHeight(800);
@@ -120,6 +131,7 @@ public class Main extends Application {
         g.insertEdge("I", "H", "HII");
         g.insertEdge("C", "H", "HCII");
         g.insertEdge("BB", "H", "BHBB");
+        g.insertEdge("B", "GG", "BHBB1");
         
         return g;
     }
