@@ -148,6 +148,8 @@ public class DFSButton<V, E> extends Button{
 		Button step = new Button("Hiển thị từng bước");
 		Button next = new Button("Next");
 		Button reset = new Button("Reset");
+		Label lb = new Label();
+
 		
 		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
 		tfStartVertex.setPrefWidth(85);
@@ -161,6 +163,7 @@ public class DFSButton<V, E> extends Button{
 		grid.add(step, 1, 2);
 		grid.add(next, 2, 2);
 		grid.add(reset, 1, 3);
+		grid.add(lb, 3, 2);
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(10, 10, 100, 10));
@@ -227,6 +230,9 @@ public class DFSButton<V, E> extends Button{
 
 			@Override
 			public void handle(ActionEvent event) {
+				if(stackStep.isEmpty()) {
+					lb.setText("Done!");
+				}
 				Vertex<V> currVertex = stackStep.peek();
 				stackStep.pop();
 				VertexNode<V> currVertexNode = graphView.vertexNodes.get(currVertex);
@@ -240,6 +246,7 @@ public class DFSButton<V, E> extends Button{
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
+				lb.setText("");
 				for (VertexNode<V> tmp : graphView.vertexNodes.values())
 					tmp.setStyle("-fx-fill: #96d1cd");
 				for (EdgeNode<E, V> tmp : graphView.edgeNodes.values()) {
