@@ -18,6 +18,7 @@ import javafx.stage.StageStyle;
 import nhom2.button.AutoPlacementButton;
 import nhom2.button.CaptureGraphPanel;
 import nhom2.button.CircularPlacementButton;
+import nhom2.button.DFSButton;
 import nhom2.button.FindPathButton;
 import nhom2.button.InputButton;
 import nhom2.graph.*;
@@ -60,10 +61,15 @@ public class Main extends Application {
     	FindPathButton<String, String> btnFindPath = new FindPathButton(stage, graphView);
     	btnFindPath.setText("Tìm đường đi");
     	SubScene subSceneFindPath = new SubScene(btnFindPath,150,30);
+    	
+    	//Tao nut DFS
+    	DFSButton<String, String> btnDFS = new DFSButton(stage, graphView);
+    	btnDFS.setText("DFS");
+    	SubScene subSceneDFS = new SubScene(btnDFS,150,30);
 
     	// Tao layout VBox
     	VBox buttonArea = new VBox(10);
-    	buttonArea.getChildren().addAll(subSceneCircularPla, subSceneAutoPla, subSceneCaptureGP, subSceneInput, subSceneFindPath);
+    	buttonArea.getChildren().addAll(subSceneCircularPla, subSceneAutoPla, subSceneCaptureGP, subSceneInput, subSceneFindPath, subSceneDFS);
     	buttonArea.setAlignment(Pos.CENTER);
 
     	GridPane root = new GridPane();
