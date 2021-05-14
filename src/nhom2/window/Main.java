@@ -1,6 +1,8 @@
 package nhom2.window;
 
 import java.util.concurrent.TimeUnit;
+
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
 import java.awt.Window;
@@ -20,8 +22,12 @@ import javafx.stage.StageStyle;
 import nhom2.button.AutoPlacementButton;
 import nhom2.button.CaptureGraphPanel;
 import nhom2.button.CircularPlacementButton;
+import nhom2.button.ColoringButton;
+import nhom2.button.DFSButton;
 import nhom2.button.FindPathButton;
+import nhom2.button.InfoButton;
 import nhom2.button.InputButton;
+import nhom2.button.RandomPlacementButton;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 import javafx.scene.transform.Scale; 
@@ -39,6 +45,7 @@ import javafx.geometry.VPos;
 public class Main extends Application {
 	public static GraphEdgeList<String, String> g= build_sample_digraph();
 	public static GraphPanel<String, String> graphView;
+
 	@Override
 	public void start(Stage stage) {
 
@@ -47,10 +54,15 @@ public class Main extends Application {
 		SubScene subSceneGraphPanel = new SubScene(graphView, 600,600);  	
 		graphView.init();
 
+		//Tap nut sap xep dinh ngau nhien
+		RandomPlacementButton btnRanPla = new RandomPlacementButton(graphView);
+		btnRanPla.setText("Sắp đỉnh ngẫu nhiên");
+		SubScene subSceneRanPla = new SubScene(btnRanPla,150,30);
+
 		// Tao nut sap dinh theo vong tron
 		CircularPlacementButton btnCircularPla = new CircularPlacementButton(graphView);
 		btnCircularPla.setText("Sắp đỉnh theo vòng tròn");
-		SubScene subSceneCircularPla = new SubScene(btnCircularPla,150,30); //size
+		SubScene subSceneCircularPla = new SubScene(btnCircularPla,150,30);
 
 		// Tao nut sap dinh tu dong
 		AutoPlacementButton btnAutoPla = new AutoPlacementButton(graphView);
@@ -67,14 +79,41 @@ public class Main extends Application {
 		btnInput.setText("Input đồ thị");
 		SubScene subSceneInput = new SubScene(btnInput,150,30);
 
-		// Tao nut tim duong di
+		// Tao nut tu tim duong di
 		FindPathButton<String, String> btnFindPath = new FindPathButton(stage, graphView);
-		btnFindPath.setText("Tìm đường đi");
+		btnFindPath.setText("Tự đường đi");
 		SubScene subSceneFindPath = new SubScene(btnFindPath,150,30);
+
+		// Tao nut tu dong tim duong di
+		Button btnAutoFindPath = new Button();
+		btnAutoFindPath.setText("Tự động tìm đường đi");
+		SubScene subSceneAutoFindPath = new SubScene(btnAutoFindPath,150,30);
+
+		// Tao nut to mau do thi
+		ColoringButton ColoringButton = new ColoringButton(graphView);
+		ColoringButton.setText("Tô màu đồ thị");
+		SubScene subSceneColoring = new SubScene(ColoringButton,150,30);
+
+		// Tao nut to mau do thi
+		DFSButton<String, String> DFSButton = new DFSButton(stage, graphView);
+		DFSButton.setText("Tìm đường DFS");
+		SubScene subSceneDFS = new SubScene(DFSButton,150,30);
+
+		// Tao nut to mau do thi
+		Button BFSButton = new Button();
+		BFSButton.setText("Tìm đường BFS");
+		SubScene subSceneBFS = new SubScene(BFSButton,150,30);
+
+		// Tao nut thông tin đồ thị
+		Button InfoButton = new InfoButton();
+		InfoButton.setText("Thông tin nhóm");
+		SubScene subSceneInfo = new SubScene(InfoButton,150,30);
+
+
 
 		// Tao layout VBox
 		VBox buttonArea = new VBox(10);
-		buttonArea.getChildren().addAll(subSceneCircularPla, subSceneAutoPla, subSceneCaptureGP, subSceneInput, subSceneFindPath);
+		buttonArea.getChildren().addAll(subSceneInput, subSceneCaptureGP, subSceneRanPla, subSceneAutoPla, subSceneCircularPla, subSceneFindPath, subSceneAutoFindPath, subSceneColoring, subSceneDFS, subSceneBFS, subSceneInfo);
 		buttonArea.setAlignment(Pos.CENTER);
 
 		GridPane root = new GridPane();
@@ -110,38 +149,16 @@ public class Main extends Application {
 		subSceneGraphPanel.heightProperty().bind(test.heightProperty());
 		subSceneGraphPanel.widthProperty().bind(test.widthProperty());
 
-		
-		
-		
-		
-		
 		Scene scene = new Scene(root);
 		stage = new Stage();
 		stage.setTitle("Graph Visualization");
 		stage.setMinWidth(800);
 		stage.setMinHeight(700);
 		stage.setScene(scene);
-
-
-
-
-
-
-
-
-		
-
-//		stage.widthProperty().addListener(stageSizeListener);
-//		stage.heightProperty().addListener(stageSizeListener); 
-
-
 		stage.show();  
 		graphView.init();
 
 	}
-
-
-
 
 	public static void main(String[] args) {
 		launch(args);

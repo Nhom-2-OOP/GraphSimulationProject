@@ -2,6 +2,7 @@ package nhom2.graphview;
 
 import java.util.concurrent.TimeUnit;
 import javafx.scene.*;
+import nhom2.coloring.Coloring;
 import nhom2.graph.*;
 import nhom2.graphview.Edge.EdgeNode;
 import nhom2.graphview.Label.Label;
@@ -64,13 +65,15 @@ public class GraphPanel<V, E> extends Pane{
 	public Map<Edge<E, V>, EdgeNode<E,V>> edgeNodes;
 	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
 	
+	public boolean isColored = false;
+	
 	public AnimationTimer timer;
 	
 	private final double repulsionForce;
 	private final double attractionForce;
     private final double attractionScale;
     
-    private boolean edgesWithArrows;
+    public boolean edgesWithArrows;
     private boolean needLabel;
 	
     public GraphPanel(GraphEdgeList<V, E> theGraph) {
@@ -134,11 +137,11 @@ public class GraphPanel<V, E> extends Pane{
         initNodes();
         this.init();
         
-        this.start_automatic_layout();
+        //this.start_automatic_layout();
 	}
 	
 	private void runLayoutIteration() {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 10; i++) {
             resetForces();
             computeForces();
             updateForces();
@@ -347,6 +350,17 @@ public class GraphPanel<V, E> extends Pane{
                 this.getChildren().add(arrow);
             }
             edgeNodes.put(edge, graphEdge);
+    	}
+    }
+    public void setColor() {
+    	Coloring coloring = new Coloring();
+    	if(this.isColored==false) {
+    		coloring.greedyColoring(this.theGraph, this.vertexNodes);
+    		this.isColored=true;
+    	}
+    	else {
+    		coloring.returnColor(this.theGraph, this.vertexNodes);
+    		this.isColored=false;
     	}
     }
 }

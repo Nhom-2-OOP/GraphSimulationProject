@@ -46,6 +46,13 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		// DPT O(1)
 		return edges.values();
 	}
+	
+	public Collection<Vertex<V>> incidentVertex(Vertex<V> v) {
+		Collection<Vertex<V>> adjVertices = new ArrayList<Vertex<V>>();
+		for(Edge<E, V> i : this.incidentEdges(v))
+			adjVertices.add(this.opposite(v, i));
+        return adjVertices;
+	}
 
 	@Override
 	// DPT: O(n)
@@ -189,6 +196,12 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 			}
 		deleteList.removeAll(deleteList);
 		vertices.remove(v.element());
+	}
+	
+	public void TEST() {
+		for (Vertex v: this.adjList.get(this.vertices.get("A")).keySet()){
+			System.out.println(v.element());
+		}
 	}
 	
 }

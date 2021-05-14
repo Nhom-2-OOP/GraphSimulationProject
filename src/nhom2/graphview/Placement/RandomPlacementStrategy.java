@@ -17,6 +17,12 @@ public class RandomPlacementStrategy implements PlacementStrategy {
             
             double x = rand.nextDouble() * width;
             double y = rand.nextDouble() * height;
+            
+            if (x + 20 < width) x -= 20;
+            if (y + 20 < height) y -= 20;
+            
+            if (x - 20 <= 0) x += 20;
+            if (y - 20 <= 0) y += 20;
                         
             vertex.setPosition(x, y);
         }
