@@ -67,7 +67,8 @@ public class DFSButton<V, E> extends Button{
 				Edge<E,V> edge = graphView.theGraph.adjList.get(preVertex.get(currVertex)).get(currVertex);//
 				EdgeNode<E,V> edgeNode = graphView.edgeNodes.get(edge);
 				edgeNode.setStyle("-fx-stroke: blue");
-				edgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
+				if(graphView.theGraph.isDirected==true)
+					edgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
 				mark.put(currVertex, 1);
 
 			}
@@ -134,7 +135,8 @@ public class DFSButton<V, E> extends Button{
 		Edge<E,V> edge = graphView.theGraph.adjList.get(preVertexStep.get(currVertex)).get(currVertex);//
 		EdgeNode<E,V> edgeNode = graphView.edgeNodes.get(edge);
 		edgeNode.setStyle("-fx-stroke: blue");
-		edgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
+		if(graphView.theGraph.isDirected==true)
+			edgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
 		mark.put(currVertex, 1);
 	}
 	
