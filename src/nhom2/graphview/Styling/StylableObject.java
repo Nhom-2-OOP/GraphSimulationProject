@@ -1,6 +1,6 @@
 package nhom2.graphview.Styling;
 
-// Doi tuong nao la stylabe thi se co file css properties theo runtime
+// Doi tuong nao la stylable thi se co file css properties theo runtime
 
 public interface StylableObject {
 	public void setStyle(String css);

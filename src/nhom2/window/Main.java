@@ -3,6 +3,8 @@ package nhom2.window;
 import java.util.concurrent.TimeUnit;
 import javafx.scene.control.CheckBox;
 
+import java.awt.Window;
+import java.io.File;
 import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
@@ -22,110 +24,170 @@ import nhom2.button.FindPathButton;
 import nhom2.button.InputButton;
 import nhom2.graph.*;
 import nhom2.graphview.*;
+import javafx.scene.transform.Scale; 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Label;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 
 
 public class Main extends Application {
 	public static GraphEdgeList<String, String> g= build_sample_digraph();
 	public static GraphPanel<String, String> graphView;
-    @Override
-    public void start(Stage stage) {
-    	
-    	// Tao scene bieu dien do thi
-    	graphView = new GraphPanel<>(g);
-    	SubScene subSceneGraphPanel = new SubScene(graphView,600,600);
-    	graphView.init();
-        //graphView.start_automatic_layout();
-        
-        // Tao nut sap dinh theo vong tron
-    	CircularPlacementButton btnCircularPla = new CircularPlacementButton(graphView);
-    	btnCircularPla.setText("Sắp đỉnh theo vòng tròn");
-    	SubScene subSceneCircularPla = new SubScene(btnCircularPla,150,30);
-    	
-    	// Tao nut sap dinh tu dong
-    	AutoPlacementButton btnAutoPla = new AutoPlacementButton(graphView);
-    	btnAutoPla.setText("Sắp đỉnh tự động");
-    	SubScene subSceneAutoPla = new SubScene(btnAutoPla,150,30);
-    	
-    	// Tao nut luu anh do thi
-    	CaptureGraphPanel btnCaptureGP = new CaptureGraphPanel(subSceneGraphPanel, stage);
-    	btnCaptureGP.setText("Lưu ảnh đồ thị");
-    	SubScene subSceneCaptureGP = new SubScene(btnCaptureGP,150,30);
-    	
-    	// Tao nut input do thi
-    	InputButton btnInput = new InputButton(stage);
-    	btnInput.setText("Input đồ thị");
-    	SubScene subSceneInput = new SubScene(btnInput,150,30);
+	@Override
+	public void start(Stage stage) {
 
-    	// Tao nut tim duong di
-    	FindPathButton<String, String> btnFindPath = new FindPathButton(stage, graphView);
-    	btnFindPath.setText("Tìm đường đi");
-    	SubScene subSceneFindPath = new SubScene(btnFindPath,150,30);
+		// Tao scene bieu dien do thi
+		graphView = new GraphPanel<>(g);
+		SubScene subSceneGraphPanel = new SubScene(graphView, 600,600);  	
+		graphView.init();
 
-    	// Tao layout VBox
-    	VBox buttonArea = new VBox(10);
-    	buttonArea.getChildren().addAll(subSceneCircularPla, subSceneAutoPla, subSceneCaptureGP, subSceneInput, subSceneFindPath);
-    	buttonArea.setAlignment(Pos.CENTER);
+		// Tao nut sap dinh theo vong tron
+		CircularPlacementButton btnCircularPla = new CircularPlacementButton(graphView);
+		btnCircularPla.setText("Sắp đỉnh theo vòng tròn");
+		SubScene subSceneCircularPla = new SubScene(btnCircularPla,150,30); //size
 
-    	GridPane root = new GridPane();
-    	root.add(buttonArea, 0, 0);
-    	root.add(subSceneGraphPanel, 1, 0);
-    	root.setHgap(20);
-    	root.setPadding(new Insets(10, 10, 100, 10));
-    	
-    	Scene scene = new Scene(root, 650, 650);
-        stage = new Stage();
-        stage.setTitle("Graph Visualization");
-        stage.setMinHeight(800);
-        stage.setMinWidth(800);
-        stage.setScene(scene);
-        stage.show();  
-    }
+		// Tao nut sap dinh tu dong
+		AutoPlacementButton btnAutoPla = new AutoPlacementButton(graphView);
+		btnAutoPla.setText("Sắp đỉnh tự động");
+		SubScene subSceneAutoPla = new SubScene(btnAutoPla,150,30);
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+		// Tao nut luu anh do thi
+		CaptureGraphPanel btnCaptureGP = new CaptureGraphPanel(subSceneGraphPanel, stage);
+		btnCaptureGP.setText("Lưu ảnh đồ thị");
+		SubScene subSceneCaptureGP = new SubScene(btnCaptureGP,150,30);
 
-    private static GraphEdgeList<String, String> build_sample_digraph() {
+		// Tao nut input do thi
+		InputButton btnInput = new InputButton(stage);
+		btnInput.setText("Input đồ thị");
+		SubScene subSceneInput = new SubScene(btnInput,150,30);
 
-    	GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(true);
+		// Tao nut tim duong di
+		FindPathButton<String, String> btnFindPath = new FindPathButton(stage, graphView);
+		btnFindPath.setText("Tìm đường đi");
+		SubScene subSceneFindPath = new SubScene(btnFindPath,150,30);
 
-        g.insertEdge("A", "B", "AB1");
-        g.insertEdge("A", "C", "AC");
-        g.insertEdge("A", "G", "AG");
-        g.insertEdge("A", "H", "AH");    
-        g.insertEdge("A", "D", "AD");
-        
-        g.insertEdge("D", "E", "DE");
-        g.insertEdge("D", "F", "DF");
-        g.insertEdge("D", "I", "DI");
-        g.insertEdge("D", "J", "DJ");
-        
-//      g.insertEdge("AA", "BB", "AB1");
-        g.insertEdge("AA", "CC", "AC1");
-        g.insertEdge("AA", "GG", "AG1");
-        g.insertEdge("AA", "HH", "AH1");
-        
-        g.insertEdge("AA", "DD", "AD1");
-        
-        g.insertEdge("DD", "EE", "DE1");
-        g.insertEdge("DD", "FF", "DF1");
-        g.insertEdge("DD", "II", "DI1");
-        g.insertEdge("DD", "JJ", "DJ1");
-        
-        
-        g.insertEdge("BB", "B", "BBB1");
-        g.insertEdge("BB", "B", "BBB2");
-        g.insertEdge("B", "BB", "BBB3");
-        g.insertEdge("I", "BB", "ADD1");
-        g.insertEdge("I", "H", "HII");
-        g.insertEdge("C", "H", "HCII");
-        g.insertEdge("BB", "H", "BHBB");
-        
-        return g;
-    }
-    public static void setGraph(GraphEdgeList<String, String> NewGraph) {
-    	g = NewGraph;
-    	graphView.Renew(NewGraph, true); 
-    }
+		// Tao layout VBox
+		VBox buttonArea = new VBox(10);
+		buttonArea.getChildren().addAll(subSceneCircularPla, subSceneAutoPla, subSceneCaptureGP, subSceneInput, subSceneFindPath);
+		buttonArea.setAlignment(Pos.CENTER);
+
+		GridPane root = new GridPane();
+
+		//    	root.setHgap(20);
+		root.setPadding(new Insets(10, 10, 10, 10));
+
+		//row
+		int numRows = 1 ;
+		for (int i = 0 ; i < numRows ; i++) {
+			RowConstraints r = new RowConstraints();
+			r.setPercentHeight(100.0 / numRows);
+			r.setValignment(VPos.CENTER);
+			root.getRowConstraints().add(r);
+		}
+
+		// col 1
+		ColumnConstraints c = new ColumnConstraints();
+		c.setPercentWidth(15);
+		c.setHalignment(HPos.CENTER);
+		root.getColumnConstraints().add(c);
+		root.add(buttonArea, 0, 0);
+
+		//col 2
+		c = new ColumnConstraints();
+		c.setPercentWidth(85);
+		c.setHalignment(HPos.CENTER);
+		root.getColumnConstraints().add(c);
+		Pane test = new Pane(); 
+		root.add(test, 1, 0);
+		test.setPrefSize(500, 500);
+		test.getChildren().add(subSceneGraphPanel);
+		subSceneGraphPanel.heightProperty().bind(test.heightProperty());
+		subSceneGraphPanel.widthProperty().bind(test.widthProperty());
+
+		
+		
+		
+		
+		
+		Scene scene = new Scene(root);
+		stage = new Stage();
+		stage.setTitle("Graph Visualization");
+		stage.setMinWidth(800);
+		stage.setMinHeight(700);
+		stage.setScene(scene);
+
+
+
+
+
+
+
+
+		
+
+//		stage.widthProperty().addListener(stageSizeListener);
+//		stage.heightProperty().addListener(stageSizeListener); 
+
+
+		stage.show();  
+		graphView.init();
+
+	}
+
+
+
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+	private static GraphEdgeList<String, String> build_sample_digraph() {
+
+		GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(true);
+
+		g.insertEdge("A", "B", "AB1");
+		g.insertEdge("A", "C", "AC");
+		g.insertEdge("A", "G", "AG");
+		g.insertEdge("A", "H", "AH");    
+		g.insertEdge("A", "D", "AD");
+
+		g.insertEdge("D", "E", "DE");
+		g.insertEdge("D", "F", "DF");
+		g.insertEdge("D", "I", "DI");
+		g.insertEdge("D", "J", "DJ");
+
+		//      g.insertEdge("AA", "BB", "AB1");
+		g.insertEdge("AA", "CC", "AC1");
+		g.insertEdge("AA", "GG", "AG1");
+		g.insertEdge("AA", "HH", "AH1");
+
+		g.insertEdge("AA", "DD", "AD1");
+
+		g.insertEdge("DD", "EE", "DE1");
+		g.insertEdge("DD", "FF", "DF1");
+		g.insertEdge("DD", "II", "DI1");
+		g.insertEdge("DD", "JJ", "DJ1");
+
+
+		g.insertEdge("BB", "B", "BBB1");
+		g.insertEdge("BB", "B", "BBB2");
+		g.insertEdge("B", "BB", "BBB3");
+		g.insertEdge("I", "BB", "ADD1");
+		g.insertEdge("I", "H", "HII");
+		g.insertEdge("C", "H", "HCII");
+		g.insertEdge("BB", "H", "BHBB");
+		g.insertEdge("DD", "H", "1");
+		return g;
+	}
+	public static void setGraph(GraphEdgeList<String, String> NewGraph) {
+		g = NewGraph;
+		graphView.Renew(NewGraph, true); 
+	}
 }
 

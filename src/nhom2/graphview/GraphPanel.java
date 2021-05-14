@@ -38,6 +38,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Shape;
@@ -50,6 +51,9 @@ import java.net.URI;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+
+import javafx.scene.layout.ColumnConstraints;
+
 
 public class GraphPanel<V, E> extends Pane{
 	
@@ -113,6 +117,7 @@ public class GraphPanel<V, E> extends Pane{
                 runLayoutIteration();
             }
         };
+    
 	}
 	
 	public void Renew(GraphEdgeList<V, E> theGraph, boolean Label) {
