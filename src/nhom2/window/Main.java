@@ -21,6 +21,7 @@ import nhom2.button.AutoPlacementButton;
 import nhom2.button.CaptureGraphPanel;
 import nhom2.button.CircularPlacementButton;
 import nhom2.button.ColoringButton;
+import nhom2.button.DFSButton;
 import nhom2.button.FindPathButton;
 import nhom2.button.InfoButton;
 import nhom2.button.InputButton;
@@ -82,7 +83,7 @@ public class Main extends Application {
     	SubScene subSceneColoring = new SubScene(ColoringButton,150,30);
     	
     	// Tao nut to mau do thi
-    	Button DFSButton = new Button();
+    	DFSButton<String, String> DFSButton = new DFSButton(stage, graphView);
     	DFSButton.setText("Tìm đường DFS");
     	SubScene subSceneDFS = new SubScene(DFSButton,150,30);
     	
@@ -132,7 +133,7 @@ public class Main extends Application {
 
     private static GraphEdgeList<String, String> build_sample_digraph() {
 
-    	GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(false);
+    	GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(true);
 
         g.insertEdge("A", "B", "AB1");
         g.insertEdge("A", "C", "AC");

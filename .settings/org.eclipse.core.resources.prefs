@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//src/nhom2/button/AutoPlacementButton.java=UTF-8
 encoding//src/nhom2/button/CaptureGraphPanel.java=UTF-8
 encoding//src/nhom2/button/CircularPlacementButton.java=UTF-8
+encoding//src/nhom2/button/DFSButton.java=UTF-8
 encoding//src/nhom2/button/FindPathButton.java=UTF-8
 encoding//src/nhom2/button/input/InputController.java=UTF-8
 encoding//src/nhom2/coloring/Coloring.java=UTF-8

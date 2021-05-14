@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import nhom2.graphview.GraphPanel;
 import nhom2.graphview.Placement.RandomPlacementStrategy;
@@ -11,6 +12,7 @@ import nhom2.graphview.Placement.RandomPlacementStrategy;
 public class AutoPlacementButton extends Button{
 	private GraphPanel graph;
 	private boolean Check = false;
+	private Label lb = new Label("Sắp xếp đỉnh tự động");
 	public AutoPlacementButton(GraphPanel GraphView) {
 		this.graph = GraphView;
 		this.setOnAction(new EventHandler<ActionEvent>() {
