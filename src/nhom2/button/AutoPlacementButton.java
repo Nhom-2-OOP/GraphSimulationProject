@@ -10,6 +10,7 @@ import nhom2.graphview.Placement.RandomPlacementStrategy;
 
 public class AutoPlacementButton extends Button{
 	private GraphPanel graph;
+	private boolean Check = false;
 	public AutoPlacementButton(GraphPanel GraphView) {
 		this.graph = GraphView;
 		this.setOnAction(new EventHandler<ActionEvent>() {
@@ -23,9 +24,13 @@ public class AutoPlacementButton extends Button{
 					alert.showAndWait();
 				}
 				else {
-					graph.placementStrategy = new RandomPlacementStrategy();
-					graph.init();
-					graph.timer.start();
+					if (!Check) {
+						Check = true;
+						graph.timer.start();
+					} else {
+						Check = false;
+						graph.timer.stop();
+					}
 				}
 			}
 			

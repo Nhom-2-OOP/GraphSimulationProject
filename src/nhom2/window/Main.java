@@ -22,6 +22,7 @@ import nhom2.button.CaptureGraphPanel;
 import nhom2.button.CircularPlacementButton;
 import nhom2.button.ColoringButton;
 import nhom2.button.FindPathButton;
+import nhom2.button.InfoButton;
 import nhom2.button.InputButton;
 import nhom2.button.RandomPlacementButton;
 import nhom2.graph.*;
@@ -89,6 +90,11 @@ public class Main extends Application {
     	Button BFSButton = new Button();
     	BFSButton.setText("Tìm đường BFS");
     	SubScene subSceneBFS = new SubScene(BFSButton,150,30);
+    	
+    	// Tao nut thông tin đồ thị
+    	Button InfoButton = new InfoButton();
+    	InfoButton.setText("Thông tin nhóm");
+    	SubScene subSceneInfo = new SubScene(InfoButton,150,30);
 
     	// Tao layout VBox
     	GridPane buttonArea = new GridPane();
@@ -102,6 +108,7 @@ public class Main extends Application {
     	buttonArea.add(subSceneColoring, 0, 7);
     	buttonArea.add(subSceneDFS, 0, 8);
     	buttonArea.add(subSceneBFS, 0, 9);
+    	buttonArea.add(subSceneInfo, 0, 10);
     	buttonArea.setVgap(10);
 
     	GridPane root = new GridPane();
