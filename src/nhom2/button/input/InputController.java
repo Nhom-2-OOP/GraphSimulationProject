@@ -133,6 +133,7 @@ public class InputController  implements Initializable {
 	    	}
 	    }
 	    Main.setGraph(g);
+//	    Test.setGraph(g);
 	}
 	private static void informSuccess() {
 		Alert inform = new Alert(Alert.AlertType.INFORMATION);

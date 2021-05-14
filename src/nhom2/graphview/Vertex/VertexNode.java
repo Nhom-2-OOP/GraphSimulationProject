@@ -38,6 +38,10 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	
 	private final StyleImplementing styleProxy;
 	
+	public void setStyleProxy(String style) {
+		styleProxy.addStyleClass(style);;
+	}
+
 	public VertexNode(Vertex<T> v, double x, double y, double radius, boolean allowMove) {
         super(x, y, radius);
 

@@ -2,14 +2,15 @@ package nhom2.graph;
 
 import java.util.*;
 import nhom2.graph.*;
+import nhom2.window.*;
 
 public class GraphEdgeList<V,E> implements Graph<V,E>{
 
 	public Map<V, Vertex<V>> vertices;
 	public Map<E, Edge<E, V>> edges;
-	public Map<Vertex<V>, Map<Vertex<V>,Edge<E,V>>> adjList;
-	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
-	public boolean isDirected;
+	public Map<Vertex<V>, Map<Vertex<V>,Edge<E,V>>> adjList;		//cac canh ke 
+	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;		//so canh giua 2 dinh
+	public boolean isDirected;										//co huong hay vo huong								
 	
 	public GraphEdgeList(boolean isDirectedGraph) {
     	this.vertices = new HashMap<>();
@@ -47,13 +48,18 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		return edges.values();
 	}
 
-	@Override
-	// DPT: O(n)
+	
+	public Collection<Vertex<V>> incidentVertex(Vertex<V> v) {
+		Collection<Vertex<V>> adjVertices = new ArrayList<Vertex<V>>();
+		for(Edge<E, V> i : this.incidentEdges(v))
+			adjVertices.add(this.opposite(v, i));
+        return adjVertices;
+	}
 	public Collection<Edge<E, V>> incidentEdges(Vertex<V> v) {	   
 		// DPT O(1)
         return adjList.get(v).values();
 	}
-
+//	List<Vertex<V>> vertexes = new ArrayList<>(this.VertexList());
 	@Override
 	public Vertex<V> opposite(Vertex<V> v, Edge<E, V> e) {
 		// DPT O(1)
@@ -83,6 +89,7 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		}
 		
 	}
+	
 
 	@Override
 	public Vertex<V> insertVertex(V vElement) {
@@ -135,13 +142,13 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 	public Edge<E, V> insertEdge(V vElement1, V vElement2, E edgeElement) {
 		// DPT O(1)
 		if(!vertices.containsKey(vElement1)) this.insertVertex(vElement1);
-		if(!vertices.containsKey(vElement2)) this.insertVertex(vElement2);
-		MyVertex outVertex = (MyVertex)vertices.get(vElement1);
+		if(!vertices.containsKey(vElement2)) this.insertVertex(vElement2);	//Neu chua co diem thi them vao
+		MyVertex outVertex = (MyVertex)vertices.get(vElement1);				//Khai bao ra 2 diem
         MyVertex inVertex = (MyVertex)vertices.get(vElement2);
         
-        if (!this.isDirected && adjList.get(outVertex).get(inVertex) != null) return null;
+        if (!this.isDirected && adjList.get(outVertex).get(inVertex) != null) return null;	//kiem tra xem co huong hay vo huong
         
-        MyEdge newEdge = new MyEdge(edgeElement, outVertex, inVertex);
+        MyEdge newEdge = new MyEdge(edgeElement, outVertex, inVertex);		// Khai bao canh
         if (NumOfEdge.get(outVertex).get(inVertex) == null) {
         	Integer NewNum = new Integer(1);
         	NumOfEdge.get(outVertex).put(inVertex, NewNum);
@@ -153,12 +160,12 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
         	NumOfEdge.get(inVertex).put(outVertex, NewNum);
         }
         
-        adjList.get(outVertex).put(inVertex, newEdge);
+        adjList.get(outVertex).put(inVertex, newEdge);			//Day diem vao do thi
         if (!this.isDirected) {
         	adjList.get(inVertex).put(outVertex, newEdge);
         }
 
-        edges.put(edgeElement, newEdge);
+        edges.put(edgeElement, newEdge);						//Day canh vao do thi
 
         return newEdge;
 	}
@@ -171,5 +178,7 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		if (Pointer == null) return 0;
 		else return Pointer.intValue();
 	}
+	
+	
 	
 }

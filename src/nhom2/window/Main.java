@@ -3,6 +3,7 @@ package nhom2.window;
 import java.util.concurrent.TimeUnit;
 import javafx.scene.control.CheckBox;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
@@ -16,6 +17,7 @@ import javafx.stage.StageStyle;
 import nhom2.button.AutoPlacementButton;
 import nhom2.button.CaptureGraphPanel;
 import nhom2.button.CircularPlacementButton;
+import nhom2.button.ColoringButton;
 import nhom2.button.InputButton;
 import nhom2.graph.*;
 import nhom2.graphview.*;
@@ -53,9 +55,14 @@ public class Main extends Application {
     	ButtonFour.setText("Input đồ thị");
     	SubScene subSceneFive = new SubScene(ButtonFour,150,30);
     	
+    	// Tao nut to mau do thi
+    	ColoringButton ButtonFive = new ColoringButton(graphView);
+    	ButtonFive.setText("Tô màu đồ thị");
+    	SubScene subSceneSix = new SubScene(ButtonFive,150,30);
+    	
     	// Tao layout VBox
     	VBox root = new VBox(10);
-    	root.getChildren().addAll(subSceneOne, subSceneTwo, subSceneThree, subSceneFour, subSceneFive);
+    	root.getChildren().addAll(subSceneOne, subSceneTwo, subSceneThree, subSceneFour, subSceneFive, subSceneSix);
     	
     	Scene scene = new Scene(root, 521, 650);
         stage = new Stage();
@@ -91,7 +98,7 @@ public class Main extends Application {
         g.insertEdge("AA", "GG", "AG1");
         g.insertEdge("AA", "HH", "AH1");
         
-        g.insertEdge("AA", "DD", "AD1");
+        g.insertEdge("AAAAA", "DD", "AD1");
         
         g.insertEdge("DD", "EE", "DE1");
         g.insertEdge("DD", "FF", "DF1");
