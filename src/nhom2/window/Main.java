@@ -1,6 +1,8 @@
 package nhom2.window;
 
 import java.util.concurrent.TimeUnit;
+
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
 import java.util.Map;
@@ -18,6 +20,7 @@ import javafx.stage.StageStyle;
 import nhom2.button.AutoPlacementButton;
 import nhom2.button.CaptureGraphPanel;
 import nhom2.button.CircularPlacementButton;
+import nhom2.button.ColoringButton;
 import nhom2.button.FindPathButton;
 import nhom2.button.InputButton;
 import nhom2.button.RandomPlacementButton;
@@ -62,10 +65,30 @@ public class Main extends Application {
     	btnInput.setText("Input đồ thị");
     	SubScene subSceneInput = new SubScene(btnInput,150,30);
 
-    	// Tao nut tim duong di
+    	// Tao nut tu tim duong di
     	FindPathButton<String, String> btnFindPath = new FindPathButton(stage, graphView);
-    	btnFindPath.setText("Tìm đường đi");
+    	btnFindPath.setText("Tự đường đi");
     	SubScene subSceneFindPath = new SubScene(btnFindPath,150,30);
+    	
+    	// Tao nut tu dong tim duong di
+    	Button btnAutoFindPath = new Button();
+    	btnAutoFindPath.setText("Tự động tìm đường đi");
+    	SubScene subSceneAutoFindPath = new SubScene(btnAutoFindPath,150,30);
+    	
+    	// Tao nut to mau do thi
+    	ColoringButton ColoringButton = new ColoringButton(graphView);
+    	ColoringButton.setText("Tô màu đồ thị");
+    	SubScene subSceneColoring = new SubScene(ColoringButton,150,30);
+    	
+    	// Tao nut to mau do thi
+    	Button DFSButton = new Button();
+    	DFSButton.setText("Tìm đường DFS");
+    	SubScene subSceneDFS = new SubScene(DFSButton,150,30);
+    	
+    	// Tao nut to mau do thi
+    	Button BFSButton = new Button();
+    	BFSButton.setText("Tìm đường BFS");
+    	SubScene subSceneBFS = new SubScene(BFSButton,150,30);
 
     	// Tao layout VBox
     	GridPane buttonArea = new GridPane();
@@ -75,6 +98,10 @@ public class Main extends Application {
     	buttonArea.add(subSceneAutoPla, 0, 3);
     	buttonArea.add(subSceneCircularPla, 0, 4);
     	buttonArea.add(subSceneFindPath, 0, 5);
+    	buttonArea.add(subSceneAutoFindPath, 0, 6);
+    	buttonArea.add(subSceneColoring, 0, 7);
+    	buttonArea.add(subSceneDFS, 0, 8);
+    	buttonArea.add(subSceneBFS, 0, 9);
     	buttonArea.setVgap(10);
 
     	GridPane root = new GridPane();
@@ -98,12 +125,11 @@ public class Main extends Application {
 
     private static GraphEdgeList<String, String> build_sample_digraph() {
 
-    	GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(true);
+    	GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(false);
 
         g.insertEdge("A", "B", "AB1");
         g.insertEdge("A", "C", "AC");
-        g.insertEdge("A", "G", "AG");
-        g.insertEdge("A", "H", "AH");    
+        g.insertEdge("A", "G", "AG");    
         g.insertEdge("A", "D", "AD");
         
         g.insertEdge("D", "E", "DE");
@@ -129,7 +155,6 @@ public class Main extends Application {
         g.insertEdge("B", "BB", "BBB3");
         g.insertEdge("I", "BB", "ADD1");
         g.insertEdge("I", "H", "HII");
-        g.insertEdge("C", "H", "HCII");
         g.insertEdge("BB", "H", "BHBB");
         g.insertEdge("B", "GG", "BHBB1");
         

@@ -2,6 +2,7 @@ package nhom2.graphview;
 
 import java.util.concurrent.TimeUnit;
 import javafx.scene.*;
+import nhom2.coloring.Coloring;
 import nhom2.graph.*;
 import nhom2.graphview.Edge.EdgeNode;
 import nhom2.graphview.Label.Label;
@@ -59,6 +60,8 @@ public class GraphPanel<V, E> extends Pane{
 	public Map<Vertex<V>, VertexNode<V>> vertexNodes;
 	public Map<Edge<E, V>, EdgeNode<E,V>> edgeNodes;
 	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
+	
+	public boolean isColored = false;
 	
 	public AnimationTimer timer;
 	
@@ -342,6 +345,17 @@ public class GraphPanel<V, E> extends Pane{
                 this.getChildren().add(arrow);
             }
             edgeNodes.put(edge, graphEdge);
+    	}
+    }
+    public void setColor() {
+    	Coloring coloring = new Coloring();
+    	if(this.isColored==false) {
+    		coloring.greedyColoring(this.theGraph, this.vertexNodes);
+    		this.isColored=true;
+    	}
+    	else {
+    		coloring.returnColor(this.theGraph, this.vertexNodes);
+    		this.isColored=false;
     	}
     }
 }

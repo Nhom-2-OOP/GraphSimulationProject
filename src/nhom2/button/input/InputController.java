@@ -72,7 +72,7 @@ public class InputController  implements Initializable {
 	}
 	@FXML
 	private void inputFromExternal(ActionEvent e) {
-		char [] data = new char [10000];
+		char [] data = new char [100000];
 		boolean isOpened = true;
 		try {
 			FileChooser fileChooser = new FileChooser();
