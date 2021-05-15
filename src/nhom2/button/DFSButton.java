@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 
 import nhom2.graph.*;
 import nhom2.graphview.*;
+import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Edge.EdgeNode;
 import nhom2.graphview.Vertex.VertexNode;
 
@@ -65,7 +66,7 @@ public class DFSButton<V, E> extends Button{
 				VertexNode<V> currVertexNode = graphView.vertexNodes.get(currVertex);
 				currVertexNode.setStyle("-fx-fill: red");
 				Edge<E,V> edge = graphView.theGraph.adjList.get(preVertex.get(currVertex)).get(currVertex);//
-				EdgeNode<E,V> edgeNode = graphView.edgeNodes.get(edge);
+				EdgeLine<E,V> edgeNode = graphView.edgeNodes.get(edge);
 				edgeNode.setStyle("-fx-stroke: blue");
 				if(graphView.theGraph.isDirected==true)
 					edgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
@@ -106,9 +107,8 @@ public class DFSButton<V, E> extends Button{
 	
 	private Map<Vertex<V>, Vertex<V>> preVertexStep = new HashMap();//
 	private Stack<Vertex<V>> stackStep = new Stack<>();
+	private Vertex<V> tmpnext;
 	private void DFSstep(Vertex<V> startVertex, GraphPanel<V, E> graphView) {
-		Vertex<V> tempstack[] = new Vertex[1000];//
-		int i=1;
 		Vertex<V> currVertex = startVertex;
 		Vertex<V> tmpcurr = currVertex;
 //		VertexNode<V> currVertexNode = graphView.vertexNodes.get(currVertex);
@@ -122,22 +122,19 @@ public class DFSButton<V, E> extends Button{
 			if(mark.get(currVertex).intValue()==0) {
 				preVertexStep.put(currVertex, tmpcurr);
 				stackStep.push(currVertex);
-//				tempstack[i]= currVertex;
-//				i++;
 			}			
 		}
-//		for(int j=i-1; j>=1;j--)
-//			stackStep.push(tempstack[j]);
+
 		currVertex = stackStep.peek();
-//		stackStep.pop();
 		VertexNode<V> currVertexNode = graphView.vertexNodes.get(currVertex);
 		currVertexNode.setStyle("-fx-fill: red");
 		Edge<E,V> edge = graphView.theGraph.adjList.get(preVertexStep.get(currVertex)).get(currVertex);//
-		EdgeNode<E,V> edgeNode = graphView.edgeNodes.get(edge);
+		EdgeLine<E,V> edgeNode = graphView.edgeNodes.get(edge);
 		edgeNode.setStyle("-fx-stroke: blue");
 		if(graphView.theGraph.isDirected==true)
 			edgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
-		mark.put(currVertex, 1);
+		tmpnext = currVertex;
+		stackStep.pop();
 	}
 	
 	public DFSButton(Stage stg, GraphPanel<V, E> graphView) {
@@ -232,9 +229,12 @@ public class DFSButton<V, E> extends Button{
 			public void handle(ActionEvent event) {
 				if(stackStep.isEmpty()) {
 					lb.setText("Done!");
+					next.setVisible(false);
 				}
-				Vertex<V> currVertex = stackStep.peek();
-				stackStep.pop();
+//				Vertex<V> currVertex = stackStep.peek();
+//				stackStep.pop();
+				Vertex<V> currVertex = tmpnext;
+				stackStep.remove(currVertex);
 				VertexNode<V> currVertexNode = graphView.vertexNodes.get(currVertex);
 				currVertexNode.setStyle("-fx-fill: red");
 				DFSstep(currVertex,graphView);
@@ -247,13 +247,14 @@ public class DFSButton<V, E> extends Button{
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				lb.setText("");
+				next.setVisible(false);
 				for (VertexNode<V> tmp : graphView.vertexNodes.values())
 					tmp.setStyle("-fx-fill: #96d1cd");
-				for (EdgeNode<E, V> tmp : graphView.edgeNodes.values()) {
+				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
 					tmp.setStyle("-fx-stroke: #45597e");
-					tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+					if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
 				}
-				
+				reset.setVisible(false);
 			}
 			
 		});

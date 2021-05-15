@@ -22,7 +22,7 @@ import nhom2.button.CaptureGraphPanel;
 import nhom2.button.CircularPlacementButton;
 import nhom2.button.ColoringButton;
 import nhom2.button.DFSButton;
-import nhom2.button.FindAllPaths;
+import nhom2.button.AutoFindPaths;
 import nhom2.button.FindPathButton;
 import nhom2.button.InfoButton;
 import nhom2.button.InputButton;
@@ -74,7 +74,7 @@ public class Main extends Application {
     	SubScene subSceneFindPath = new SubScene(btnFindPath,150,30);
     	
     	// Tao nut tu dong tim duong di
-    	Button btnAutoFindPath = new FindAllPaths<String, String>(graphView);
+    	Button btnAutoFindPath = new AutoFindPaths<String, String>(graphView);
     	btnAutoFindPath.setText("Tự động tìm đường đi");
     	SubScene subSceneAutoFindPath = new SubScene(btnAutoFindPath,150,30);
     	

@@ -16,6 +16,7 @@ public class CircularPlacementButton extends Button{
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				graph.timer.stop();
+				AutoPlacementButton.Check = false;
 				graph.placementStrategy = new CircularSortedPlacementStrategy();
 				graph.init();
 			}

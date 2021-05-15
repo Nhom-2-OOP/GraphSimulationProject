@@ -11,7 +11,7 @@ import nhom2.graphview.Placement.RandomPlacementStrategy;
 
 public class AutoPlacementButton extends Button{
 	private GraphPanel graph;
-	private boolean Check = false;
+	public static boolean Check = false;
 	private Label lb = new Label("Sắp xếp đỉnh tự động");
 	public AutoPlacementButton(GraphPanel GraphView) {
 		this.graph = GraphView;

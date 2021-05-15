@@ -16,6 +16,7 @@ public class RandomPlacementButton extends Button{
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				graph.timer.stop();
+				AutoPlacementButton.Check = false;
 				//System.out.println(graph.theGraph.vertices.size());
 				graph.placementStrategy = new RandomPlacementStrategy();
 				graph.init();

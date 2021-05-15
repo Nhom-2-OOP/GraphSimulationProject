@@ -29,11 +29,12 @@ import nhom2.graph.Edge;
 import nhom2.graph.GraphEdgeList;
 import nhom2.graph.Vertex;
 import nhom2.graphview.*;
+import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Edge.EdgeNode;
 import nhom2.graphview.Placement.RandomPlacementStrategy;
 import nhom2.graphview.Vertex.VertexNode;
 
-public class FindAllPaths<V,E> extends Button {  
+public class AutoFindPaths<V,E> extends Button {  
 	protected ArrayList<String> Traces = new ArrayList<>();   //  1 dãy các đường đi trong đồ thị
 	protected ArrayList<String> minPath = new ArrayList<>();
 	protected HashMap<String, ArrayList<String>> Adj = new HashMap<>();   // Danh sách các cạnh kề
@@ -44,11 +45,12 @@ public class FindAllPaths<V,E> extends Button {
 	protected String finish;
 	protected int numPath;
 	protected int posPath;
-	public FindAllPaths(GraphPanel graphView) {   
+	public AutoFindPaths(GraphPanel graphView) {   
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
 				graph = graphView.theGraph;
+				Adj.clear();
 				Stage stage = new Stage();
 				GridPane grid = new GridPane();
 				TextField begin = new TextField(); 
@@ -72,25 +74,12 @@ public class FindAllPaths<V,E> extends Button {
 				OK2.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent arg0) {
-						SetUp();
-						begin.commitValue();
-						end.commitValue();
-						start = begin.getText();
-						finish = end.getText();
-						if (start == "" || finish == "") {
-							Alert inform = new Alert(Alert.AlertType.INFORMATION);
-				    		inform.setHeaderText("Chưa nhập tên đỉnh!!!");
-				    		inform.showAndWait();
-						}
-						else if (start.equals(finish)) {
-							Alert inform = new Alert(Alert.AlertType.INFORMATION);
-				    		inform.setHeaderText("Hai đỉnh trùng nhau! Hãy nhập lại!");
-				    		inform.showAndWait();
-						}
+						SetUp(begin, end);
+						if (start == "" || finish == "") message ("Chưa nhập tên đỉnh!!!");
+						else if (start.equals(finish)) message ("Hai đỉnh trùng nhau! Hãy nhập lại!");
 						else if (checkVertexExist(start, finish) ) {
 							minPath.clear();
-							SetUp(start, finish);
-							BFS(start,finish);	
+							BFS();
 							paths.clear();
 							if (minPath.size() > 1) {
 								paths.appendText("Đường đi ngắn nhất giữa hai đỉnh : \n");
@@ -99,42 +88,21 @@ public class FindAllPaths<V,E> extends Button {
 								Reset(graphView);
 								changeColor(graphView, minPath);
 							}
-							else {
-								Alert inform = new Alert(Alert.AlertType.INFORMATION);
-					    		inform.setHeaderText("Không có đường đi giữa hai đỉnh!!!");
-					    		inform.showAndWait();
-							}
+							else message ("Không có đường đi giữa hai đỉnh!!!");
 						}
-						else {
-							Alert inform = new Alert(Alert.AlertType.INFORMATION);
-				    		inform.setHeaderText("Đỉnh nhập vào không tồn tại! \nVui lòng nhập lại");
-				    		inform.showAndWait();
-						}
+						else message ("Đỉnh nhập vào không tồn tại! \nVui lòng nhập lại");
 					}
 				});
 				OK1.setText("Select");
 				OK1.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent arg0) {
-						SetUp();
-						begin.commitValue();
-						end.commitValue();
-						start = begin.getText();
-						finish = end.getText();
-						if (start == "" || finish == "") {
-							Alert inform = new Alert(Alert.AlertType.INFORMATION);
-				    		inform.setHeaderText("Chưa nhập tên đỉnh!!!");
-				    		inform.showAndWait();
-						}
-						else if (start.equals(finish)) {
-							Alert inform = new Alert(Alert.AlertType.INFORMATION);
-				    		inform.setHeaderText("Hai đỉnh trùng nhau! Hãy nhập lại!");
-				    		inform.showAndWait();
-						}
+						SetUp(begin, end);					
+						if (start == "" || finish == "") message ("Chưa nhập tên đỉnh!!!");
+						else if (start.equals(finish)) message ("Hai đỉnh trùng nhau! Hãy nhập lại!");
 						else if (checkVertexExist(start, finish) ) {
 							result.clear();
 							Reset(graphView);
-							SetUp(start, finish);
 							Find(start,finish);	
 							paths.clear();
 							if (result.size() != 0 ) {
@@ -163,17 +131,9 @@ public class FindAllPaths<V,E> extends Button {
 									}
 								});
 							}
-							else {
-								Alert inform = new Alert(Alert.AlertType.INFORMATION);
-					    		inform.setHeaderText("Không có đường đi giữa hai đỉnh!!!");
-					    		inform.showAndWait();
-							}
+							else message ("Không có đường đi giữa hai đỉnh!!!");
 						}
-						else {
-							Alert inform = new Alert(Alert.AlertType.INFORMATION);
-				    		inform.setHeaderText("Đỉnh nhập vào không tồn tại! \nVui lòng nhập lại");
-				    		inform.showAndWait();
-						}
+						else message ("Đỉnh nhập vào không tồn tại! \nVui lòng nhập lại");
 					}
 				});
 				
@@ -207,7 +167,11 @@ public class FindAllPaths<V,E> extends Button {
 			}
 		});		
 	}
-	public void SetUp () {
+	public void SetUp (TextField text1, TextField text2) {
+		text1.commitValue();
+		text2.commitValue();
+		start = text1.getText();
+		finish = text2.getText();
 		Set<Vertex<String>> set = graph.adjList.keySet();
         for (Vertex<String> key : set) {
         	ArrayList<String> list = new ArrayList<>();
@@ -217,19 +181,13 @@ public class FindAllPaths<V,E> extends Button {
         	String tmp = key.element();
         	Adj.put(tmp, list);
         	checked.put(tmp, true);
+        	Traces.clear();
+    		Traces.add(start);
+            checked.replace(start, false);
         }
-	}
-	public void SetUp (String start, String end) {
-		Traces.clear();
-		Traces.add(start);
-        checked.replace(start, false);
 	}
 	public void Find (String start, String end) {
-        if (Adj.size() > 20) {
-        	Alert inform = new Alert(Alert.AlertType.INFORMATION);
-    		inform.setHeaderText("Số đỉnh lớn có thể tốn rất nhiều thời gian!!!");
-    		inform.showAndWait();
-        }
+        if (Adj.size() > 20) message("Số đỉnh lớn có thể tốn rất nhiều thời gian!!!");
         TryFind (start, end);
         numPath = result.size();
 	}
@@ -257,47 +215,40 @@ public class FindAllPaths<V,E> extends Button {
 		}
 	}  
 	
-	public void BFS (String start, String end) {
+	public void BFS () {
+		ArrayList<String> BFS = new ArrayList<>();
 		HashMap<String, String> parent = new HashMap<>();
-		parent.put(start, null);
-		minPath.add(start);
 		ArrayList<String> minPathOp = new ArrayList<>();
-        ArrayList<String> parents = new ArrayList<>();
-        ArrayList<String> children = new ArrayList<>();
-        parents.add(start);
-        boolean breaken = false;
-        do {
-        	for (int i = 0; i< parents.size(); i++) {
-        		String tmp1 = parents.get(i);
-        		for (int j = 0; j < Adj.get(tmp1).size(); j++) {
-        			String tmp2 = Adj.get(tmp1).get(j);
-        			if (checked.get(tmp2) == true) {
-        				checked.replace(tmp2, false);
-        				children.add(tmp2);
-        				parent.put(tmp2, tmp1);
-        				if (tmp2.equals(end)) {
-        					while (parent.get(tmp2) != null) {
-        						minPathOp.add(tmp2);
-        						tmp2 = parent.get(tmp2);
-        					}
-        					breaken = true;
-        					break;
-        				}
-        			}
-        		}
-        	}
-        	if (breaken == true) break;
-        	parents.clear();
-        	if (children.size() != 0) parents = (ArrayList<String>)children.clone();
-        	else break;
-        	children.clear();
-        }
-        while (parents.size() != 0);
-        if (minPathOp.size() != 0) for (int i = minPathOp.size() - 1; i>= 0; i--) minPath.add(minPathOp.get(i)); 
-	}  
+		minPath.add(start);
+		BFS.add(start);
+		int index = 0;
+		boolean breaken = false;
+		while (index < BFS.size()) {
+			String tmp1 = BFS.get(index);
+			for (int i = 0; i < Adj.get(tmp1).size(); i++) {
+				String tmp2 = Adj.get(tmp1).get(i);
+				if (checked.get(tmp2) == true) {
+					BFS.add(tmp2);
+					checked.replace(tmp2,false);
+					parent.put(tmp2,tmp1);
+					if (tmp2.equals(finish)) {
+						while (parent.get(tmp2) != null) {
+    						minPathOp.add(tmp2);
+    						tmp2 = parent.get(tmp2);
+    					}
+    					breaken = true;
+    					break;
+					}
+				}
+			}
+			if (breaken == true) break;
+			index++;
+		}
+        if (minPathOp.size() != 0) for (int i = minPathOp.size() - 1; i>= 0; i--) minPath.add(minPathOp.get(i));
+	}
 	
 	public void changeColor (GraphPanel<V, E> graphView, ArrayList<String> adj) {
-		// Thay đổi màu đỉnh đầu
+		// Thay đổi màu đỉnh bắt đầu
 		String input = adj.get(0);
 		Vertex<V> currentVertex = graphView.theGraph.vertices.get(input);
 		VertexNode<V> currentVertexNode = graphView.vertexNodes.get(currentVertex);
@@ -307,13 +258,13 @@ public class FindAllPaths<V,E> extends Button {
 			Vertex<V> inputVertex = graphView.theGraph.vertices.get(input);
 			VertexNode<V> inputVertexNode = graphView.vertexNodes.get(inputVertex);
 			Edge<E, V> inputEdge = graphView.theGraph.adjList.get(currentVertex).get(inputVertex);
-			EdgeNode<E, V> inputEdgeNode = graphView.edgeNodes.get(inputEdge);
+			EdgeLine<E, V> inputEdgeNode = graphView.edgeNodes.get(inputEdge);
 
 			// thay đổi màu đỉnh và cạnh			
 			if (i < adj.size() -1) inputVertexNode.setStyle("-fx-fill: yellow ");  
 			else inputVertexNode.setStyle("-fx-fill: red ");  
 			inputEdgeNode.setStyle("-fx-stroke: blue");
-			inputEdgeNode.getAttachedArrow().setStyle("-fx-stroke: blue "); 
+			if (graphView.edgesWithArrows) inputEdgeNode.getAttachedArrow().setStyle("-fx-stroke: blue "); 
 			currentVertex = inputVertex;
 		}
 	}
@@ -340,9 +291,15 @@ public class FindAllPaths<V,E> extends Button {
 	public void Reset(GraphPanel<V,E> graphView) {
 		for (VertexNode<V> tmp : graphView.vertexNodes.values())
 			tmp.setStyle("-fx-fill: #96d1cd");
-		for (EdgeNode<E, V> tmp : graphView.edgeNodes.values()) {
+		for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
 			tmp.setStyle("-fx-stroke: #45597e");
-			tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+			if (graphView.edgesWithArrows) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
 		}
+	}
+	
+	public void message (String s) {
+		Alert inform = new Alert(Alert.AlertType.INFORMATION);
+		inform.setHeaderText(s);
+		inform.showAndWait();
 	}
 }
