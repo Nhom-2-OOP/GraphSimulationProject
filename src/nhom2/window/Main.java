@@ -1,16 +1,6 @@
 package nhom2.window;
 
-import java.util.concurrent.TimeUnit;
-
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-
-import java.awt.Window;
-import java.io.File;
-import java.util.Map;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import nhom2.button.AutoPlacementButton;
 import nhom2.button.CaptureGraphPanel;
 import nhom2.button.CircularPlacementButton;
@@ -30,12 +19,6 @@ import nhom2.button.InputButton;
 import nhom2.button.RandomPlacementButton;
 import nhom2.graph.*;
 import nhom2.graphview.*;
-import javafx.scene.transform.Scale; 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Label;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.geometry.HPos;
