@@ -2,8 +2,10 @@ package nhom2.window;
 
 import javafx.scene.control.Button;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.layout.*;
@@ -19,18 +21,21 @@ import nhom2.button.FindPathButton;
 import nhom2.button.InfoButton;
 import nhom2.button.InputButton;
 import nhom2.button.RandomPlacementButton;
+import nhom2.button.buttonAreaVBox;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 
 
 public class Main extends Application {
 	public static GraphEdgeList<String, String> g= build_sample_digraph();
-	public static GraphPanel<String, String> graphView;
-
+	public static GraphPanel<String, String> graphView;	
+	public static Node NodeButtonArea;
+	
 	@Override
 	public void start(Stage stage) {
 
@@ -39,93 +44,15 @@ public class Main extends Application {
     	SubScene subSceneGraphPanel = new SubScene(graphView,800,600);
     	graphView.init();
         //graphView.start_automatic_layout();
-        
-    	//Tap nut sap xep dinh ngau nhien
-    	RandomPlacementButton btnRanPla = new RandomPlacementButton(graphView);
-    	btnRanPla.setText("Sắp đỉnh ngẫu nhiên");
-    	SubScene subSceneRanPla = new SubScene(btnRanPla,150,30);
-    	
-        // Tao nut sap dinh theo vong tron
-    	CircularPlacementButton btnCircularPla = new CircularPlacementButton(graphView);
-    	btnCircularPla.setText("Sắp đỉnh theo vòng tròn");
-    	SubScene subSceneCircularPla = new SubScene(btnCircularPla,150,30);
-    	
-    	// Tao nut sap dinh tu dong
-    	AutoPlacementButton btnAutoPla = new AutoPlacementButton(graphView);
-    	btnAutoPla.setText("Sắp đỉnh tự động");
-    	SubScene subSceneAutoPla = new SubScene(btnAutoPla,150,30);
-    	
-    	// Tao nut luu anh do thi
-    	CaptureGraphPanel btnCaptureGP = new CaptureGraphPanel(subSceneGraphPanel, stage);
-    	btnCaptureGP.setText("Lưu ảnh đồ thị");
-    	SubScene subSceneCaptureGP = new SubScene(btnCaptureGP,150,30);
-    	
-    	// Tao nut input do thi
-    	InputButton btnInput = new InputButton(stage);
-    	btnInput.setText("Input đồ thị");
-    	SubScene subSceneInput = new SubScene(btnInput,150,30);
-
-    	// Tao nut tu tim duong di
-    	FindPathButton<String, String> btnFindPath = new FindPathButton(stage, graphView);
-    	btnFindPath.setText("Tự tìm đường đi");
-    	SubScene subSceneFindPath = new SubScene(btnFindPath,150,30);
-    	
-    	// Tao nut tu dong tim duong di
-    	Button btnAutoFindPath = new AutoFindPaths<String, String>(graphView);
-    	btnAutoFindPath.setText("Tự động tìm đường đi");
-    	SubScene subSceneAutoFindPath = new SubScene(btnAutoFindPath,150,30);
-    	
-    	// Tao nut to mau do thi
-    	ColoringButton ColoringButton = new ColoringButton(graphView);
-    	ColoringButton.setText("Tô màu đồ thị");
-    	SubScene subSceneColoring = new SubScene(ColoringButton,150,30);
-    	
-    	// Tao nut to mau do thi
-    	DFSButton<String, String> DFSButton = new DFSButton(stage, graphView);
-    	DFSButton.setText("Tìm đường DFS");
-    	SubScene subSceneDFS = new SubScene(DFSButton,150,30);
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	// Tao nut to mau do thi
-    	BFSButton<String, String> BFSButton = new BFSButton(stage, graphView);
-    	BFSButton.setText("Tìm đường BFS");
-    	SubScene subSceneBFS = new SubScene(BFSButton,150,30);
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	// Tao nut thông tin đồ thị
-    	Button InfoButton = new InfoButton();
-    	InfoButton.setText("Thông tin nhóm");
-    	SubScene subSceneInfo = new SubScene(InfoButton,150,30);
-
-
-
-		// Tao layout VBox
-		VBox buttonArea = new VBox(10);
-		buttonArea.getChildren().addAll(subSceneInput, subSceneCaptureGP, subSceneRanPla, subSceneAutoPla, subSceneCircularPla, subSceneFindPath, subSceneAutoFindPath, subSceneColoring, subSceneDFS, subSceneBFS, subSceneInfo);
-		buttonArea.setAlignment(Pos.CENTER);
-
 		GridPane root = new GridPane();
-
-		//    	root.setHgap(20);
+        	
+		
+		//VBox
+		VBox buttonArea = new buttonAreaVBox().area(graphView, subSceneGraphPanel, stage, root);
+		
+		
+//		GridPane root = new GridPane();
+		root.setHgap(10);
 		root.setPadding(new Insets(10, 10, 10, 10));
 
 		//row
@@ -139,22 +66,24 @@ public class Main extends Application {
 
 		// col 1
 		ColumnConstraints c = new ColumnConstraints();
-		c.setPercentWidth(15);
+//		c.setPercentWidth(15);
+		c.setPrefWidth(150);
 		c.setHalignment(HPos.CENTER);
 		root.getColumnConstraints().add(c);
 		root.add(buttonArea, 0, 0);
-
+			
 		//col 2
 		c = new ColumnConstraints();
 		c.setPercentWidth(85);
 		c.setHalignment(HPos.CENTER);
 		root.getColumnConstraints().add(c);
-		Pane test = new Pane(); 
-		root.add(test, 1, 0);
-		test.setPrefSize(500, 500);
-		test.getChildren().add(subSceneGraphPanel);
-		subSceneGraphPanel.heightProperty().bind(test.heightProperty());
-		subSceneGraphPanel.widthProperty().bind(test.widthProperty());
+		Pane graphPane = new Pane(); 
+		root.add(graphPane, 1, 0);
+//		root.setHgrow(graphPane, Priority.ALWAYS);
+		graphPane.setPrefSize(500, 500);
+		graphPane.getChildren().add(subSceneGraphPanel);
+		subSceneGraphPanel.heightProperty().bind(graphPane.heightProperty());
+		subSceneGraphPanel.widthProperty().bind(graphPane.widthProperty());
 
 		Scene scene = new Scene(root);
 		stage = new Stage();
@@ -163,12 +92,22 @@ public class Main extends Application {
 		stage.setMinHeight(700);
 		stage.setScene(scene);
 		stage.show();  
+		
+		NodeButtonArea = root.getChildren().get(0);
+		root.setManaged(false);
+//		root.getChildren().remove(0);
+	}
 
+	public static Node getNodeButtonArea() {
+		return NodeButtonArea;
 	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	
+	
 
 	private static GraphEdgeList<String, String> build_sample_digraph() {
 
@@ -208,6 +147,8 @@ public class Main extends Application {
 		g.insertEdge("DD", "H", "1");
 		return g;
 	}
+	
+
 	public static void setGraph(GraphEdgeList<String, String> NewGraph) {
 		g = NewGraph;
 		graphView.Renew(NewGraph, true); 
