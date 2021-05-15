@@ -85,10 +85,31 @@ public class Main extends Application {
     	DFSButton.setText("Tìm đường DFS");
     	SubScene subSceneDFS = new SubScene(DFSButton,150,30);
     	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     	// Tao nut to mau do thi
     	BFSButton<String, String> BFSButton = new BFSButton(stage, graphView);
     	BFSButton.setText("Tìm đường BFS");
     	SubScene subSceneBFS = new SubScene(BFSButton,150,30);
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     	
     	// Tao nut thông tin đồ thị
     	Button InfoButton = new InfoButton();
