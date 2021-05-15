@@ -32,8 +32,6 @@ import nhom2.graphview.Vertex.VertexNode;
 public class DFSButton<V, E> extends Button{
 	private Stage stage;
 	protected Scene View;
-//	private Vertex<V> startVertex;
-//	private Vertex<V> currVertex;
 	Map<Vertex<V>,Integer> mark = new HashMap();
 	
 	private void DFSUtil(Vertex<V> currVertex, GraphPanel<V, E> graphView, Map<Vertex<V>,Integer> mark) {
@@ -46,9 +44,7 @@ public class DFSButton<V, E> extends Button{
 		VertexNode<V> startVertexNode = graphView.vertexNodes.get(currVertex);
 		startVertexNode.setStyle("-fx-fill: red");
 		Map<Vertex<V>, Edge<E, V>> tempstart = graphView.theGraph.adjList.get(currVertex);
-//		TreeMap<Vertex<V>,Edge<E, V>> tempstart1 = new TreeMap<>(tempstart);//
 		Set<Vertex<V>> adjStartVertex = tempstart.keySet();
-//		SortedSet<Vertex<V>> adjStartVertexSort = new TreeSet<>(adjStartVertex);//
 		Iterator iteratorStart = adjStartVertex.iterator();
 		while(iteratorStart.hasNext()) {
 			currVertex = (Vertex<V>) iteratorStart.next();
@@ -62,21 +58,21 @@ public class DFSButton<V, E> extends Button{
 			currVertex = stack.peek();
 			stack.pop();
 			Vertex<V> tmpcurr = currVertex;
+			//thay đổi màu của đỉnh và cạnh
 			if(mark.get(currVertex).intValue()==0) {
 				VertexNode<V> currVertexNode = graphView.vertexNodes.get(currVertex);
 				currVertexNode.setStyle("-fx-fill: red");
-				Edge<E,V> edge = graphView.theGraph.adjList.get(preVertex.get(currVertex)).get(currVertex);//
+				Edge<E,V> edge = graphView.theGraph.adjList.get(preVertex.get(currVertex)).get(currVertex);
 				EdgeLine<E,V> edgeNode = graphView.edgeNodes.get(edge);
 				edgeNode.setStyle("-fx-stroke: blue");
 				if(graphView.theGraph.isDirected==true)
 					edgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
 				mark.put(currVertex, 1);
-
 			}
+			
+			//push đỉnh kề của đỉnh vừa tô màu và stack
 			Map<Vertex<V>, Edge<E, V>> temp = graphView.theGraph.adjList.get(currVertex);
-//			TreeMap<Vertex<V>,Edge<E, V>> temp1 = new TreeMap<>(temp);
 			Set<Vertex<V>> adjVertex = temp.keySet();
-//			SortedSet<Vertex<V>> adjVertexSort = new TreeSet<>(adjVertex);//
 			Iterator iterator = adjVertex.iterator();
 			while(iterator.hasNext()) {
 				currVertex = (Vertex<V>) iterator.next();
@@ -89,30 +85,20 @@ public class DFSButton<V, E> extends Button{
 	}
 	private void DFS(Vertex<V> startVertex, GraphPanel<V, E> graphView) {
 		Map<Vertex<V>, VertexNode<V>> tmp = graphView.vertexNodes;
-//		TreeMap<Vertex<V>,VertexNode<V>> tmp1 = new TreeMap<>(tmp);
 		Set<Vertex<V>> vertex = tmp.keySet();
-//		SortedSet<Vertex<V>> vertexSort = new TreeSet<>(vertex);//
 		for(Vertex<V> iterator : vertex)
 			mark.put(iterator, 0);
 		Vertex<V> currVertex = startVertex;
 		DFSUtil(currVertex,graphView,mark);
-//		vertex.remove(currVertex);
-//		Iterator iterator = vertex.iterator();
-//		while(iterator.hasNext()) {
-//			currVertex =(Vertex<V>) iterator.next();
-//			if(mark.get(currVertex).intValue()==0)
-//				DFSUtil(currVertex,graphView,mark);
-//		}
 	}
 	
+	//phần hiển thị từng bước
 	private Map<Vertex<V>, Vertex<V>> preVertexStep = new HashMap();//
 	private Stack<Vertex<V>> stackStep = new Stack<>();
 	private Vertex<V> tmpnext;
 	private void DFSstep(Vertex<V> startVertex, GraphPanel<V, E> graphView) {
 		Vertex<V> currVertex = startVertex;
 		Vertex<V> tmpcurr = currVertex;
-//		VertexNode<V> currVertexNode = graphView.vertexNodes.get(currVertex);
-//		currVertexNode.setStyle("-fx-fill: red");
 		mark.put(currVertex, 1);
 		Map<Vertex<V>, Edge<E, V>> temp = graphView.theGraph.adjList.get(currVertex);
 		Set<Vertex<V>> adjVertex = temp.keySet();
@@ -137,6 +123,7 @@ public class DFSButton<V, E> extends Button{
 		stackStep.pop();
 	}
 	
+	//DFS button
 	public DFSButton(Stage stg, GraphPanel<V, E> graphView) {
 		GridPane grid = new GridPane();
 		Label lbStartVertex = new Label("Start Vertex:");
@@ -181,6 +168,7 @@ public class DFSButton<V, E> extends Button{
 			}
 		});
 		
+		//button hiển thị kết quả
 		finish.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -198,6 +186,7 @@ public class DFSButton<V, E> extends Button{
 			}
 		});
 		
+		//button hiển thị từng bước
 		step.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -230,9 +219,8 @@ public class DFSButton<V, E> extends Button{
 				if(stackStep.isEmpty()) {
 					lb.setText("Done!");
 					next.setVisible(false);
+					return;
 				}
-//				Vertex<V> currVertex = stackStep.peek();
-//				stackStep.pop();
 				Vertex<V> currVertex = tmpnext;
 				stackStep.remove(currVertex);
 				VertexNode<V> currVertexNode = graphView.vertexNodes.get(currVertex);
@@ -245,7 +233,6 @@ public class DFSButton<V, E> extends Button{
 		reset.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				lb.setText("");
 				next.setVisible(false);
 				for (VertexNode<V> tmp : graphView.vertexNodes.values())
