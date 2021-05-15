@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import nhom2.graph.*;
 import nhom2.graphview.*;
+import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Edge.EdgeNode;
 import nhom2.graphview.Vertex.VertexNode;
 
@@ -124,7 +125,7 @@ public class FindPathButton<V, E> extends Button{
 				// reset status graphPanel
 				for (VertexNode<V> tmp : graphView.vertexNodes.values())
 					tmp.setStyle("-fx-fill: #96d1cd");
-				for (EdgeNode<E, V> tmp : graphView.edgeNodes.values()) {
+				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
 					tmp.setStyle("-fx-stroke: #45597e");
 					if (graphView.edgesWithArrows)
 						tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
@@ -173,7 +174,7 @@ public class FindPathButton<V, E> extends Button{
 					Vertex<V> inputVertex = graphView.theGraph.vertices.get(input);
 					VertexNode<V> inputVertexNode = graphView.vertexNodes.get(inputVertex);
 					Edge<E, V> inputEdge = graphView.theGraph.adjList.get(currentVertex).get(inputVertex);
-					EdgeNode<E, V> inputEdgeNode = graphView.edgeNodes.get(inputEdge);
+					EdgeLine<E, V> inputEdgeNode = graphView.edgeNodes.get(inputEdge);
 					// thay đổi màu đỉnh và cạnh
 					inputVertexNode.setStyle("-fx-fill: yellow");
 					inputEdgeNode.setStyle("-fx-stroke: blue");
@@ -219,7 +220,7 @@ public class FindPathButton<V, E> extends Button{
 				// TODO Auto-generated method stub
 				for (VertexNode<V> tmp : graphView.vertexNodes.values())
 					tmp.setStyle("-fx-fill: #96d1cd");
-				for (EdgeNode<E, V> tmp : graphView.edgeNodes.values()) {
+				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
 					tmp.setStyle("-fx-stroke: #45597e");
 					if (graphView.edgesWithArrows)
 						tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
@@ -240,7 +241,7 @@ public class FindPathButton<V, E> extends Button{
 					currentVertex = collection[countStep-1];
 					VertexNode<V> backVertexNode = graphView.vertexNodes.get(collection[countStep]);
 					Edge<E, V> backEdge = graphView.theGraph.adjList.get(currentVertex).get(collection[countStep]);
-					EdgeNode<E, V> backEdgeNode = graphView.edgeNodes.get(backEdge);
+					EdgeLine<E, V> backEdgeNode = graphView.edgeNodes.get(backEdge);
 
 					// backtracking
 					int lenVertex = collection[countStep].element().toString().length();

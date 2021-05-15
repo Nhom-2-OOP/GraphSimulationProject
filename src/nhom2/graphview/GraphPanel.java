@@ -382,7 +382,7 @@ public class GraphPanel<V, E> extends Pane{
     }
     
     public void deleteVertex(VertexNode v) {
-    	timer.stop();
+    	//timer.stop();
     	this.getChildren().remove(v.getAttachedLabel());
     	this.getChildren().remove(v);
     	ArrayList<Edge> deleteList = new ArrayList<Edge>();
