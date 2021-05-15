@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.scene.*;
 import nhom2.coloring.Coloring;
 import nhom2.graph.*;
+import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Edge.EdgeNode;
 import nhom2.graphview.Label.Label;
 import nhom2.graphview.Placement.PlacementStrategy;
@@ -21,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.logging.Level;
@@ -34,7 +36,9 @@ import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
@@ -42,6 +46,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -62,10 +67,12 @@ public class GraphPanel<V, E> extends Pane{
 	
 	public GraphEdgeList<V, E> theGraph;
 	public Map<Vertex<V>, VertexNode<V>> vertexNodes;
-	public Map<Edge<E, V>, EdgeNode<E,V>> edgeNodes;
+	public Map<Edge<E, V>, EdgeLine<E,V>> edgeNodes;
 	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
 	
 	public boolean isColored = false;
+	
+	public EventHandler<MouseEvent> Handler;
 	
 	public AnimationTimer timer;
 	
@@ -120,7 +127,102 @@ public class GraphPanel<V, E> extends Pane{
                 runLayoutIteration();
             }
         };
-    
+
+        Handler = new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				// TODO Auto-generated method stub
+				if (mouseEvent.getClickCount() == 2) {
+	            	TextInputDialog box = new TextInputDialog("Nhập tên đỉnh");
+	            	box.setHeaderText("Thêm đỉnh mới");
+	            	box.setTitle("Nhập tên đỉnh");
+	            	box.setContentText("Nhập tên đỉnh mới: ");
+	            	Optional<String> result = box.showAndWait();
+	            	if (result.isPresent()) {
+	            		if (theGraph.vertices.get(result.get()) != null) {
+	            			Alert newAlert = new Alert(AlertType.WARNING);
+	            			newAlert.setTitle("Thông báo");
+	            			newAlert.setHeaderText("Thêm đỉnh không thành không");
+	            			newAlert.setContentText("Tên đỉnh mới đã có trong đồ thị");
+	            			newAlert.showAndWait();
+	            		}
+	            		else {
+	            			Insert((V)result.get(), mouseEvent.getX(), mouseEvent.getY());
+	            			Alert alert = new Alert(AlertType.INFORMATION);
+	            			alert.setTitle("Thông báo");
+	            			alert.setHeaderText(null);
+	            			alert.setContentText("Thêm đỉnh thành công!");
+
+	            			alert.showAndWait();
+	            		}
+	            	}
+	            }
+			}
+        };
+        
+        this.setOnMouseClicked(Handler);
+	}
+	
+	public void Insert(V v, double x, double y) {
+		Vertex<V> vertex = this.theGraph.insertVertex(v);
+		VertexNode<V> NewVertexNode = new VertexNode(vertex, x, y, 10, true);
+        vertexNodes.put(vertex, NewVertexNode);
+        this.getChildren().add(NewVertexNode);
+        if (needLabel) {
+        	Label label = new Label((String)vertex.element());
+            label.addStyleClass("vertex-label");
+            label.setOnMouseEntered((MouseEvent mouseEvent) -> {
+                if (!mouseEvent.isPrimaryButtonDown()) {
+                    getScene().setCursor(Cursor.HAND);
+                }
+
+            });
+            this.getChildren().add(label);
+            NewVertexNode.attachLabel(label);
+            label.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+				@Override
+				public void handle(ContextMenuEvent event) {
+					// TODO Auto-generated method stub
+					NewVertexNode.contextMenu.show(NewVertexNode, event.getScreenX(), event.getScreenY());
+				}           	
+            }
+            );
+        }
+        MenuItem item1 = new MenuItem("Thông tin đỉnh");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+            	Alert inform = new Alert(Alert.AlertType.INFORMATION);
+        		inform.setHeaderText("Tên đỉnh: " + vertex.element());
+        		inform.showAndWait();
+            }
+        });
+        MenuItem item2 = new MenuItem("Xóa đỉnh");
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+            	deleteVertex(NewVertexNode);
+        		Alert inform = new Alert(Alert.AlertType.INFORMATION);
+        		inform.setHeaderText("Xóa đỉnh thành công");
+        		inform.showAndWait();
+            }
+        });
+        
+        MenuItem item3 = new MenuItem("Thêm cạnh");
+        item3.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {	
+            	add(NewVertexNode);
+            }
+        });
+        NewVertexNode.contextMenu.getItems().addAll(item1, item2, item3);
+        NewVertexNode.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+        @Override
+        public void handle(ContextMenuEvent event) {
+            NewVertexNode.contextMenu.show(NewVertexNode, event.getScreenX(), event.getScreenY());;
+        }
+        });
+        Map<Vertex<V>, Integer> newMap = new HashMap<>();
+		NumOfEdge.put(NewVertexNode.getUnderlyingVertex(), newMap);
 	}
 	
 	public void Renew(GraphEdgeList<V, E> theGraph, boolean Label) {
@@ -154,7 +256,7 @@ public class GraphPanel<V, E> extends Pane{
 		
 	}
 	private boolean areAdjacent(VertexNode<V> v, VertexNode<V> u) {
-        return v.isAdjacentTo(u);
+        return this.theGraph.areAdjacent(v.getUnderlyingVertex(), u.getUnderlyingVertex()) || this.theGraph.areAdjacent(u.getUnderlyingVertex(), v.getUnderlyingVertex());
     }
 	
 	private void computeForces() {
@@ -207,9 +309,9 @@ public class GraphPanel<V, E> extends Pane{
         return theGraph.TotalEdgesBetween(u, v);
     }
     
-    private EdgeNode CreateAndAddEdge(Edge<E, V> edge, VertexNode<V> graphVertexInbound, VertexNode<V> graphVertexOutbound) {
+    private EdgeLine CreateAndAddEdge(Edge<E, V> edge, VertexNode<V> graphVertexInbound, VertexNode<V> graphVertexOutbound) {
 
-        EdgeNode graphEdge;
+        EdgeLine graphEdge;
         
         Vertex<V> inVertex = graphVertexInbound.getUnderlyingVertex();
         Vertex<V> outVertex = graphVertexOutbound.getUnderlyingVertex();
@@ -229,20 +331,51 @@ public class GraphPanel<V, E> extends Pane{
         int count = getTotalEdgesBetween(graphVertexInbound.getUnderlyingVertex(), graphVertexOutbound.getUnderlyingVertex());
         int index = NewNum.intValue() - 1;
         
-        if (count > 1 || graphVertexInbound == graphVertexOutbound) {
-        	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexOutbound, graphVertexInbound, index, true);
-//        	System.out.println(index + " " + count + " " + graphVertexInbound.getUnderlyingVertex().element() + " " + graphVertexOutbound.getUnderlyingVertex().element());
-//        	//System.out.print(NewEdgeView.getControlX1() + " " + NewEdgeView.getControlY1()+ " " + NewEdgeView.getControlX2() + " " + NewEdgeView.getControlY2());
-        	graphEdge = NewEdgeView;
-        	
-            this.getChildren().add(0, (Node)NewEdgeView);
-        } else {
-        	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexOutbound, graphVertexInbound, index, true);
-            graphEdge = NewEdgeView;
-            this.getChildren().add(0, (Node)NewEdgeView);
-        }
+//        if (count > 1 || graphVertexInbound == graphVertexOutbound) {
+//        	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexOutbound, graphVertexInbound, index, true);
+////        	System.out.println(index + " " + count + " " + graphVertexInbound.getUnderlyingVertex().element() + " " + graphVertexOutbound.getUnderlyingVertex().element());
+////        	//System.out.print(NewEdgeView.getControlX1() + " " + NewEdgeView.getControlY1()+ " " + NewEdgeView.getControlX2() + " " + NewEdgeView.getControlY2());
+//        	graphEdge = NewEdgeView;
+//        	
+//            this.getChildren().add(0, (Node)NewEdgeView);
+//        } else {
+//        	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexOutbound, graphVertexInbound, index, true);
+//            graphEdge = NewEdgeView;
+//            this.getChildren().add(0, (Node)NewEdgeView);
+//        }
+        
+      if (count > 1 || graphVertexInbound == graphVertexOutbound) {
+    	  EdgeLine NewEdgeView = new EdgeLine(edge, graphVertexOutbound, graphVertexInbound);
+//    	System.out.println(index + " " + count + " " + graphVertexInbound.getUnderlyingVertex().element() + " " + graphVertexOutbound.getUnderlyingVertex().element());
+//    	//System.out.print(NewEdgeView.getControlX1() + " " + NewEdgeView.getControlY1()+ " " + NewEdgeView.getControlX2() + " " + NewEdgeView.getControlY2());
+    	  graphEdge = NewEdgeView;
+    	
+    	  this.getChildren().add(0, (Node)NewEdgeView);
+      } else {
+    	EdgeLine NewEdgeView = new EdgeLine(edge, graphVertexOutbound, graphVertexInbound);
+        graphEdge = NewEdgeView;
+        this.getChildren().add(0, (Node)NewEdgeView);
+      }
 
-        return graphEdge;
+      MenuItem item = new MenuItem("Xóa cạnh");
+      item.setOnAction(new EventHandler<ActionEvent>() {
+          public void handle(ActionEvent e) {
+        	  theGraph.removeEdge(edge);
+        	  getChildren().remove(graphEdge);
+        	  edgeNodes.remove(edge);
+        	  Alert inform = new Alert(Alert.AlertType.INFORMATION);
+        	  inform.setHeaderText("Xóa cạnh thành công");
+        	  inform.showAndWait();
+          }
+      });
+      graphEdge.contextMenu.getItems().add(item);
+      graphEdge.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+            @Override
+            public void handle(ContextMenuEvent event) {
+                graphEdge.contextMenu.show(graphEdge, event.getScreenX(), event.getScreenY());;
+            }
+      });
+      return graphEdge;
     }
     
     public void init(){
@@ -319,7 +452,14 @@ public class GraphPanel<V, E> extends Pane{
             		inform.showAndWait();
                 }
             });
-            NewVertexNode.contextMenu.getItems().addAll(item1, item2);
+            
+            MenuItem item3 = new MenuItem("Thêm cạnh");
+            item3.setOnAction(new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent e) {
+                	add(NewVertexNode);
+                }
+            });
+            NewVertexNode.contextMenu.getItems().addAll(item1, item2, item3);
             NewVertexNode.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
  
             @Override
@@ -339,10 +479,10 @@ public class GraphPanel<V, E> extends Pane{
             
             //System.out.println(vertex.element() + " " + oppositeVertex.element() + " " + edge.element());
 
-            graphVertexIn.addAdjacentVertex(graphVertexOppositeOut);
-            graphVertexOppositeOut.addAdjacentVertex(graphVertexIn);
+//            graphVertexIn.addAdjacentVertex(graphVertexOppositeOut);
+//            graphVertexOppositeOut.addAdjacentVertex(graphVertexIn);
 
-            EdgeNode<E,V> graphEdge = CreateAndAddEdge(edge, graphVertexIn, graphVertexOppositeOut);
+            EdgeLine<E,V> graphEdge = CreateAndAddEdge(edge, graphVertexIn, graphVertexOppositeOut);
                 
             if (this.edgesWithArrows) {
             	Arrow arrow = new Arrow();
@@ -352,6 +492,63 @@ public class GraphPanel<V, E> extends Pane{
             edgeNodes.put(edge, graphEdge);
     	}
     }
+    public void add(VertexNode NewVertexNode) {
+    	Line tmp = new Line();  	
+    	tmp.setStyle("-fx-stroke-width: 2; -fx-stroke: #ebaf2f; -fx-stroke-dash-array: 2 5 2 5;");
+    	double diffX = 180, diffY = 10;
+    	tmp.startXProperty().bind(NewVertexNode.centerXProperty());
+    	tmp.startYProperty().bind(NewVertexNode.centerYProperty());
+    	this.getChildren().add(0, tmp);
+    	
+    	EventHandler<MouseEvent> myHandler01 = new EventHandler<MouseEvent>() {
+    			@Override
+    			public void handle(MouseEvent arg0) {
+    				// TODO Auto-generated method stub
+    				tmp.setEndX(arg0.getSceneX() - diffX);
+    	            tmp.setEndY(arg0.getSceneY() - diffY);
+    			}
+    	};
+    	//this.addEventFilter(MouseEvent.MOUSE_MOVED, myHandler01);
+    	this.setOnMouseMoved(myHandler01);
+    	EventHandler<MouseEvent> myHandler02 = new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				if (arg0.getClickCount() == 2) {
+	    			for (VertexNode v: vertexNodes.values()) {
+	    				if (v.contains(arg0.getX(), arg0.getY())) {
+	    					setOnMouseMoved(null);
+	    					getChildren().remove(0);
+	    					removeEventFilter(MouseEvent.MOUSE_MOVED, myHandler01);
+	    					if (theGraph.areAdjacent(NewVertexNode.getUnderlyingVertex(),v.getUnderlyingVertex() )) {
+	    						setOnMouseClicked(Handler);
+	    						Alert inform = new Alert(Alert.AlertType.ERROR);
+	    			    		inform.setHeaderText("Đã có cạnh nối!");
+	    			    		inform.showAndWait();
+	    					} else {
+	    						Edge<E, V> edge = theGraph.insertEdge((V)NewVertexNode.getUnderlyingVertex().element(), (V)v.getUnderlyingVertex().element(), (E)((String)NewVertexNode.getUnderlyingVertex().element() + (String)v.getUnderlyingVertex().element()));
+	    						EdgeLine<E,V> graphEdge = CreateAndAddEdge(edge, NewVertexNode, v);
+	    			            if (edgesWithArrows) {
+	    			            	Arrow arrow = new Arrow();
+	    			                graphEdge.attachArrow(arrow);
+	    			                getChildren().add(arrow);
+	    			            }
+	    			            edgeNodes.put(edge, graphEdge);
+	    						setOnMouseClicked(Handler);
+	    						Alert inform = new Alert(Alert.AlertType.INFORMATION);
+	    			    		inform.setHeaderText("Thêm cạnh thành công!");
+	    			    		inform.showAndWait();
+	    					}    					
+	    				}
+	    			}
+	    		}
+			}
+    	};
+    	this.setOnMouseClicked(myHandler02);
+    	//this.addEventFilter(MouseEvent.MOUSE_CLICKED, myHandler02);
+    }
+    
+    
     public void setColor() {
     	Coloring coloring = new Coloring();
     	if(this.isColored==false) {

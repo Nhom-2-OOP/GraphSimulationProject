@@ -124,20 +124,27 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
             }
 
         });
+        
+        this.setOnMouseClicked((MouseEvent mouseEvent) -> {
+            if (!mouseEvent.isPrimaryButtonDown()) {
+                getScene().setCursor(Cursor.DEFAULT);
+            }
+
+        });
     }
 
 
-	public void addAdjacentVertex(VertexNode<T> v) {
-        this.adjacentVertices.add(v);
-    }
-	
-	public boolean removeAdjacentVertex(VertexNode<T> v) {
-        return this.adjacentVertices.remove(v);
-    }
-	
-	public boolean removeAdjacentVertices(Collection<VertexNode<T>> col) {
-        return this.adjacentVertices.removeAll(col);
-    }
+//	public void addAdjacentVertex(VertexNode<T> v) {
+//        this.adjacentVertices.add(v);
+//    }
+//	
+//	public boolean removeAdjacentVertex(VertexNode<T> v) {
+//        return this.adjacentVertices.remove(v);
+//    }
+//	
+//	public boolean removeAdjacentVertices(Collection<VertexNode<T>> col) {
+//        return this.adjacentVertices.removeAll(col);
+//    }
 	
 	public Point2D getPosition() {
         return new Point2D(getCenterX(), getCenterY());
@@ -210,9 +217,9 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
         forceVector.y += y;
     }
 	
-	public boolean isAdjacentTo(VertexNode<T> v) {
-        return this.adjacentVertices.contains(v);
-    }
+//	public boolean isAdjacentTo(VertexNode<T> v) {
+//        return this.adjacentVertices.contains(v);
+//    }
 	
 	public void moveFromForces() {
 

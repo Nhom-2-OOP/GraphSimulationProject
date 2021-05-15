@@ -47,6 +47,14 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		return edges.values();
 	}
 	
+	public void removeEdge(Edge e) {
+		Vertex outVertex = e.Vertices()[0];
+		Vertex inVertex = e.Vertices()[1];
+		edges.remove(e.element());
+		adjList.get(inVertex).remove(outVertex);
+		if (!this.isDirected) adjList.get(outVertex).remove(inVertex);
+	}
+	
 	public Collection<Vertex<V>> incidentVertex(Vertex<V> v) {
 		Collection<Vertex<V>> adjVertices = new ArrayList<Vertex<V>>();
 		for(Edge<E, V> i : this.incidentEdges(v))
