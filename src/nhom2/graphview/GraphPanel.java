@@ -341,19 +341,37 @@ public class GraphPanel<V, E> extends Pane{
 //        }
         
       if (count > 1 || graphVertexInbound == graphVertexOutbound) {
-    	EdgeLine NewEdgeView = new EdgeLine(edge, graphVertexOutbound, graphVertexInbound);
+    	  EdgeLine NewEdgeView = new EdgeLine(edge, graphVertexOutbound, graphVertexInbound);
 //    	System.out.println(index + " " + count + " " + graphVertexInbound.getUnderlyingVertex().element() + " " + graphVertexOutbound.getUnderlyingVertex().element());
 //    	//System.out.print(NewEdgeView.getControlX1() + " " + NewEdgeView.getControlY1()+ " " + NewEdgeView.getControlX2() + " " + NewEdgeView.getControlY2());
-    	graphEdge = NewEdgeView;
+    	  graphEdge = NewEdgeView;
     	
-        this.getChildren().add(0, (Node)NewEdgeView);
-    } else {
+    	  this.getChildren().add(0, (Node)NewEdgeView);
+      } else {
     	EdgeLine NewEdgeView = new EdgeLine(edge, graphVertexOutbound, graphVertexInbound);
         graphEdge = NewEdgeView;
         this.getChildren().add(0, (Node)NewEdgeView);
-    }
+      }
 
-        return graphEdge;
+      MenuItem item = new MenuItem("Xóa cạnh");
+      item.setOnAction(new EventHandler<ActionEvent>() {
+          public void handle(ActionEvent e) {
+        	  theGraph.removeEdge(edge);
+        	  getChildren().remove(graphEdge);
+        	  edgeNodes.remove(edge);
+        	  Alert inform = new Alert(Alert.AlertType.INFORMATION);
+        	  inform.setHeaderText("Xóa cạnh thành công");
+        	  inform.showAndWait();
+          }
+      });
+      graphEdge.contextMenu.getItems().add(item);
+      graphEdge.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+            @Override
+            public void handle(ContextMenuEvent event) {
+                graphEdge.contextMenu.show(graphEdge, event.getScreenX(), event.getScreenY());;
+            }
+      });
+      return graphEdge;
     }
     
     public void init(){

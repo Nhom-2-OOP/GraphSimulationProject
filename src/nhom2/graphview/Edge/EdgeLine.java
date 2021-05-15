@@ -6,6 +6,9 @@ import nhom2.graphview.Label.Label;
 import nhom2.graphview.Styling.StyleImplementing;
 import nhom2.graphview.Vertex.VertexNode;
 import javafx.beans.value.*;
+import javafx.scene.Cursor;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.*;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
@@ -21,6 +24,8 @@ public class EdgeLine<E,V> extends Line implements EdgeView<E,V>{
     private Label attachedLabel = null;
     private Arrow attachedArrow = null;
     
+    public ContextMenu contextMenu = new ContextMenu();
+    
     public StyleImplementing styleProxy;
 
     public EdgeLine(Edge<E, V> edge, VertexNode inbound, VertexNode outbound) {
@@ -35,6 +40,20 @@ public class EdgeLine<E,V> extends Line implements EdgeView<E,V>{
         
         styleProxy = new StyleImplementing(this);
         styleProxy.addStyleClass("edge");
+        
+        setOnMouseEntered((MouseEvent mouseEvent) -> {
+            if (!mouseEvent.isPrimaryButtonDown()) {
+                getScene().setCursor(Cursor.HAND);
+            }
+
+        });
+
+        setOnMouseExited((MouseEvent mouseEvent) -> {
+            if (!mouseEvent.isPrimaryButtonDown()) {
+                getScene().setCursor(Cursor.DEFAULT);
+            }
+
+        });
         
         // Dieu chinh phan dau va cuoi cua line ve center cua dinh inbound va dinh outbound
         this.startXProperty().bind(outbound.centerXProperty());

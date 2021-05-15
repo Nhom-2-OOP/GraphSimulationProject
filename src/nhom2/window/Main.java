@@ -70,7 +70,7 @@ public class Main extends Application {
 
     	// Tao nut tu tim duong di
     	FindPathButton<String, String> btnFindPath = new FindPathButton(stage, graphView);
-    	btnFindPath.setText("Tự đường đi");
+    	btnFindPath.setText("Tự tìm đường đi");
     	SubScene subSceneFindPath = new SubScene(btnFindPath,150,30);
     	
     	// Tao nut tu dong tim duong di
@@ -89,7 +89,7 @@ public class Main extends Application {
     	SubScene subSceneDFS = new SubScene(DFSButton,150,30);
     	
     	// Tao nut to mau do thi
-    	Button BFSButton = new Button();
+    	DFSButton<String, String> BFSButton = new DFSButton(stage, graphView);
     	BFSButton.setText("Tìm đường BFS");
     	SubScene subSceneBFS = new SubScene(BFSButton,150,30);
     	
@@ -121,7 +121,7 @@ public class Main extends Application {
     	
     	Scene scene = new Scene(root, 1000, 650);
         stage = new Stage();
-        stage.setTitle("Graph Visualization");
+        stage.setTitle("Nhóm 2 - OOP - Graph Visualization");
         stage.setMinHeight(800);
         stage.setMinWidth(800);
         stage.setScene(scene);
@@ -134,7 +134,7 @@ public class Main extends Application {
 
     private static GraphEdgeList<String, String> build_sample_digraph() {
 
-    	GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(true);
+    	GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(false);
 
         g.insertEdge("A", "B", "AB1");
         g.insertEdge("A", "C", "AC");
