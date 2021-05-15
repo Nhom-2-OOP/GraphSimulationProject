@@ -35,51 +35,53 @@ public class Main extends Application {
 	public static GraphEdgeList<String, String> g= build_sample_digraph();
 	public static GraphPanel<String, String> graphView;	
 	public static Node NodeButtonArea;
-	
+
 	@Override
 	public void start(Stage stage) {
 
 		// Tao scene bieu dien do thi
-    	graphView = new GraphPanel<>(g);
-    	SubScene subSceneGraphPanel = new SubScene(graphView,800,600);
-    	graphView.init();
-        //graphView.start_automatic_layout();
+		graphView = new GraphPanel<>(g);
+		SubScene subSceneGraphPanel = new SubScene(graphView,800,600);
+		graphView.init();
+		//graphView.start_automatic_layout();
 		GridPane root = new GridPane();
-        	
-		
+
+
 		//VBox
 		VBox buttonArea = new buttonAreaVBox().area(graphView, subSceneGraphPanel, stage, root);
-		
-		
-//		GridPane root = new GridPane();
+
+
+		//		GridPane root = new GridPane();
 		root.setHgap(10);
 		root.setPadding(new Insets(10, 10, 10, 10));
 
-		//row
-		int numRows = 1 ;
-		for (int i = 0 ; i < numRows ; i++) {
-			RowConstraints r = new RowConstraints();
-			r.setPercentHeight(100.0 / numRows);
-			r.setValignment(VPos.CENTER);
-			root.getRowConstraints().add(r);
-		}
+		//row0
+		RowConstraints r = new RowConstraints();
+		r.setPercentHeight(80);
+		r.setValignment(VPos.CENTER);
+		root.getRowConstraints().add(r);
+		
+		r = new RowConstraints();
+		r.setPercentHeight(20);
+		r.setValignment(VPos.CENTER);
+		root.getRowConstraints().add(r);
 
-		// col 1
+		// col 0
 		ColumnConstraints c = new ColumnConstraints();
-//		c.setPercentWidth(15);
-		c.setPrefWidth(150);
+		//		c.setPercentWidth(15);
+		c.setPrefWidth(300);
 		c.setHalignment(HPos.CENTER);
 		root.getColumnConstraints().add(c);
 		root.add(buttonArea, 0, 0);
-			
-		//col 2
+
+		//col 1
 		c = new ColumnConstraints();
-		c.setPercentWidth(85);
+		//		c.setPercentWidth(85);
 		c.setHalignment(HPos.CENTER);
 		root.getColumnConstraints().add(c);
 		Pane graphPane = new Pane(); 
 		root.add(graphPane, 1, 0);
-//		root.setHgrow(graphPane, Priority.ALWAYS);
+		root.setHgrow(graphPane, Priority.ALWAYS);
 		graphPane.setPrefSize(500, 500);
 		graphPane.getChildren().add(subSceneGraphPanel);
 		subSceneGraphPanel.heightProperty().bind(graphPane.heightProperty());
@@ -92,10 +94,10 @@ public class Main extends Application {
 		stage.setMinHeight(700);
 		stage.setScene(scene);
 		stage.show();  
-		
+
 		NodeButtonArea = root.getChildren().get(0);
 		root.setManaged(false);
-//		root.getChildren().remove(0);
+		//		root.getChildren().remove(0);
 	}
 
 	public static Node getNodeButtonArea() {
@@ -105,9 +107,9 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
-	
-	
+
+
+
 
 	private static GraphEdgeList<String, String> build_sample_digraph() {
 
@@ -147,7 +149,7 @@ public class Main extends Application {
 		g.insertEdge("DD", "H", "1");
 		return g;
 	}
-	
+
 
 	public static void setGraph(GraphEdgeList<String, String> NewGraph) {
 		g = NewGraph;
