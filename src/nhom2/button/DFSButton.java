@@ -13,6 +13,7 @@ import java.util.TreeSet;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -28,6 +29,7 @@ import nhom2.graphview.*;
 import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Edge.EdgeNode;
 import nhom2.graphview.Vertex.VertexNode;
+import nhom2.window.Main;
 
 public class DFSButton<V, E> extends Button{
 	private Stage stage;
@@ -124,7 +126,7 @@ public class DFSButton<V, E> extends Button{
 	}
 	
 	//DFS button
-	public DFSButton(Stage stg, GraphPanel<V, E> graphView) {
+	public DFSButton(GridPane root , GraphPanel<V, E> graphView) {
 		GridPane grid = new GridPane();
 		Label lbStartVertex = new Label("Start Vertex:");
 		TextField tfStartVertex = new TextField();
@@ -133,7 +135,7 @@ public class DFSButton<V, E> extends Button{
 		Button next = new Button("Next");
 		Button reset = new Button("Reset");
 		Label lb = new Label();
-
+		BackButton backBut = new BackButton(root, grid);
 		
 		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
 		tfStartVertex.setPrefWidth(85);
@@ -141,31 +143,25 @@ public class DFSButton<V, E> extends Button{
 		next.setVisible(false);
 		reset.setVisible(false);
 		
-		grid.add(lbStartVertex, 0, 0);
-		grid.add(tfStartVertex, 1, 0);
-		grid.add(finish, 1, 1);
-		grid.add(step, 1, 2);
-		grid.add(next, 2, 2);
-		grid.add(reset, 1, 3);
-		grid.add(lb, 3, 2);
+		grid.add(backBut, 0, 0);
+		grid.add(lbStartVertex, 0, 2);
+		grid.add(tfStartVertex, 0, 3);
+		grid.add(finish, 0, 4);
+		grid.add(step, 0, 5);
+		grid.add(next, 1, 6);
+		grid.add(reset, 0, 6);
 		grid.setHgap(10);
 		grid.setVgap(10);
-		grid.setPadding(new Insets(10, 10, 100, 10));
-		grid.setMinSize(500, 200);
-		
-		try {
-			Parent root = grid;
-			this.View = new Scene(root);
-			this.stage = stg;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		grid.setPadding(new Insets(10, 10, 10, 10));
+
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				stage.setScene(View);
-				stage.show();
-			}
+				Node box = Main.getNodeButtonArea();
+				root.getChildren().remove(box);
+				root.add(grid, 0, 0);
+		
+				}
 		});
 		
 		//button hiển thị kết quả

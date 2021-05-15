@@ -148,7 +148,7 @@ public class BFSButton<V, E> extends Button{
 		mark.put(currVertex, 1);
 	}
 
-	public BFSButton(SubScene subSceneGraphPanel, Stage stage, GridPane root, GraphPanel<V, E> graphView) { //con cai thiet ke giao dien nay chua ro lam nen idol nao giup voi?
+	public BFSButton(GridPane root, GraphPanel<V, E> graphView) { //con cai thiet ke giao dien nay chua ro lam nen idol nao giup voi?
 		GridPane grid = new GridPane();
 		Label lbStartVertex = new Label("Start Vertex:");
 		TextField tfStartVertex = new TextField();
@@ -174,35 +174,16 @@ public class BFSButton<V, E> extends Button{
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(10, 10, 10, 10));
-		//		grid.setMinSize(500, 200);
 
-		
-		
-		
-		
-		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-//				System.out.println("Start: "+ root.getChildren());
-//				final BackButton backBut = new BackButton(c0);
-				//				grid.add(backBut, 0, 0);
-				//				root.add(grid, 0, 0);
 				Node box = Main.getNodeButtonArea();
 				root.getChildren().remove(box);
 				root.add(grid, 0, 0);
-				
-				
-				
-//				System.out.println("END: "+ root.getChildren());			
+		
 				}
 		});
 
-		
-		
-		
-		
-		
-		
 		finish.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
