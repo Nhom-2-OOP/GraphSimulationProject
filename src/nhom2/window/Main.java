@@ -100,10 +100,9 @@ public class Main extends Application {
 		graphView.init();
 
 
-		//VBox
-		VBox buttonArea = new ButtonAreaVBox().area(graphView, subSceneGraphPanel, stage, root);
-//		buttonArea.getStyleClass().add("buttonArea");
-
+		//buttonArea
+		GridPane buttonArea = new ButtonAreaVBox().area(graphView, subSceneGraphPanel, stage, root);
+		
 		root.add(graphPane, 2, 0);		
 		root.add(buttonArea, 0, 0);
 		root.add(col1Pane, 1, 0);
@@ -111,7 +110,7 @@ public class Main extends Application {
 
 		Scene scene = new Scene(root);
 
-		scene.getStylesheets().add(getClass().getResource("test.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("design/test.css").toExternalForm());
 		System.out.println(scene.getStylesheets());
 
 

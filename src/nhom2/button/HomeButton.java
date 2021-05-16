@@ -36,7 +36,6 @@ import javafx.geometry.VPos;
 public class HomeButton extends Button {
 
 	public HomeButton(GridPane root) {
-		this.setText("Home");
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				root.getChildren().remove(2);
