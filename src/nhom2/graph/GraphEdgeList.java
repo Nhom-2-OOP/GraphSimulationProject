@@ -235,7 +235,7 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 			res.add(curV);
 			
 			for(Vertex<V> temp : adjListReverse.get(curV).keySet()) {
-				if(visited.containsKey(temp)) {
+				if(!visited.containsKey(temp)) {
 					stack.push(temp);
 				}
 			}
