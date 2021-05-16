@@ -12,11 +12,14 @@ public class ButtonAreaVBox {
 
 	public VBox area(GraphPanel graphView, SubScene subSceneGraphPanel, Stage stage, GridPane root) {
 		int sizeButton = 55;
+		//Tao nut Home
+		HomeButton btnHome = new HomeButton(root);
+		SubScene subSceneHome = new SubScene(btnHome, sizeButton, sizeButton);
 
 		// Tao nut input do thi
 		InputButton btnInput = new InputButton(stage);
 		btnInput.setText("Input đồ thị");
-		SubScene subSceneInput = new SubScene(btnInput,55,55);
+		SubScene subSceneInput = new SubScene(btnInput,sizeButton,sizeButton);
 
 		// Tao nut luu anh do thi
 		CaptureGraphPanel btnCaptureGP = new CaptureGraphPanel(subSceneGraphPanel, stage);
@@ -43,9 +46,9 @@ public class ButtonAreaVBox {
 		SubScene subSceneInfo = new SubScene(InfoButton,sizeButton,sizeButton);
 
 		// Tao layout VBox
-		VBox buttonArea = new VBox(10);
-		buttonArea.getChildren().addAll(subSceneInput, subSceneCaptureGP, subScenePla, subScenePathFinding, subSceneColoring, subSceneInfo);
-		buttonArea.setAlignment(Pos.CENTER);
+		VBox buttonArea = new VBox(0);
+		buttonArea.getChildren().addAll(subSceneHome,subSceneInput, subSceneCaptureGP, subScenePla, subScenePathFinding, subSceneColoring, subSceneInfo);
+		buttonArea.setAlignment(Pos.TOP_CENTER);
 
 		return buttonArea;
 	}

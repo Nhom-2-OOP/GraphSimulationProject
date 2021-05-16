@@ -31,27 +31,18 @@ import nhom2.graphview.*;
 import nhom2.window.Main;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-public class BackButton extends Button {
-	public Node gridBack;
 
-	public Node getGridBack() {
-		return gridBack;
-	}
 
-	public void setGridBack(Node gridBack) {
-		this.gridBack = gridBack;
-	}
+public class HomeButton extends Button {
 
-	public BackButton(GridPane root) {
-		this.setText("Back");
+	public HomeButton(GridPane root) {
+		this.setText("Home");
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				root.getChildren().remove(2);
-				root.add(gridBack, 1, 0);
-
+				root.add(Main.getNodeCol1Start(), 1, 0);
 			}
 		});
-
 	}
 
 }

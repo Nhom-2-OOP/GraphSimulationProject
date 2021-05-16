@@ -43,7 +43,6 @@ public class PlacementButton extends Button{
 
 	public PlacementButton( GridPane root, GraphPanel graphView) {
 		GridPane grid = new GridPane();
-		System.out.println(Main.getNodeCol1Start());
 		//BackButton
 		BackButton backBut = new BackButton(root);
 		

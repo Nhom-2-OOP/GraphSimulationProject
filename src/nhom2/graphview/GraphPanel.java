@@ -82,6 +82,7 @@ public class GraphPanel<V, E> extends Pane{
     public boolean edgesWithArrows;
     private boolean needLabel;
 	
+    
     public GraphPanel(GraphEdgeList<V, E> theGraph) {
         this(theGraph, null, true);
     }
@@ -105,7 +106,7 @@ public class GraphPanel<V, E> extends Pane{
             }
 
             getStylesheets().add(css);
-            this.getStyleClass().add("graph");
+            this.getStyleClass().add("graphView");
         } catch (MalformedURLException ex) {
             Logger.getLogger(GraphPanel.class.getName()).log(Level.SEVERE, null, ex);
         }

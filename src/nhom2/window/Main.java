@@ -42,31 +42,34 @@ public class Main extends Application {
 
 		// Tao scene bieu dien do thi
 		graphView = new GraphPanel<>(g);
+		
+//		graphView.getStyleClass().add("graph-view");
+		
 		SubScene subSceneGraphPanel = new SubScene(graphView,800,600);
 		//graphView.start_automatic_layout();
 		GridPane root = new GridPane();
 
 		//		GridPane root = new GridPane();
 		root.setHgap(10);
-		root.setPadding(new Insets(10, 10, 10, 10));
+//		root.setPadding(new Insets(10, 10, 10, 0));
 
 		//row0
 		RowConstraints r = new RowConstraints();
-		r.setPercentHeight(80);
-		r.setValignment(VPos.CENTER);
+		r.setPercentHeight(100);
+		//		r.setValignment(VPos.CENTER);
 		root.getRowConstraints().add(r);
 
-		r = new RowConstraints();
-		r.setPercentHeight(20);
-		r.setValignment(VPos.CENTER);
-		root.getRowConstraints().add(r);
+//		//row1
+//		r = new RowConstraints();
+//		r.setPercentHeight(20);
+//		r.setValignment(VPos.CENTER);
+//		root.getRowConstraints().add(r);
 
 		// col 0
 		ColumnConstraints c = new ColumnConstraints();
 		c.setPrefWidth(55);
 		c.setHalignment(HPos.CENTER);
 		root.getColumnConstraints().add(c);
-		//		root.add(buttonArea, 0, 0);
 
 
 		// col 1
@@ -78,7 +81,6 @@ public class Main extends Application {
 		Pane col1Pane = new Pane();
 		Text testText = new Text(10, 50, "col1 include text");
 		col1Pane.getChildren().add(testText);
-		//		root.add(col1Pane, 1, 0);
 
 		//col 2
 		c = new ColumnConstraints();
@@ -86,7 +88,7 @@ public class Main extends Application {
 		c.setHalignment(HPos.CENTER);
 		root.getColumnConstraints().add(c);
 		Pane graphPane = new Pane(); 
-		//		root.add(graphPane, 2, 0);
+		
 		root.setHgrow(graphPane, Priority.ALWAYS);
 		graphPane.resize(500, 500);
 		graphPane.getChildren().add(subSceneGraphPanel);
@@ -94,25 +96,30 @@ public class Main extends Application {
 		subSceneGraphPanel.widthProperty().bind(graphPane.widthProperty());
 		graphView.init();
 
-		
+
 		//VBox
 		VBox buttonArea = new ButtonAreaVBox().area(graphView, subSceneGraphPanel, stage, root);
+		buttonArea.getStyleClass().add("buttonArea");
 
 		root.add(graphPane, 2, 0);		
 		root.add(buttonArea, 0, 0);
 		root.add(col1Pane, 1, 0);
 		nodeCol1Start = root.getChildren().get(2);
-		//System.out.println(root.getChildren());		
 
 		Scene scene = new Scene(root);
+
+		scene.getStylesheets().add(getClass().getResource("test.css").toExternalForm());
+		System.out.println(scene.getStylesheets());
+
+
 		stage = new Stage();
 		stage.setTitle("Nhóm 2 - OOP - Graph Visualization");
 		stage.setMinWidth(800);
 		stage.setMinHeight(700);
 		stage.setScene(scene);
 		stage.show();  
-
-		System.out.println(nodeCol1Start);
+		
+		root.getStyleClass().add("rootMain");
 		root.setManaged(false);
 	}
 
@@ -146,7 +153,6 @@ public class Main extends Application {
 		g.insertEdge("AA", "CC", "AC1");
 		g.insertEdge("AA", "GG", "AG1");
 		g.insertEdge("AA", "HH", "AH1");
-
 		g.insertEdge("AA", "DD", "AD1");
 
 		g.insertEdge("DD", "EE", "DE1");

@@ -1,0 +1,25 @@
+.graphView{
+	 -fx-cursor: hand;
+    -fx-border-color: blue;
+    -fx-border-width: 0px;
+		-fx-background-color: rgb(52 ,55, 70)	;
+
+    /* -fx-background-color: rgb(238, 105, 227); */
+    
+}
+
+.rootMain{
+	-fx-background-color: rgb(40 ,42, 54)	;
+
+}
+
+.buttonArea{
+    -fx-background-color: RGB(33, 34, 44);    
+
+	
+}
+
+.button{
+	-fx-font-size: 16;
+	-fx-cursor:hand ;
+}
