@@ -62,7 +62,7 @@ public class PathFindingButton extends Button{
 		SubScene subSceneBFS = new SubScene(BFSButton,245,30);
 
 		// Tao nut DFS
-		DFSButton<String, String> DFSButton = new DFSButton(root, graphView);
+		DFSButton2<String, String> DFSButton = new DFSButton2(root, graphView);
 		DFSButton.setText("Tìm đường theo DFS");
 		SubScene subSceneDFS = new SubScene(DFSButton,245,30);
 
