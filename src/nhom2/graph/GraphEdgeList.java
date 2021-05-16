@@ -203,6 +203,7 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 				}
 			}
 		deleteList.removeAll(deleteList);
+		adjList.remove(v);
 		vertices.remove(v.element());
 	}
 	

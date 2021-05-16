@@ -525,7 +525,7 @@ public class GraphPanel<V, E> extends Pane{
     public void add(VertexNode NewVertexNode) {
     	Line tmp = new Line();  	
     	tmp.setStyle("-fx-stroke-width: 2; -fx-stroke: #ebaf2f; -fx-stroke-dash-array: 2 5 2 5;");
-    	double diffX = 180, diffY = 10;
+    	double diffX = 320, diffY = 10;
     	tmp.startXProperty().bind(NewVertexNode.centerXProperty());
     	tmp.startYProperty().bind(NewVertexNode.centerYProperty());
     	this.getChildren().add(0, tmp);
