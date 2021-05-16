@@ -9,6 +9,7 @@ import java.util.SortedSet;
 import java.util.Stack;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -41,6 +42,7 @@ public class DFSButton<V, E> extends Button{
 	public void setNodeBack(Node nodeBack) {
 		this.gridBack = nodeBack;
 	}
+	
 	private void DFSUtil(Vertex<V> currVertex, GraphPanel<V, E> graphView, Map<Vertex<V>,Integer> mark) {
 		Stack<Vertex<V>> stack = new Stack<>();
 		Map<Vertex<V>, Vertex<V>> preVertex = new HashMap();
@@ -156,7 +158,7 @@ public class DFSButton<V, E> extends Button{
 		grid.add(step, 1, 3);
 		grid.add(next, 2, 3);
 		grid.add(reset, 1, 4);
-		grid.add(lb, 3, 3);
+		grid.add(lb, 2, 3);
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(10, 10, 10, 10));
