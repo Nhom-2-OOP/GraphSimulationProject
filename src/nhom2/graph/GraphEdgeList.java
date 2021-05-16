@@ -207,6 +207,43 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		vertices.remove(v.element());
 	}
 	
+	public Vector<Vertex<V>> isInAPath(Vertex<V> target){
+		Vector<Vertex<V>> res = new Vector<>();
+		
+		// dao nguoc huong cua adjList
+		Map<Vertex<V>, Map<Vertex<V>,Edge<E,V>>> adjListReverse = new HashMap<>();
+		for(Vertex<V> v : vertices.values()) {
+			Map<Vertex<V>, Edge<E,V>> newMap = new HashMap<>();
+			adjListReverse.put(v, newMap);
+		}
+		for(Vertex<V> outVertex : this.adjList.keySet()	) {
+			Map<Vertex<V>, Edge<E,V>> map = adjList.get(outVertex);
+			for(Vertex<V> inVertex : map.keySet()) {
+				adjListReverse.get(inVertex).put(outVertex, map.get(inVertex));
+			}
+		}
+		
+		// dfs
+		Stack<Vertex<V>> stack = new Stack<>();
+		Map<Vertex<V>, Integer> visited = new HashMap<>();
+			
+		stack.push(target);
+		
+		while(!stack.empty()) {
+			Vertex<V> curV = stack.pop();
+			visited.put(curV, 1);
+			res.add(curV);
+			
+			for(Vertex<V> temp : adjListReverse.get(curV).keySet()) {
+				if(visited.containsKey(temp)) {
+					stack.push(temp);
+				}
+			}
+		}
+		
+		return res;
+	}
+	
 	public void TEST() {
 		for (Vertex v: this.adjList.get(this.vertices.get("A")).keySet()){
 			System.out.println(v.element());
