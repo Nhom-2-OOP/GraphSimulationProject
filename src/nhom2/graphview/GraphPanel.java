@@ -528,6 +528,8 @@ public class GraphPanel<V, E> extends Pane{
     	double diffX = 320, diffY = 10;
     	tmp.startXProperty().bind(NewVertexNode.centerXProperty());
     	tmp.startYProperty().bind(NewVertexNode.centerYProperty());
+    	tmp.setEndX(NewVertexNode.centerXProperty().doubleValue());
+        tmp.setEndY(NewVertexNode.centerYProperty().doubleValue());
     	this.getChildren().add(0, tmp);
     	
     	EventHandler<MouseEvent> myHandler01 = new EventHandler<MouseEvent>() {

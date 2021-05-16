@@ -102,7 +102,7 @@ public class Main extends Application {
 		root.add(buttonArea, 0, 0);
 		root.add(col1Pane, 1, 0);
 		nodeCol1Start = root.getChildren().get(2);
-		System.out.println(root.getChildren());		
+		//System.out.println(root.getChildren());		
 
 		Scene scene = new Scene(root);
 		stage = new Stage();

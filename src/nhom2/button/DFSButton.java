@@ -9,7 +9,6 @@ import java.util.SortedSet;
 import java.util.Stack;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -29,7 +28,6 @@ import nhom2.graphview.*;
 import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Edge.EdgeNode;
 import nhom2.graphview.Vertex.VertexNode;
-import nhom2.window.Main;
 
 public class DFSButton<V, E> extends Button{
 	private Stage stage;
@@ -143,6 +141,7 @@ public class DFSButton<V, E> extends Button{
 		Button reset = new Button("Reset");
 		Label lb = new Label();
 		BackButton backBut = new BackButton(root);
+
 		
 		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
 		tfStartVertex.setPrefWidth(85);
@@ -151,16 +150,17 @@ public class DFSButton<V, E> extends Button{
 		reset.setVisible(false);
 		
 		grid.add(backBut, 0, 0);
-		grid.add(lbStartVertex, 0, 2);
-		grid.add(tfStartVertex, 0, 3);
-		grid.add(finish, 0, 4);
-		grid.add(step, 0, 5);
-		grid.add(next, 1, 6);
-		grid.add(reset, 0, 6);
+		grid.add(lbStartVertex, 0, 1);
+		grid.add(tfStartVertex, 1, 1);
+		grid.add(finish, 1, 2);
+		grid.add(step, 1, 3);
+		grid.add(next, 2, 3);
+		grid.add(reset, 1, 4);
+		grid.add(lb, 3, 3);
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(10, 10, 10, 10));
-
+		grid.setMinSize(500, 200);
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {

@@ -21,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import nhom2.graph.*;
 import nhom2.graphview.*;
+import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Edge.EdgeNode;
 import nhom2.graphview.Vertex.VertexNode;
 
@@ -123,27 +124,24 @@ public class FindPathButton<V, E> extends Button {
 		pathPane.setAlignment(Pos.CENTER_LEFT);
 		textPath.setEditable(false);
 		textPath.setMinWidth(300);
-<<<<<<< HEAD
 		
+//		grid.setAlignment(Pos.CENTER_LEFT);
+//		grid.add(new Label("Start"), 0, 0);
+//		grid.add(tfStartVertex, 1, 0);
+//		grid.add(new Label("End"), 0, 1);
+//		grid.add(tfEndVertex, 1, 1);
+//		grid.add(btFind, 1, 2);
+//		grid.add(new Label("Next vertex"), 3, 0);
+//		grid.add(listNV, 3, 1, 3, 4);
+//		grid.add(btOk, 4, 1);
+//		grid.add(reset, 4, 2);
+//		grid.add(back, 4, 3);
+//		grid.add(pathPane, 0, 5, 4, 5);
+//		grid.setHgap(30);
+//		grid.setVgap(10);
+//		grid.setPadding(new Insets(30, 30, 100, 30));
+//		grid.setMinSize(350, 250);
 		
-		grid.setAlignment(Pos.CENTER_LEFT);
-		grid.add(new Label("Start"), 0, 0);
-		grid.add(tfStartVertex, 1, 0);
-		grid.add(new Label("End"), 0, 1);
-		grid.add(tfEndVertex, 1, 1);
-		grid.add(btFind, 1, 2);
-		grid.add(new Label("Next vertex"), 3, 0);
-		grid.add(listNV, 3, 1, 3, 4);
-		grid.add(btOk, 4, 1);
-		grid.add(reset, 4, 2);
-		grid.add(back, 4, 3);
-		grid.add(pathPane, 0, 5, 4, 5);
-		grid.setHgap(30);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(30, 30, 100, 30));
-		grid.setMinSize(350, 250);
-		
-=======
 		pathPane.setLayoutX(36.0);
 		pathPane.setLayoutY(220.0);
 
@@ -162,7 +160,7 @@ public class FindPathButton<V, E> extends Button {
 									listNV, btNext, reset, back,
 									pathPane, lbnext);
 
->>>>>>> 03fc62d6096351f593db189f814a5f2128e132b6
+//>>>>>>> 03fc62d6096351f593db189f814a5f2128e132b6
 		try {
 			Parent root = pane;
 			this.View = new Scene(root);
@@ -185,7 +183,7 @@ public class FindPathButton<V, E> extends Button {
 				// reset status graphPanel
 				for (VertexNode<V> tmp : graphView.vertexNodes.values())
 					tmp.setStyle("-fx-fill: #96d1cd");
-				for (EdgeNode<E, V> tmp : graphView.edgeNodes.values()) {
+				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
 					tmp.setStyle("-fx-stroke: #45597e");
 					if (graphView.edgesWithArrows)
 						tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
@@ -231,7 +229,7 @@ public class FindPathButton<V, E> extends Button {
 					Vertex<V> inputVertex = graphView.theGraph.vertices.get(input);
 					VertexNode<V> inputVertexNode = graphView.vertexNodes.get(inputVertex);
 					Edge<E, V> inputEdge = graphView.theGraph.adjList.get(currentVertex).get(inputVertex);
-					EdgeNode<E, V> inputEdgeNode = graphView.edgeNodes.get(inputEdge);
+					EdgeLine<E, V> inputEdgeNode = graphView.edgeNodes.get(inputEdge);
 					// thay đổi màu đỉnh và cạnh
 					inputVertexNode.setStyle("-fx-fill: yellow");
 					inputEdgeNode.setStyle("-fx-stroke: blue");
@@ -277,7 +275,7 @@ public class FindPathButton<V, E> extends Button {
 				// TODO Auto-generated method stub
 				for (VertexNode<V> tmp : graphView.vertexNodes.values())
 					tmp.setStyle("-fx-fill: #96d1cd");
-				for (EdgeNode<E, V> tmp : graphView.edgeNodes.values()) {
+				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
 					tmp.setStyle("-fx-stroke: #45597e");
 					if (graphView.edgesWithArrows)
 						tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
@@ -298,7 +296,7 @@ public class FindPathButton<V, E> extends Button {
 					currentVertex = collection[countStep - 1];
 					VertexNode<V> backVertexNode = graphView.vertexNodes.get(collection[countStep]);
 					Edge<E, V> backEdge = graphView.theGraph.adjList.get(currentVertex).get(collection[countStep]);
-					EdgeNode<E, V> backEdgeNode = graphView.edgeNodes.get(backEdge);
+					EdgeLine<E, V> backEdgeNode = graphView.edgeNodes.get(backEdge);
 
 					// backtracking
 					int lenVertex = collection[countStep].element().toString().length();

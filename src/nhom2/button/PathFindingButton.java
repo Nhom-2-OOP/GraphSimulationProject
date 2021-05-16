@@ -48,7 +48,7 @@ public class PathFindingButton extends Button{
 
 		// Tao nut tu tim duong di
 		FindPathButton<String, String> btnFindPath = new FindPathButton(stage, graphView);
-		btnFindPath.setText("Tự tìm đường");
+		btnFindPath.setText("Tự tìm đường đi");
 		SubScene subSceneFindPath = new SubScene(btnFindPath,245,30);
 
 		// Tao nut tu dong tim duong di
@@ -58,12 +58,12 @@ public class PathFindingButton extends Button{
 
 		// Tao nut BFS
 		BFSButton<String, String> BFSButton = new BFSButton(root, graphView);
-		BFSButton.setText("Tìm đường BFS");
+		BFSButton.setText("Tìm đường theo BFS");
 		SubScene subSceneBFS = new SubScene(BFSButton,245,30);
 
 		// Tao nut DFS
 		DFSButton<String, String> DFSButton = new DFSButton(root, graphView);
-		DFSButton.setText("Tìm đường DFS");
+		DFSButton.setText("Tìm đường theo DFS");
 		SubScene subSceneDFS = new SubScene(DFSButton,245,30);
 
 		VBox placeList = new VBox(10);

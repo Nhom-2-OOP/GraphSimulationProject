@@ -48,14 +48,14 @@ public class PlacementButton extends Button{
 		BackButton backBut = new BackButton(root);
 		
 		
-		//Tap nut sap xep dinh ngau nhiên
+		//Tap nut sap xep dinh ngau nhiÃªn
 		RandomPlacementButton btnRanPla = new RandomPlacementButton(graphView);
 		btnRanPla.setText("Sắp xếp đỉnh ngẫu nhiên");
 		SubScene subSceneRanPla = new SubScene(btnRanPla,245,30);
 
 		// Tao nut sap dinh theo vong tron
 		CircularPlacementButton btnCircularPla = new CircularPlacementButton(graphView);
-		btnCircularPla.setText("Sắp xếp đỉnh theo vòng tròn");
+		btnCircularPla.setText("Sắp xếp đỉnh theo hình tròn");
 		SubScene subSceneCircularPla = new SubScene(btnCircularPla,245,30);
 
 		// Tao nut sap dinh tu dong
