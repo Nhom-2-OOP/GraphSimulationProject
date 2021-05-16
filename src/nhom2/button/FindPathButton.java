@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -36,7 +37,7 @@ public class FindPathButton<V, E> extends Button {
 	private int countStep = 0;
 	private TextField textPath = new TextField("");
 	private ListView<String> listNV = new ListView<String>();
-
+	private CheckBox checkbox = new CheckBox("Smart Vertex");
 	public void setListNextVertex(GraphPanel<V, E> graphView, Vertex<V> v) {
 		// lay ra danh sach dinh ke, canh ke
 		Map<Vertex<V>, Edge<E, V>> unknown = graphView.theGraph.adjList.get(v);
@@ -46,11 +47,13 @@ public class FindPathButton<V, E> extends Button {
 		int cntV = 0; // so dinh ke hien thi ra
 
 		for (Vertex<V> iterator : adjVertex) {
-			if(graphView.theGraph.isInAPath(endVertex).contains(iterator)) {
-				String mi = new String(iterator.element().toString());
-				listNV.getItems().add(mi);
-				cntV++;
-			}
+			if(checkbox.isSelected())
+				if(!graphView.theGraph.isInAPath(endVertex).contains(iterator) ) 
+					continue;
+			String mi = new String(iterator.element().toString());
+			listNV.getItems().add(mi);
+			cntV++;
+			
 			if (cntV >= LENGTH_LIST_VERTEX)
 				break;
 		}
@@ -119,32 +122,19 @@ public class FindPathButton<V, E> extends Button {
 
 		// Path
 		HBox pathPane = new HBox();
-		pathPane.setSpacing(20);
+		pathPane.setSpacing(10);
 		pathPane.getChildren().addAll(new Label("Path"), textPath);
 		pathPane.setAlignment(Pos.CENTER_LEFT);
 		textPath.setEditable(false);
 		textPath.setMinWidth(300);
-		
-//		grid.setAlignment(Pos.CENTER_LEFT);
-//		grid.add(new Label("Start"), 0, 0);
-//		grid.add(tfStartVertex, 1, 0);
-//		grid.add(new Label("End"), 0, 1);
-//		grid.add(tfEndVertex, 1, 1);
-//		grid.add(btFind, 1, 2);
-//		grid.add(new Label("Next vertex"), 3, 0);
-//		grid.add(listNV, 3, 1, 3, 4);
-//		grid.add(btOk, 4, 1);
-//		grid.add(reset, 4, 2);
-//		grid.add(back, 4, 3);
-//		grid.add(pathPane, 0, 5, 4, 5);
-//		grid.setHgap(30);
-//		grid.setVgap(10);
-//		grid.setPadding(new Insets(30, 30, 100, 30));
-//		grid.setMinSize(350, 250);
-		
-		pathPane.setLayoutX(36.0);
-		pathPane.setLayoutY(220.0);
 
+		pathPane.setLayoutX(14.0);
+		pathPane.setLayoutY(220.0);
+		
+		// check box
+		checkbox.setLayoutX(180.0);
+		checkbox.setLayoutY(180.0);
+		
 		// danh sach dinh ke
 		listNV.setMaxSize(85, 105);
 		listNV.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -158,7 +148,7 @@ public class FindPathButton<V, E> extends Button {
 		pane.setPadding(new Insets(50,50,50,50));
 		pane.getChildren().addAll(lbstart, lbend, tfStartVertex, tfEndVertex, btFind, 
 									listNV, btNext, reset, back,
-									pathPane, lbnext);
+									pathPane, lbnext, checkbox);
 
 //>>>>>>> 03fc62d6096351f593db189f814a5f2128e132b6
 		try {
@@ -172,6 +162,7 @@ public class FindPathButton<V, E> extends Button {
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				stage.setScene(View);
+				stage.setTitle("Lựa chọn đường đi");
 				stage.show();
 			}
 		});
