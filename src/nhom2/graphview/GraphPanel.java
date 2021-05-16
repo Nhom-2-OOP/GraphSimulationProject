@@ -546,7 +546,7 @@ public class GraphPanel<V, E> extends Pane{
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				if (arg0.getClickCount() == 2) {
+				if (arg0.getClickCount() == 1) {
 	    			for (VertexNode v: vertexNodes.values()) {
 	    				if (v.contains(arg0.getX(), arg0.getY())) {
 	    					setOnMouseMoved(null);
