@@ -23,6 +23,7 @@ public class InputButton extends Button  {
 	private Scene View;
 	public static Stage stage;
 	public InputButton(Stage s)  {
+
 		try {
 			Parent root = FXMLLoader.load(InputButton.class.getResource("input/InputButton.fxml"));
 			this.View = new Scene(root);

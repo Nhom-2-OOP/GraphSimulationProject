@@ -101,7 +101,6 @@ public class FindPathButton<V, E> extends Button{
 		grid.setVgap(10);
 		grid.setPadding(new Insets(30, 30, 100, 30));
 		grid.setMinSize(350, 250);
-
 		
 		try {
 			Parent root = grid;
@@ -110,7 +109,7 @@ public class FindPathButton<V, E> extends Button{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				stage.setScene(View);
