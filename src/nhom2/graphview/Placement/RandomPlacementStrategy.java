@@ -15,14 +15,11 @@ public class RandomPlacementStrategy implements PlacementStrategy {
 
         for (VertexView<V> vertex : vertices) {
             
-            double x = rand.nextDouble() * width;
-            double y = rand.nextDouble() * height;
+            double x = rand.nextDouble() * (width - 20);
+            double y = rand.nextDouble() * (height - 20);
             
-            if (x + 20 < width) x -= 20;
-            if (y + 20 < height) y -= 20;
-            
-            if (x - 20 <= 0) x += 20;
-            if (y - 20 <= 0) y += 20;
+            x += 10;
+            y += 10;
                         
             vertex.setPosition(x, y);
         }

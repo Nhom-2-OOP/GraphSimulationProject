@@ -64,8 +64,8 @@ public class AutoFindPaths<V,E> extends Button {
 				paths.setMinWidth(480);
 				paths.setMinHeight(150);
 				
-				Label lb3 = new Label("Tìm và hiển thị đường đi ngắn nhất");
-				Label lb4 = new Label("Tìm tất cả các đường đi ");
+				Label lb3 = new Label("Đường đi ngắn nhất");
+				Label lb4 = new Label("Tìm tất cả đường đi");
 				ChoiceBox<Integer> choosePath = new ChoiceBox();
 				
 				Button OK1 = new Button();
