@@ -42,6 +42,14 @@ public class BFSButton<V, E> extends Button{
 	private Stage stage;
 	protected Scene View;
 	Map<Vertex<V>,Integer> mark = new HashMap();
+	private Node gridBack;
+
+	public Node getNodeBack() {
+		return gridBack;
+	}
+	public void setNodeBack(Node nodeBack) {
+		this.gridBack = nodeBack;
+	}
 
 	private void BFSUtil(Vertex<V> currVertex, GraphPanel<V, E> graphView, Map<Vertex<V>,Integer> mark) {
 		Queue<Vertex<V>> queue = new LinkedList<Vertex<V>>();
@@ -156,8 +164,8 @@ public class BFSButton<V, E> extends Button{
 		Button step = new Button("Hiển thị từng bước");
 		Button next = new Button("Next");
 		Button reset = new Button("Reset");
-		BackButton backBut = new BackButton(root, grid);
-		
+		BackButton backBut = new BackButton(root);
+
 		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
 		tfStartVertex.setPrefWidth(85);
 		tfStartVertex.setMaxWidth(85);
@@ -177,11 +185,10 @@ public class BFSButton<V, E> extends Button{
 
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				Node box = Main.getNodeButtonArea();
-				root.getChildren().remove(box);
-				root.add(grid, 0, 0);
-		
-				}
+				root.getChildren().remove(2);
+				root.add(grid, 1, 0);
+				backBut.setGridBack(gridBack);
+			}
 		});
 
 		finish.setOnAction(new EventHandler<ActionEvent>() {

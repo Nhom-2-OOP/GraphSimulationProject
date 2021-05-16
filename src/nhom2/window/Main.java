@@ -21,10 +21,11 @@ import nhom2.button.FindPathButton;
 import nhom2.button.InfoButton;
 import nhom2.button.InputButton;
 import nhom2.button.RandomPlacementButton;
-import nhom2.button.buttonAreaVBox;
+import nhom2.button.ButtonAreaVBox;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.text.Text;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -34,7 +35,7 @@ import javafx.scene.Node;
 public class Main extends Application {
 	public static GraphEdgeList<String, String> g= build_sample_digraph();
 	public static GraphPanel<String, String> graphView;	
-	public static Node NodeButtonArea;
+	public static Node nodeCol1Start;
 
 	@Override
 	public void start(Stage stage) {
@@ -45,10 +46,6 @@ public class Main extends Application {
 		//graphView.start_automatic_layout();
 		GridPane root = new GridPane();
 
-
-		//VBox
-		VBox buttonArea = new buttonAreaVBox().area(graphView, subSceneGraphPanel, stage, root);
-
 		//		GridPane root = new GridPane();
 		root.setHgap(10);
 		root.setPadding(new Insets(10, 10, 10, 10));
@@ -58,7 +55,7 @@ public class Main extends Application {
 		r.setPercentHeight(80);
 		r.setValignment(VPos.CENTER);
 		root.getRowConstraints().add(r);
-		
+
 		r = new RowConstraints();
 		r.setPercentHeight(20);
 		r.setValignment(VPos.CENTER);
@@ -66,25 +63,46 @@ public class Main extends Application {
 
 		// col 0
 		ColumnConstraints c = new ColumnConstraints();
-		//		c.setPercentWidth(15);
-		c.setPrefWidth(300);
+		c.setPrefWidth(55);
 		c.setHalignment(HPos.CENTER);
 		root.getColumnConstraints().add(c);
-		root.add(buttonArea, 0, 0);
+		//		root.add(buttonArea, 0, 0);
 
-		//col 1
+
+		// col 1
+
+		c = new ColumnConstraints();
+		c.setPrefWidth(245);
+		c.setHalignment(HPos.LEFT);
+		root.getColumnConstraints().add(c);
+		Pane col1Pane = new Pane();
+		Text testText = new Text(10, 50, "col1 include text");
+		col1Pane.getChildren().add(testText);
+		//		root.add(col1Pane, 1, 0);
+
+		//col 2
 		c = new ColumnConstraints();
 		//		c.setPercentWidth(85);
 		c.setHalignment(HPos.CENTER);
 		root.getColumnConstraints().add(c);
 		Pane graphPane = new Pane(); 
-		root.add(graphPane, 1, 0);
+		//		root.add(graphPane, 2, 0);
 		root.setHgrow(graphPane, Priority.ALWAYS);
 		graphPane.resize(500, 500);
 		graphPane.getChildren().add(subSceneGraphPanel);
 		subSceneGraphPanel.heightProperty().bind(graphPane.heightProperty());
 		subSceneGraphPanel.widthProperty().bind(graphPane.widthProperty());
 		graphView.init();
+
+		
+		//VBox
+		VBox buttonArea = new ButtonAreaVBox().area(graphView, subSceneGraphPanel, stage, root);
+
+		root.add(graphPane, 2, 0);		
+		root.add(buttonArea, 0, 0);
+		root.add(col1Pane, 1, 0);
+		nodeCol1Start = root.getChildren().get(2);
+		System.out.println(root.getChildren());		
 
 		Scene scene = new Scene(root);
 		stage = new Stage();
@@ -94,13 +112,13 @@ public class Main extends Application {
 		stage.setScene(scene);
 		stage.show();  
 
-		NodeButtonArea = root.getChildren().get(0);
+		System.out.println(nodeCol1Start);
 		root.setManaged(false);
-		//		root.getChildren().remove(0);
 	}
 
-	public static Node getNodeButtonArea() {
-		return NodeButtonArea;
+
+	public static Node getNodeCol1Start() {
+		return nodeCol1Start;
 	}
 
 	public static void main(String[] args) {

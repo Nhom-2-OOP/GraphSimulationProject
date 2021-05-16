@@ -32,15 +32,25 @@ import nhom2.window.Main;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 public class BackButton extends Button {
+	public Node gridBack;
 
-	public BackButton(GridPane root, GridPane grid) {
-		
+	public Node getGridBack() {
+		return gridBack;
+	}
+
+	public void setGridBack(Node gridBack) {
+		this.gridBack = gridBack;
+	}
+
+	public BackButton(GridPane root) {
 		this.setText("Back");
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				Node box = Main.getNodeButtonArea();
-				root.getChildren().remove(grid);
-				root.add(box, 0, 0);
+				//				System.out.println(gridBack);
+				//				System.out.println(root.getChildren().get(2));
+				root.getChildren().remove(2);
+				root.add(gridBack, 1, 0);
+
 			}
 		});
 

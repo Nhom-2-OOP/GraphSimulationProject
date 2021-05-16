@@ -35,7 +35,14 @@ public class DFSButton<V, E> extends Button{
 	private Stage stage;
 	protected Scene View;
 	Map<Vertex<V>,Integer> mark = new HashMap();
+	private Node gridBack;
 	
+	public Node getNodeBack() {
+		return gridBack;
+	}
+	public void setNodeBack(Node nodeBack) {
+		this.gridBack = nodeBack;
+	}
 	private void DFSUtil(Vertex<V> currVertex, GraphPanel<V, E> graphView, Map<Vertex<V>,Integer> mark) {
 		Stack<Vertex<V>> stack = new Stack<>();
 		Map<Vertex<V>, Vertex<V>> preVertex = new HashMap();
@@ -135,7 +142,7 @@ public class DFSButton<V, E> extends Button{
 		Button next = new Button("Next");
 		Button reset = new Button("Reset");
 		Label lb = new Label();
-		BackButton backBut = new BackButton(root, grid);
+		BackButton backBut = new BackButton(root);
 		
 		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
 		tfStartVertex.setPrefWidth(85);
@@ -157,10 +164,9 @@ public class DFSButton<V, E> extends Button{
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				Node box = Main.getNodeButtonArea();
-				root.getChildren().remove(box);
-				root.add(grid, 0, 0);
-		
+				root.getChildren().remove(2);
+				root.add(grid, 1, 0);
+				backBut.setGridBack(gridBack);
 				}
 		});
 		
