@@ -3,15 +3,17 @@ package nhom2.button;
 import javafx.geometry.Pos;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nhom2.graphview.GraphPanel;
 
 public class ButtonAreaVBox {
-
+	int sizeButton = 55;
 	public VBox area(GraphPanel graphView, SubScene subSceneGraphPanel, Stage stage, GridPane root) {
-		int sizeButton = 55;
 		//Tao nut Home
 		HomeButton btnHome = new HomeButton(root);
 		SubScene subSceneHome = new SubScene(btnHome, sizeButton, sizeButton);
@@ -45,12 +47,74 @@ public class ButtonAreaVBox {
 		InfoButton.setText("Thông tin nhóm");
 		SubScene subSceneInfo = new SubScene(InfoButton,sizeButton,sizeButton);
 
+
+		
 		// Tao layout VBox
 		VBox buttonArea = new VBox(0);
 		buttonArea.getChildren().addAll(subSceneHome,subSceneInput, subSceneCaptureGP, subScenePla, subScenePathFinding, subSceneColoring, subSceneInfo);
 		buttonArea.setAlignment(Pos.TOP_CENTER);
 
+		buttonArea.getStyleClass().add("buttonArea");
+		btnHome.getStyleClass().add("buttonOfButtonArea");
+		btnInput.getStyleClass().add("buttonOfButtonArea");
+		btnCaptureGP.getStyleClass().add("buttonOfButtonArea");
+		btnPla.getStyleClass().add("buttonOfButtonArea");
+		btnPathFinding.getStyleClass().add("buttonOfButtonArea");
+		ColoringButton.getStyleClass().add("buttonOfButtonArea");
+		InfoButton.getStyleClass().add("buttonOfButtonArea");
+		 
 		return buttonArea;
+	}
+	
+	public VBox label() {
+		VBox labelBtnArea = new VBox(0);
+		
+		Label labHome = new Label("Home");
+		labHome.getStyleClass().add("labelOfButtonArea");
+		labHome.setPrefSize(245, sizeButton);
+		Pane btnHome = new Pane(labHome);
+		labelBtnArea.getChildren().add(btnHome);
+		
+
+		Label labInp = new Label("Input");
+		labInp.getStyleClass().add("labelOfButtonArea");
+		labInp.setPrefSize(245, sizeButton);
+		Pane btnInp = new Pane(labInp);
+		labelBtnArea.getChildren().add(btnInp);
+		
+		Label labCap = new Label("Save Image");
+		labCap.getStyleClass().add("labelOfButtonArea");
+		labCap.setPrefSize(245, sizeButton);
+		Pane btnCaptureGP = new Pane(labCap);
+		labelBtnArea.getChildren().add(btnCaptureGP);
+		
+		
+		Label labPla = new Label("Sắp xếp đỉnh");
+		labPla.getStyleClass().add("labelOfButtonArea");
+		labPla.setPrefSize(245, sizeButton);
+		Pane btnPla = new Pane(labPla);
+		labelBtnArea.getChildren().add(btnPla);
+
+		Label labPathFind = new Label("Tìm đường đi đồ thị");
+		labPathFind.getStyleClass().add("labelOfButtonArea");
+		labPathFind.setPrefSize(245, sizeButton);
+		Pane btnPathFinding = new Pane(labPathFind);
+		labelBtnArea.getChildren().add(btnPathFinding);
+
+		Label labColor= new Label("Tô màu đồ thị");
+		labColor.getStyleClass().add("labelOfButtonArea");
+		labColor.setPrefSize(245, sizeButton);
+		Pane btnColor = new Pane(labColor);
+		labelBtnArea.getChildren().add(btnColor);
+		
+		Label labInfo= new Label("Infor");
+		labInfo.getStyleClass().add("labelOfButtonArea");
+		labInfo.setPrefSize(245, sizeButton);
+		Pane btnInfo  = new Pane(labInfo);
+		labelBtnArea.getChildren().add(btnInfo);
+		
+		System.out.println(labelBtnArea.getChildren());
+		return labelBtnArea;
 	}
 
 }

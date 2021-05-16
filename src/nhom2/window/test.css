@@ -1,25 +1,28 @@
-.graphView{
-	 -fx-cursor: hand;
+.graphView {
     -fx-border-color: blue;
     -fx-border-width: 0px;
-		-fx-background-color: rgb(52 ,55, 70)	;
-
-    /* -fx-background-color: rgb(238, 105, 227); */
-    
+    -fx-background-color: rgb(52, 55, 70);
 }
 
-.rootMain{
-	-fx-background-color: rgb(40 ,42, 54)	;
+.rootMain {
+    -fx-background-color: rgb(40 ,42, 54)	;
+}
+
+.buttonArea {
+    -fx-background-color: rgb(52, 55, 70);
+}
+
+.button {
+    -fx-font-size: 16;
+    -fx-cursor: hand;
+}
+
+.buttonOfButtonArea {
+    -fx-background-color: rgb(52, 55, 70);
+    -fx-text-fill: white;
 
 }
 
-.buttonArea{
-    -fx-background-color: rgb(33, 34, 44);    
-
-	
-}
-
-.button{
-	-fx-font-size: 16;
-	-fx-cursor:hand ;
+.labelOfButtonArea{
+	-fx-text-fill: white;
 }

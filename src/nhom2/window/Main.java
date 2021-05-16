@@ -43,7 +43,6 @@ public class Main extends Application {
 		// Tao scene bieu dien do thi
 		graphView = new GraphPanel<>(g);
 		
-//		graphView.getStyleClass().add("graph-view");
 		
 		SubScene subSceneGraphPanel = new SubScene(graphView,800,600);
 		//graphView.start_automatic_layout();
@@ -79,9 +78,13 @@ public class Main extends Application {
 		c.setHalignment(HPos.LEFT);
 		root.getColumnConstraints().add(c);
 		Pane col1Pane = new Pane();
-		Text testText = new Text(10, 50, "col1 include text");
-		col1Pane.getChildren().add(testText);
-
+//		col1Pane.heightProperty().bind(root.heightProperty());
+//		Text testText = new Text(10, 50, "col1 include text");
+		VBox labelButton = new ButtonAreaVBox().label();
+		
+		col1Pane.getChildren().add(labelButton);
+//		col1Pane.prefHeight(500);
+		
 		//col 2
 		c = new ColumnConstraints();
 		//		c.setPercentWidth(85);
@@ -99,7 +102,7 @@ public class Main extends Application {
 
 		//VBox
 		VBox buttonArea = new ButtonAreaVBox().area(graphView, subSceneGraphPanel, stage, root);
-		buttonArea.getStyleClass().add("buttonArea");
+//		buttonArea.getStyleClass().add("buttonArea");
 
 		root.add(graphPane, 2, 0);		
 		root.add(buttonArea, 0, 0);
