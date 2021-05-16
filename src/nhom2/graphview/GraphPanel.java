@@ -6,6 +6,7 @@ import nhom2.coloring.Coloring;
 import nhom2.graph.*;
 import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Edge.EdgeNode;
+import nhom2.graphview.Edge.EdgeView;
 import nhom2.graphview.Label.Label;
 import nhom2.graphview.Placement.PlacementStrategy;
 import nhom2.graphview.Placement.RandomPlacementStrategy;
@@ -37,6 +38,8 @@ import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
@@ -356,12 +359,33 @@ public class GraphPanel<V, E> extends Pane{
       MenuItem item = new MenuItem("Xóa cạnh");
       item.setOnAction(new EventHandler<ActionEvent>() {
           public void handle(ActionEvent e) {
-        	  theGraph.removeEdge(edge);
-        	  getChildren().remove(graphEdge);
-        	  edgeNodes.remove(edge);
-        	  Alert inform = new Alert(Alert.AlertType.INFORMATION);
-        	  inform.setHeaderText("Xóa cạnh thành công");
-        	  inform.showAndWait();
+        	  if (theGraph.isDirected) {
+        		  if (theGraph.areAdjacent(outVertex, inVertex)) {
+        			  Alert alert = new Alert(AlertType.CONFIRMATION);
+        			  alert.setTitle("Chọn hướng cạnh xóa");
+        			  alert.setHeaderText("Hãy chọn hướng cạnh xóa");
+        			  alert.setContentText(null);
+
+        			  ButtonType buttonTypeOne = new ButtonType(inVertex.element() + " đến " + outVertex.element());
+        			  ButtonType buttonTypeTwo = new ButtonType(outVertex.element() + " đến " + inVertex.element());
+        			  ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+        			  alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+
+        			  Optional<ButtonType> result = alert.showAndWait();
+        			  if (result.get() == buttonTypeOne){
+        				  removeEdge(edge, graphEdge);
+        			  } else if (result.get() == buttonTypeTwo) {
+        				  removeEdge(theGraph.adjList.get(outVertex).get(inVertex), edgeNodes.get(theGraph.adjList.get(outVertex).get(inVertex)));
+        			  }
+        		  }
+        		  else {
+        			  removeEdge(edge, graphEdge);
+        		  }
+        	  }
+        	  else {
+        		  removeEdge(edge, graphEdge);
+        	  }
           }
       });
       graphEdge.contextMenu.getItems().add(item);
@@ -372,6 +396,16 @@ public class GraphPanel<V, E> extends Pane{
             }
       });
       return graphEdge;
+    }
+    
+    public void removeEdge(Edge edge, EdgeView graphEdge) {
+    	theGraph.removeEdge(edge);
+  	  	getChildren().remove(graphEdge);
+  	  	if (theGraph.isDirected) getChildren().remove(graphEdge.getAttachedArrow());
+  	  	edgeNodes.remove(edge);
+  	  	Alert inform = new Alert(Alert.AlertType.INFORMATION);
+  	  	inform.setHeaderText("Xóa cạnh thành công");
+  	  	inform.showAndWait();
     }
     
     public void init(){

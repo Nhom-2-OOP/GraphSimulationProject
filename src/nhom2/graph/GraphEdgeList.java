@@ -51,8 +51,8 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		Vertex outVertex = e.Vertices()[0];
 		Vertex inVertex = e.Vertices()[1];
 		edges.remove(e.element());
-		adjList.get(inVertex).remove(outVertex);
-		if (!this.isDirected) adjList.get(outVertex).remove(inVertex);
+		adjList.get(outVertex).remove(inVertex);
+		if (!this.isDirected) adjList.get(inVertex).remove(outVertex);
 	}
 	
 	public Collection<Vertex<V>> incidentVertex(Vertex<V> v) {
@@ -154,7 +154,7 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		MyVertex outVertex = (MyVertex)vertices.get(vElement1);
         MyVertex inVertex = (MyVertex)vertices.get(vElement2);
         
-        if (!this.isDirected && adjList.get(outVertex).get(inVertex) != null) return null;
+        if (adjList.get(outVertex).get(inVertex) != null) return null;
         
         MyEdge newEdge = new MyEdge(edgeElement, outVertex, inVertex);
         if (NumOfEdge.get(outVertex).get(inVertex) == null) {
