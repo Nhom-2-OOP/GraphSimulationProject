@@ -96,7 +96,7 @@ public class BFSButton<V, E> extends Button{
 		BackButton backBut = new BackButton(root);
 
 		
-		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
+		tfStartVertex.setPromptText("Nhập đỉnh");
 		tfStartVertex.setPrefWidth(85);
 		tfStartVertex.setMaxWidth(85);
 		next.setVisible(false);
