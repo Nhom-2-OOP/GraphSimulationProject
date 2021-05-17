@@ -101,10 +101,7 @@ public class BFSButton<V, E> extends Button{
 		Button finish = new Button("Hiển thị kết quả");
 		Button step = new Button("Hiển thị từng bước");
 		Button next = new Button("Next");
-<<<<<<< HEAD
-		Button reset = new Button("Reset");
 		Label lb = new Label();
-		BackButton backBut = new BackButton(root);
 		
 		EventHandler<ActionEvent> current = backBut.getOnAction();
 		
@@ -122,12 +119,9 @@ public class BFSButton<V, E> extends Button{
 		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
 		tfStartVertex.setPrefWidth(85);
 		tfStartVertex.setMaxWidth(85);
-=======
->>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
 		next.setVisible(false);
 		Button reset = new Button("Reset");
 		reset.setVisible(false);
-		Label lb = new Label();
 			
 		gridChild.setVgap(30);
 		
