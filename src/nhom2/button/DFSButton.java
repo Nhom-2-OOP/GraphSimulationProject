@@ -12,6 +12,7 @@ import java.util.TreeSet;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -22,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import nhom2.graph.*;
@@ -33,17 +35,33 @@ import nhom2.graphview.Vertex.VertexNode;
 public class DFSButton<V, E> extends Button{
 	private Stage stage;
 	protected Scene View;
+<<<<<<< HEAD
 	Map<Vertex<V>,Integer> mark = new HashMap();
+=======
+
+	private GraphPanel<V,E> GraphView;
+
+	private Map<Vertex<V>, Vertex<V>> parVertex = new HashMap<>();
+	private Map<Vertex<V>,Integer> IsVisited = new HashMap();
+	private ArrayList<Vertex<V>> VisitingOrder = new ArrayList<>();
+	private Vertex<V> curVertex;
+
+>>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
 	private Node gridBack;
+<<<<<<< HEAD
 	private Label lb = new Label();
 	private Button next = new Button("Next");
 	
+=======
+
+>>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
 	public Node getNodeBack() {
 		return gridBack;
 	}
 	public void setNodeBack(Node nodeBack) {
 		this.gridBack = nodeBack;
 	}
+<<<<<<< HEAD
 	
 	private void DFSUtil(Vertex<V> currVertex, GraphPanel<V, E> graphView, Map<Vertex<V>,Integer> mark) {
 		Stack<Vertex<V>> stack = new Stack<>();
@@ -64,7 +82,14 @@ public class DFSButton<V, E> extends Button{
 				stack.push(currVertex);
 			}
 		}
+=======
 
+	private void DFS(Vertex v) {
+		IsVisited.put(v, new Integer(1));
+		VisitingOrder.add(v);
+>>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
+
+<<<<<<< HEAD
 		while(stack.empty() == false) {
 			currVertex = stack.peek();
 			stack.pop();
@@ -91,9 +116,18 @@ public class DFSButton<V, E> extends Button{
 					preVertex.put(currVertex, tmpcurr);
 					stack.push(currVertex);
 				}
+=======
+		Set<Vertex<V>> adjVertex = GraphView.theGraph.adjList.get(v).keySet();
+
+		for (Vertex<V> u: adjVertex) {
+			if (IsVisited.get(u).intValue() == 0) {
+				DFS(u);
+				parVertex.put(u, v);
+>>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
 			}
 		}
 	}
+<<<<<<< HEAD
 	private void DFS(Vertex<V> startVertex, GraphPanel<V, E> graphView) {
 		Map<Vertex<V>, VertexNode<V>> tmp = graphView.vertexNodes;
 		Set<Vertex<V>> vertex = tmp.keySet();
@@ -140,12 +174,25 @@ public class DFSButton<V, E> extends Button{
 	}
 	
 	//DFS button
+=======
+
+>>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
 	public DFSButton(GridPane root, GraphPanel<V, E> graphView) {
+<<<<<<< HEAD
+=======
+		this.GraphView = graphView;
+
+>>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
 		GridPane grid = new GridPane();
+		BackButton backBut = new BackButton(root);
+
+		GridPane gridChild = new GridPane();
 		Label lbStartVertex = new Label("Start Vertex:");
 		TextField tfStartVertex = new TextField();
+		tfStartVertex.setPromptText("Nhập đỉnh");
 		Button finish = new Button("Hiển thị kết quả");
 		Button step = new Button("Hiển thị từng bước");
+<<<<<<< HEAD
 		Button reset = new Button("Reset");
 		BackButton backBut = new BackButton(root);
 
@@ -153,10 +200,27 @@ public class DFSButton<V, E> extends Button{
 		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
 		tfStartVertex.setPrefWidth(85);
 		tfStartVertex.setMaxWidth(85);
+=======
+		Button next = new Button("Next");
+>>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
 		next.setVisible(false);
+		Button reset = new Button("Reset");
 		reset.setVisible(false);
-		
+		Label lb = new Label();
+
+		gridChild.setVgap(30);
+
+		gridChild.add(lbStartVertex, 0, 0);
+		gridChild.add(tfStartVertex, 0, 1);
+		gridChild.add(finish, 0, 2);
+		gridChild.add(step, 0, 3);
+		HBox nexResBox = new HBox(60);
+		nexResBox.getChildren().addAll(next, reset);
+		gridChild.add(lb, 0, 4);
+		gridChild.add(nexResBox, 0, 4);
+
 		grid.add(backBut, 0, 0);
+<<<<<<< HEAD
 		grid.add(lbStartVertex, 0, 1);
 		grid.add(tfStartVertex, 1, 1);
 		grid.add(finish, 1, 2);
@@ -182,21 +246,37 @@ public class DFSButton<V, E> extends Button{
 	    });
 
 		
+=======
+		grid.add(gridChild, 0, 1);
+
+		gridChild.setPadding(new Insets(30, 10, 0, 10));
+		gridChild.setHalignment(tfStartVertex, HPos.RIGHT);
+
+		lbStartVertex.getStyleClass().add("lbStartVerTexFS");
+		tfStartVertex.getStyleClass().add("tfStartVertexFS");
+		finish.getStyleClass().add("FSFinishStep");
+		step.getStyleClass().add("FSFinishStep");
+		next.getStyleClass().add("FSNextReset");
+		reset.getStyleClass().add("FSNextReset");
+		nexResBox.getStyleClass().add("nexResBox");
+		lb.getStyleClass().add("FSlb");
+
+>>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				root.getChildren().remove(2);
 				root.add(grid, 1, 0);
 				backBut.setGridBack(gridBack);
-				}
+			}
 		});
-		
+
 		this.setOnMouseEntered(mouseEvent -> {
 			this.getStyleClass().add("Col1ChooseButtonEntered");		
 		});
 		this.setOnMouseExited(mouseEvent -> {
 			this.getStyleClass().remove(2);
 		});
-		
+
 		//button hiển thị kết quả
 		finish.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -219,11 +299,29 @@ public class DFSButton<V, E> extends Button{
 					alert.show();
 					return;
 				}
+<<<<<<< HEAD
+=======
+
+				for (Vertex<V> v: graphView.theGraph.vertices.values()) IsVisited.put(v, new Integer(0));
+				parVertex.put(startVertex, startVertex);
+				DFS(startVertex);
+
+				for (Vertex<V> v: parVertex.keySet()) {
+					VertexNode VertexView = (VertexNode)GraphView.vertexNodes.get(v);
+					VertexView.setStyle("-fx-fill: red");
+					if (v != startVertex) {
+						EdgeLine EdgeView = (EdgeLine)GraphView.edgeNodes.get(GraphView.theGraph.getEdge(parVertex.get(v), v));
+						EdgeView.setStyle("-fx-stroke: blue");
+						if(GraphView.theGraph.isDirected == true) EdgeView.getAttachedArrow().setStyle("-fx-stroke: blue");
+					}
+				}
+
+>>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
 				reset.setVisible(true);
 				DFS(startVertex,graphView);
 			}
 		});
-		
+
 		//button hiển thị từng bước
 		step.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -237,6 +335,11 @@ public class DFSButton<V, E> extends Button{
 					tmp.setStyle("-fx-stroke: #45597e");
 					if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
 				}
+<<<<<<< HEAD
+=======
+				reset.setVisible(false);
+
+>>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
 				tfStartVertex.commitValue();
 				String dataStart = tfStartVertex.getText();
 				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
@@ -249,21 +352,39 @@ public class DFSButton<V, E> extends Button{
 				reset.setVisible(true);
 				next.setVisible(true);
 				graphView.vertexNodes.get(startVertex).setStyle("-fx-fill: red");
+<<<<<<< HEAD
 				Map<Vertex<V>, VertexNode<V>> tmp = graphView.vertexNodes;
 				Set<Vertex<V>> vertex = tmp.keySet();
 				for(Vertex<V> iterator : vertex)
 					mark.put(iterator, 0);
 				Map<Vertex<V>, Edge<E, V>> temp = graphView.theGraph.adjList.get(startVertex);
 				if(temp.size()==0) {
+=======
+
+				parVertex.clear();
+				IsVisited.clear();
+				VisitingOrder.clear();
+
+				for (Vertex<V> v: graphView.theGraph.vertices.values()) IsVisited.put(v, new Integer(0));
+				parVertex.put(startVertex, startVertex);
+				DFS(startVertex);
+
+				if (VisitingOrder.size() == 1){
+>>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
 					lb.setText("Done!");
 					next.setVisible(false);
 					return;
 				}
+<<<<<<< HEAD
 				tmpnext = startVertex;
+=======
+
+				curVertex = startVertex;
+>>>>>>> branch 'gitHub' of https://github.com/Nhom-2-OOP/GraphSimulationProject
 			}
-			
+
 		});
-		
+
 		next.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -275,9 +396,9 @@ public class DFSButton<V, E> extends Button{
 				currVertexNode.setStyle("-fx-fill: red");
 				DFSstep(currVertex,graphView);
 			}
-			
+
 		});
-		
+
 		reset.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -291,8 +412,35 @@ public class DFSButton<V, E> extends Button{
 				}
 				reset.setVisible(false);
 			}
-			
+
+		});
+		
+		finish.setOnMouseEntered(mouseEvent -> {
+			finish.getStyleClass().add("FSFinishStepEntered");
+		});
+		finish.setOnMouseExited(mouseEvent -> {
+			finish.getStyleClass().remove(2);
+		});
+		step.setOnMouseEntered(mouseEvent -> {
+			step.getStyleClass().add("FSFinishStepEntered");
+		});
+		step.setOnMouseExited(mouseEvent -> {
+			step.getStyleClass().remove(2);
+		});
+		
+		
+		next.setOnMouseEntered(mouseEvent -> {
+			next.getStyleClass().add("FSNextResetEntered");
+		});
+		next.setOnMouseExited(mouseEvent -> {
+			next.getStyleClass().remove(2);
+		});
+		reset.setOnMouseEntered(mouseEvent -> {
+			reset.getStyleClass().add("FSNextResetEntered");
+		});
+		reset.setOnMouseExited(mouseEvent -> {
+			reset.getStyleClass().remove(2);
 		});
 	}
-	
+
 }
