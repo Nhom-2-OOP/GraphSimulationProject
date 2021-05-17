@@ -2,13 +2,11 @@
 	-fx-border-color: blue;
 	-fx-border-width: 0px;
 	-fx-background-color: rgb(52, 55, 70);
-
 }
 
 .rootMain {
 	-fx-background-color: rgb(40, 42, 54);
 	/* -fx-text-fill: #9aa8d4; */
-	-fx-text-fill: red;
 }
 
 .buttonArea {
@@ -38,9 +36,9 @@
 	-fx-background-repeat: no-repeat;
 	-fx-background-size: 80.0%;
 }
-.btnHomeEntered{
-		-fx-background-image: url("homeEntered.png");
-	
+
+.btnHomeEntered {
+	-fx-background-image: url("homeEntered.png");
 }
 
 .btnInput {
@@ -49,9 +47,9 @@
 	-fx-background-repeat: no-repeat;
 	-fx-background-size: 80.0%;
 }
-.btnInputEntered{
-		-fx-background-image: url("inputEntered.png");
-	
+
+.btnInputEntered {
+	-fx-background-image: url("inputEntered.png");
 }
 
 .btnCaptureGP {
@@ -60,9 +58,9 @@
 	-fx-background-repeat: no-repeat;
 	-fx-background-size: 80.0%;
 }
-.btnCaptureGPEntered{
-		-fx-background-image: url("saveEntered.png");
-	
+
+.btnCaptureGPEntered {
+	-fx-background-image: url("saveEntered.png");
 }
 
 .btnPla {
@@ -71,9 +69,9 @@
 	-fx-background-repeat: no-repeat;
 	-fx-background-size: 80.0%;
 }
-.btnPlaEntered{
-		-fx-background-image: url("placementEntered.png");
-	
+
+.btnPlaEntered {
+	-fx-background-image: url("placementEntered.png");
 }
 
 .btnPathFinding {
@@ -82,9 +80,9 @@
 	-fx-background-repeat: no-repeat;
 	-fx-background-size: 80.0%;
 }
-.btnPathFindingEntered{
-		-fx-background-image: url("pathFindingEntered.png");
-	
+
+.btnPathFindingEntered {
+	-fx-background-image: url("pathFindingEntered.png");
 }
 
 .ColoringButton {
@@ -93,9 +91,9 @@
 	-fx-background-repeat: no-repeat;
 	-fx-background-size: 80.0%;
 }
-.ColoringButtonEntered{
-		-fx-background-image: url("colorEntered.png");
-	
+
+.ColoringButtonEntered {
+	-fx-background-image: url("colorEntered.png");
 }
 
 .InfoButton {
@@ -104,7 +102,21 @@
 	-fx-background-repeat: no-repeat;
 	-fx-background-size: 80.0%;
 }
-.InfoButtonEntered{
-		-fx-background-image: url("infoEntered.png");
-	
+
+.InfoButtonEntered {
+	-fx-background-image: url("infoEntered.png");
 }
+
+.BackButton {
+	-fx-background-image: url("backDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 80.0%;
+}
+
+.BackButtonEntered {
+	-fx-background-image: url("backEntered.png");
+}
+
+
+

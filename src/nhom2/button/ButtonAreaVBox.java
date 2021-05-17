@@ -130,7 +130,6 @@ public class ButtonAreaVBox {
 		Pane btnColor = new Pane(labColor);
 		labelBtnArea.getChildren().add(btnColor);
 		
-//		labelBtnArea.getStyleClass().add("labelBtnArea");
 		return labelBtnArea;
 	}
 

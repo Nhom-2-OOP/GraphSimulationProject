@@ -44,12 +44,20 @@ public class BackButton extends Button {
 
 	public BackButton(GridPane root) {
 		this.setText("Back");
+		this.getStyleClass().add("BackButton");
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				root.getChildren().remove(2);
 				root.add(gridBack, 1, 0);
 
 			}
+		});
+		
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("BackButtonEntered");
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(2);
 		});
 
 	}

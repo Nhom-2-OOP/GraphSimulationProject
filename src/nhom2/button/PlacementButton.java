@@ -43,6 +43,7 @@ public class PlacementButton extends Button{
 
 	public PlacementButton( GridPane root, GraphPanel graphView) {
 		GridPane grid = new GridPane();
+
 		//BackButton
 		BackButton backBut = new BackButton(root);
 		
@@ -65,7 +66,7 @@ public class PlacementButton extends Button{
 		VBox placeList = new VBox(10);
 		placeList.getChildren().addAll(backBut, subSceneRanPla, subSceneCircularPla, subSceneAutoPla);
 		grid.getChildren().add(placeList);
-		
+				
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				backBut.setGridBack(Main.getNodeCol1Start());
