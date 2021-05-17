@@ -38,9 +38,9 @@ import nhom2.graphview.Vertex.VertexNode;
 import nhom2.window.Main;
 
 
-public class PathFindingButton extends Button{
+public class PathFindingButton<V,E> extends Button{
 
-	public PathFindingButton(GridPane root, Stage stage, GraphPanel graphView) {
+	public PathFindingButton(GridPane root, Stage stage, GraphPanel<V,E> graphView) {
 		GridPane grid = new GridPane();
 
 		//BackButton
@@ -76,6 +76,12 @@ public class PathFindingButton extends Button{
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
+				for (VertexNode tmp : graphView.vertexNodes.values())
+					tmp.setStyle("-fx-fill: #96d1cd");
+				for (EdgeLine tmp : graphView.edgeNodes.values()) {
+					tmp.setStyle("-fx-stroke: #45597e");
+					if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+				}
 				root.getChildren().remove(2);
 				root.add(grid, 1, 0);
 				backBut.setGridBack(Main.getNodeCol1Start());

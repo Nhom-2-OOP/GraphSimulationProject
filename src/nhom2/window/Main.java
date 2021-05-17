@@ -171,6 +171,11 @@ public class Main extends Application {
 
 
 	public static void setGraph(GraphEdgeList<String, String> NewGraph) {
+		for (Edge<String, String> edge : NewGraph.edges.values()) {
+            Vertex vertex = edge.Vertices()[0];
+            Vertex oppositeVertex = edge.Vertices()[1];
+            System.out.println(vertex.element() + " " + oppositeVertex.element());
+        }
 		g = NewGraph;
 		graphView.Renew(NewGraph, true); 
 	}

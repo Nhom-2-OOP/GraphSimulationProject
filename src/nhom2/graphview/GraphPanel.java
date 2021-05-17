@@ -235,6 +235,12 @@ public class GraphPanel<V, E> extends Pane{
 		vertexNodes.clear();;
         edgeNodes.clear();; 
 		this.getChildren().clear();
+		
+//		for (Edge<E,V> edge : theGraph.edges.values()) {
+//            Vertex vertex = edge.Vertices()[0];
+//            Vertex oppositeVertex = edge.Vertices()[1];
+//            System.out.println(vertex.element() + " " + oppositeVertex.element());
+//        }
        
         initNodes();
         this.init();
@@ -504,6 +510,8 @@ public class GraphPanel<V, E> extends Pane{
     	for (Edge<E, V> edge : theGraph.edges.values()) {
             Vertex<V> vertex = edge.Vertices()[0];
             Vertex<V> oppositeVertex = edge.Vertices()[1];
+            
+//          System.out.println(vertex.element() + " " + oppositeVertex.element());
 
             VertexNode<V> graphVertexIn = vertexNodes.get(vertex);
             VertexNode<V> graphVertexOppositeOut = vertexNodes.get(oppositeVertex);
@@ -526,7 +534,7 @@ public class GraphPanel<V, E> extends Pane{
     public void add(VertexNode NewVertexNode) {
     	Line tmp = new Line();  	
     	tmp.setStyle("-fx-stroke-width: 2; -fx-stroke: #ebaf2f; -fx-stroke-dash-array: 2 5 2 5;");
-    	double diffX = 320, diffY = 10;
+    	double diffX = 319, diffY = 0;
     	tmp.startXProperty().bind(NewVertexNode.centerXProperty());
     	tmp.startYProperty().bind(NewVertexNode.centerYProperty());
     	tmp.setEndX(NewVertexNode.centerXProperty().doubleValue());

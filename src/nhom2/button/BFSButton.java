@@ -23,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -94,6 +95,18 @@ public class BFSButton<V, E> extends Button{
 		Button reset = new Button("Reset");
 		Label lb = new Label();
 		BackButton backBut = new BackButton(root);
+		
+		EventHandler<ActionEvent> current = backBut.getOnAction();
+		
+		backBut.setOnAction(e -> {
+	        current.handle(e);
+	        for (VertexNode<V> tmp : graphView.vertexNodes.values())
+				tmp.setStyle("-fx-fill: #96d1cd");
+			for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
+				tmp.setStyle("-fx-stroke: #45597e");
+				if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+			}
+	    });
 
 		
 		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
@@ -117,6 +130,12 @@ public class BFSButton<V, E> extends Button{
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
+				for (VertexNode<V> tmp : graphView.vertexNodes.values())
+					tmp.setStyle("-fx-fill: #96d1cd");
+				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
+					tmp.setStyle("-fx-stroke: #45597e");
+					if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+				}
 				root.getChildren().remove(2);
 				root.add(grid, 1, 0);
 				backBut.setGridBack(gridBack);
@@ -165,6 +184,8 @@ public class BFSButton<V, E> extends Button{
 					VertexView.setStyle("-fx-fill: red");
 					if (v != startVertex) {
 						EdgeLine EdgeView = (EdgeLine)GraphView.edgeNodes.get(GraphView.theGraph.getEdge(parVertex.get(v), v));
+//						System.out.print(parVertex.get(v).element() + " ");
+//						System.out.println(v.element());
 						EdgeView.setStyle("-fx-stroke: blue");
 						if(GraphView.theGraph.isDirected == true) EdgeView.getAttachedArrow().setStyle("-fx-stroke: blue");
 					}
