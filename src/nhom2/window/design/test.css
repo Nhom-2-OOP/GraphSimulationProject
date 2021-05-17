@@ -138,7 +138,7 @@
 }
 
 .tfStartVertexFS{
-	-fx-max-width: 200;
+	-fx-max-width: 210;
 	-fx-pref-height: 30;
 	-fx-font-size: 16;
 	-fx-font-style: italic;
@@ -155,13 +155,30 @@
 .FSFinishStepEntered{
 	-fx-text-fill: white;
 }
+
 .FSNextReset{
-	-fx-alignment: center-left;
+	-fx-alignment: center;
 	-fx-background-color:  rgb(40, 42, 54);
 	-fx-text-fill: #9aa8d4;
 	-fx-pref-height: 30;
-    -fx-max-width: 100;
-	-fx-padding: 30 0.0 0 10 ;
+    -fx-pref-width: 100;
+    -fx-border-color: blue;
+	-fx-border-width: 0px;
+	-fx-background-color: rgb(52, 55, 70);
+		-fx-border-color: #9e5b8b;
+	-fx-border-width: 1px;
 }
 
+.FSNextResetEntered{
+	-fx-text-fill: white;
+	-fx-background-color: #3c3d51;
+
+}
+.nexResBox{
+	-fx-pref-height: 30;
+    -fx-pref-width: 245;
+    -fx-alignment: center ;
+    -fx-padding: 30 0.0 0 10 ;
+
+}
 

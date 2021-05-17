@@ -26,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
@@ -108,15 +109,17 @@ public class BFSButton<V, E> extends Button{
 		gridChild.add(tfStartVertex, 0, 1);
 		gridChild.add(finish, 0, 2);
 		gridChild.add(step, 0, 3);
-		gridChild.add(next, 0, 4);
-		gridChild.add(reset, 1, 4);
+		HBox nexResBox = new HBox(70);
+		nexResBox.getChildren().addAll(next, reset);
+		gridChild.add(nexResBox, 0, 4);
 		gridChild.add(lb, 0, 5);
 		
 		grid.add(backBut, 0, 0);
 		grid.add(gridChild, 0, 1);
 	
-		gridChild.setPadding(new Insets(30, 0, 0, 10));
-		gridChild.setHalignment(tfStartVertex, HPos.CENTER);
+		gridChild.setPadding(new Insets(30, 10, 0, 10));
+		gridChild.setHalignment(tfStartVertex, HPos.RIGHT);
+
 		
 		lbStartVertex.getStyleClass().add("lbStartVerTexFS");
 		tfStartVertex.getStyleClass().add("tfStartVertexFS");
@@ -124,6 +127,7 @@ public class BFSButton<V, E> extends Button{
 		step.getStyleClass().add("FSFinishStep");
 		next.getStyleClass().add("FSNextReset");
 		reset.getStyleClass().add("FSNextReset");
+		nexResBox.getStyleClass().add("nexResBox");
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
@@ -184,12 +188,7 @@ public class BFSButton<V, E> extends Button{
 			}
 		});
 		
-		finish.setOnMouseEntered(mouseEvent -> {
-			finish.getStyleClass().add("FSFinishStepEntered");
-		});
-		finish.setOnMouseExited(mouseEvent -> {
-			finish.getStyleClass().remove(2);
-		});
+
 		
 		//button hiển thị từng bước
 		step.setOnAction(new EventHandler<ActionEvent>() {
@@ -237,13 +236,6 @@ public class BFSButton<V, E> extends Button{
 			}
 			
 		});
-		
-		step.setOnMouseEntered(mouseEvent -> {
-			step.getStyleClass().add("FSFinishStepEntered");
-		});
-		step.setOnMouseExited(mouseEvent -> {
-			step.getStyleClass().remove(2);
-		});
 
 		next.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -279,6 +271,35 @@ public class BFSButton<V, E> extends Button{
 			}
 			
 		});
+		
+		finish.setOnMouseEntered(mouseEvent -> {
+			finish.getStyleClass().add("FSFinishStepEntered");
+		});
+		finish.setOnMouseExited(mouseEvent -> {
+			finish.getStyleClass().remove(2);
+		});
+		step.setOnMouseEntered(mouseEvent -> {
+			step.getStyleClass().add("FSFinishStepEntered");
+		});
+		step.setOnMouseExited(mouseEvent -> {
+			step.getStyleClass().remove(2);
+		});
+		
+		
+		next.setOnMouseEntered(mouseEvent -> {
+			next.getStyleClass().add("FSNextResetEntered");
+			System.out.println(next.getStyleClass());
+		});
+		next.setOnMouseExited(mouseEvent -> {
+			next.getStyleClass().remove(2);
+		});
+		reset.setOnMouseEntered(mouseEvent -> {
+			reset.getStyleClass().add("FSNextResetEntered");
+		});
+		reset.setOnMouseExited(mouseEvent -> {
+			reset.getStyleClass().remove(2);
+		});
+		
 	}
 	
 }
