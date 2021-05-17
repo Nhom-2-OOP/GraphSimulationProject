@@ -28,7 +28,8 @@
 }
 
 .labelOfButtonArea {
-	-fx-text-fill: white;
+	-fx-text-fill: #9aa8d4;
+	-fx-font-style: italic;
 }
 
 .btnHome {

@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nhom2.graphview.GraphPanel;
@@ -91,45 +92,45 @@ public class ButtonAreaVBox {
 	public VBox label() {
 		VBox labelBtnArea = new VBox(0);
 		
-		Label labHome = new Label("Home");
+		Label labHome = new Label(" Home");
 		labHome.getStyleClass().add("labelOfButtonArea");
 		labHome.setPrefSize(245, sizeButton);
 		Pane btnHome = new Pane(labHome);
 		labelBtnArea.getChildren().add(btnHome);
 		
 
-		Label labInp = new Label("Input");
+		Label labInp = new Label(" Input");
 		labInp.getStyleClass().add("labelOfButtonArea");
 		labInp.setPrefSize(245, sizeButton);
 		Pane btnInp = new Pane(labInp);
 		labelBtnArea.getChildren().add(btnInp);
 		
-		Label labCap = new Label("Save Image");
+		Label labCap = new Label(" Save Image");
 		labCap.getStyleClass().add("labelOfButtonArea");
 		labCap.setPrefSize(245, sizeButton);
 		Pane btnCaptureGP = new Pane(labCap);
 		labelBtnArea.getChildren().add(btnCaptureGP);
 		
 		
-		Label labPla = new Label("Sắp xếp đỉnh");
+		Label labPla = new Label(" Sắp xếp đỉnh");
 		labPla.getStyleClass().add("labelOfButtonArea");
 		labPla.setPrefSize(245, sizeButton);
 		Pane btnPla = new Pane(labPla);
 		labelBtnArea.getChildren().add(btnPla);
 
-		Label labPathFind = new Label("Tìm đường đi đồ thị");
+		Label labPathFind = new Label(" Tìm đường đi đồ thị");
 		labPathFind.getStyleClass().add("labelOfButtonArea");
 		labPathFind.setPrefSize(245, sizeButton);
 		Pane btnPathFinding = new Pane(labPathFind);
 		labelBtnArea.getChildren().add(btnPathFinding);
 
-		Label labColor= new Label("Tô màu đồ thị");
+		Label labColor= new Label(" Tô màu đồ thị");
 		labColor.getStyleClass().add("labelOfButtonArea");
 		labColor.setPrefSize(245, sizeButton);
 		Pane btnColor = new Pane(labColor);
 		labelBtnArea.getChildren().add(btnColor);
 		
-		System.out.println(labelBtnArea.getChildren());
+//		labelBtnArea.getStyleClass().add("labelBtnArea");
 		return labelBtnArea;
 	}
 
