@@ -106,7 +106,7 @@ public class Main extends Application {
 		Scene scene = new Scene(root);
 
 		scene.getStylesheets().add(getClass().getResource("design/test.css").toExternalForm());
-		System.out.println(scene.getStylesheets());
+		//System.out.println(scene.getStylesheets());
 
 
 		stage = new Stage();
@@ -171,11 +171,11 @@ public class Main extends Application {
 
 
 	public static void setGraph(GraphEdgeList<String, String> NewGraph) {
-		for (Edge<String, String> edge : NewGraph.edges.values()) {
-            Vertex vertex = edge.Vertices()[0];
-            Vertex oppositeVertex = edge.Vertices()[1];
-            System.out.println(vertex.element() + " " + oppositeVertex.element());
-        }
+//		for (Edge<String, String> edge : NewGraph.edges.values()) {
+//            Vertex vertex = edge.Vertices()[0];
+//            Vertex oppositeVertex = edge.Vertices()[1];
+//            System.out.println(vertex.element() + " " + oppositeVertex.element());
+//        }
 		g = NewGraph;
 		graphView.Renew(NewGraph, true); 
 	}

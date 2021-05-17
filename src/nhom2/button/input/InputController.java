@@ -132,15 +132,13 @@ public class InputController  implements Initializable {
 	    
 	    	int size = t.length;
 	    	for(int i=1;i<size;i++) { 
-	    		//System.out.println(t[0] + " " + t[i]);
-	    		g.insertEdge(t[0],t[i],t[0] + t[i]);
+	    		//if (t[0].equals("44"))  System.out.println(t[0] + " " + t[i]);
+	    		g.insertEdge(t[0],t[i],t[0] + " " + t[i]);
 	    	}
 	    }
-//	    for (Edge<String, String> edge : g.edges.values()) {
-//            Vertex vertex = edge.Vertices()[0];
-//            Vertex oppositeVertex = edge.Vertices()[1];
-//            System.out.println(vertex.element() + " " + oppositeVertex.element());
-//        }
+	    
+//	    System.out.println(g.adjList.get(g.vertices.get("44")) != null);
+	    
 	    Main.setGraph(g);
 	}
 	private static void informSuccess() {

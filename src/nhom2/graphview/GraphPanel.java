@@ -245,6 +245,40 @@ public class GraphPanel<V, E> extends Pane{
         initNodes();
         this.init();
         
+        Handler = new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				// TODO Auto-generated method stub
+				if (mouseEvent.getClickCount() == 2) {
+	            	TextInputDialog box = new TextInputDialog("Nhập tên đỉnh");
+	            	box.setHeaderText("Thêm đỉnh mới");
+	            	box.setTitle("Nhập tên đỉnh");
+	            	box.setContentText("Nhập tên đỉnh mới: ");
+	            	Optional<String> result = box.showAndWait();
+	            	if (result.isPresent()) {
+	            		if (theGraph.vertices.get(result.get()) != null) {
+	            			Alert newAlert = new Alert(AlertType.WARNING);
+	            			newAlert.setTitle("Thông báo");
+	            			newAlert.setHeaderText("Thêm đỉnh không thành không");
+	            			newAlert.setContentText("Tên đỉnh mới đã có trong đồ thị");
+	            			newAlert.showAndWait();
+	            		}
+	            		else {
+	            			Insert((V)result.get(), mouseEvent.getX(), mouseEvent.getY());
+	            			Alert alert = new Alert(AlertType.INFORMATION);
+	            			alert.setTitle("Thông báo");
+	            			alert.setHeaderText(null);
+	            			alert.setContentText("Thêm đỉnh thành công!");
+
+	            			alert.showAndWait();
+	            		}
+	            	}
+	            }
+			}
+        };
+        
+        this.setOnMouseClicked(Handler);
+        
         //this.start_automatic_layout();
 	}
 	
@@ -322,25 +356,25 @@ public class GraphPanel<V, E> extends Pane{
         Vertex<V> inVertex = graphVertexInbound.getUnderlyingVertex();
         Vertex<V> outVertex = graphVertexOutbound.getUnderlyingVertex();
         
-        Integer NewNum;
-        if (NumOfEdge.get(outVertex).get(inVertex) == null) {
-        	NewNum = new Integer(1);
-        	NumOfEdge.get(outVertex).put(inVertex, NewNum);
-        	NumOfEdge.get(inVertex).put(outVertex, NewNum);
-        }
-        else {
-        	NewNum = new Integer(NumOfEdge.get(outVertex).get(inVertex).intValue() + 1);
-        	NumOfEdge.get(outVertex).put(inVertex, NewNum);
-        	NumOfEdge.get(inVertex).put(outVertex, NewNum);
-        }
+//        Integer NewNum;
+//        if (NumOfEdge.get(outVertex).get(inVertex) == null) {
+//        	NewNum = new Integer(1);
+//        	NumOfEdge.get(outVertex).put(inVertex, NewNum);
+//        	NumOfEdge.get(inVertex).put(outVertex, NewNum);
+//        }
+//        else {
+//        	NewNum = new Integer(NumOfEdge.get(outVertex).get(inVertex).intValue() + 1);
+//        	NumOfEdge.get(outVertex).put(inVertex, NewNum);
+//        	NumOfEdge.get(inVertex).put(outVertex, NewNum);
+//        }
         
         int count = getTotalEdgesBetween(graphVertexInbound.getUnderlyingVertex(), graphVertexOutbound.getUnderlyingVertex());
-        int index = NewNum.intValue() - 1;
+//        int index = NewNum.intValue() - 1;
         
 //        if (count > 1 || graphVertexInbound == graphVertexOutbound) {
 //        	EdgeNode NewEdgeView = new EdgeNode(edge, graphVertexOutbound, graphVertexInbound, index, true);
-////        	System.out.println(index + " " + count + " " + graphVertexInbound.getUnderlyingVertex().element() + " " + graphVertexOutbound.getUnderlyingVertex().element());
-////        	//System.out.print(NewEdgeView.getControlX1() + " " + NewEdgeView.getControlY1()+ " " + NewEdgeView.getControlX2() + " " + NewEdgeView.getControlY2());
+//       	System.out.println(index + " " + count + " " + graphVertexInbound.getUnderlyingVertex().element() + " " + graphVertexOutbound.getUnderlyingVertex().element());
+//       	System.out.print(NewEdgeView.getControlX1() + " " + NewEdgeView.getControlY1()+ " " + NewEdgeView.getControlX2() + " " + NewEdgeView.getControlY2());
 //        	graphEdge = NewEdgeView;
 //        	
 //            this.getChildren().add(0, (Node)NewEdgeView);
@@ -353,7 +387,7 @@ public class GraphPanel<V, E> extends Pane{
       if (count > 1 || graphVertexInbound == graphVertexOutbound) {
     	  EdgeLine NewEdgeView = new EdgeLine(edge, graphVertexOutbound, graphVertexInbound);
 //    	System.out.println(index + " " + count + " " + graphVertexInbound.getUnderlyingVertex().element() + " " + graphVertexOutbound.getUnderlyingVertex().element());
-//    	//System.out.print(NewEdgeView.getControlX1() + " " + NewEdgeView.getControlY1()+ " " + NewEdgeView.getControlX2() + " " + NewEdgeView.getControlY2());
+//    	System.out.print(NewEdgeView.getControlX1() + " " + NewEdgeView.getControlY1()+ " " + NewEdgeView.getControlX2() + " " + NewEdgeView.getControlY2());
     	  graphEdge = NewEdgeView;
     	
     	  this.getChildren().add(0, (Node)NewEdgeView);
@@ -516,12 +550,8 @@ public class GraphPanel<V, E> extends Pane{
             VertexNode<V> graphVertexIn = vertexNodes.get(vertex);
             VertexNode<V> graphVertexOppositeOut = vertexNodes.get(oppositeVertex);
             
-            //System.out.println(vertex.element() + " " + oppositeVertex.element() + " " + edge.element());
-
-//            graphVertexIn.addAdjacentVertex(graphVertexOppositeOut);
-//            graphVertexOppositeOut.addAdjacentVertex(graphVertexIn);
-
             EdgeLine<E,V> graphEdge = CreateAndAddEdge(edge, graphVertexIn, graphVertexOppositeOut);
+//          System.out.println(graphEdge.getUnderlyingEdge().Vertices()[0].element() + " "+ graphEdge.getUnderlyingEdge().Vertices()[1].element());
                 
             if (this.edgesWithArrows) {
             	Arrow arrow = new Arrow();
@@ -534,7 +564,7 @@ public class GraphPanel<V, E> extends Pane{
     public void add(VertexNode NewVertexNode) {
     	Line tmp = new Line();  	
     	tmp.setStyle("-fx-stroke-width: 2; -fx-stroke: #ebaf2f; -fx-stroke-dash-array: 2 5 2 5;");
-    	double diffX = 319, diffY = 0;
+    	double diffX = 300, diffY = 0;
     	tmp.startXProperty().bind(NewVertexNode.centerXProperty());
     	tmp.startYProperty().bind(NewVertexNode.centerYProperty());
     	tmp.setEndX(NewVertexNode.centerXProperty().doubleValue());

@@ -52,8 +52,6 @@ public class ButtonAreaVBox {
 		Button InfoButton = new InfoButton();
 //		InfoButton.setText("Thông tin nhóm");
 		SubScene subSceneInfo = new SubScene(InfoButton,sizeButton,sizeButton);
-
-
 		
 		// Tao layout VBox
 		VBox buttonAreaTop = new VBox(0);

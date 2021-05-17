@@ -171,6 +171,9 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
         	NumOfEdge.get(inVertex).put(outVertex, NewNum);
         }
         
+//        if (outVertex.element().equals("44")) {
+//        	System.out.println("adj:" + outVertex.element() + " " + inVertex.element());
+//        }
         adjList.get(outVertex).put(inVertex, newEdge);
         if (!this.isDirected) {
         	adjList.get(inVertex).put(outVertex, newEdge);
