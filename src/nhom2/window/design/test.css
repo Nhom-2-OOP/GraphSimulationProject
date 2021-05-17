@@ -111,7 +111,6 @@
 	-fx-background-repeat: no-repeat;
 	-fx-background-size: 70.0%;
 }
-
 .InfoButtonEntered {
 	-fx-background-image: url("infoEntered.png");
 }
@@ -123,7 +122,6 @@
 	-fx-background-size: 70.0%;
 	-fx-background-color:  rgb(40, 42, 54);
 }
-
 .BackButtonEntered {
 	-fx-background-image: url("backEntered.png");
 }
@@ -132,14 +130,71 @@
 .Col1ChooseButton{
 	-fx-alignment: center-left;
 	-fx-background-color:  rgb(40, 42, 54);
-		-fx-text-fill: #9aa8d4;
-	
+	-fx-text-fill: #9aa8d4;
 	-fx-pref-height: 30;
     -fx-pref-width: 245;
 	-fx-padding: 10 0.0 10 10 ;
 }
-
 .Col1ChooseButtonEntered{
 	-fx-text-fill: white;
+}
+
+
+.lbStartVerTexFS{
+	-fx-text-fill: #9aa8d4;
+	-fx-font-size: 20;
+	-fx-padding: 0 0 0 10 ;
+	
+}
+
+.tfStartVertexFS{
+	-fx-max-width: 210;
+	-fx-pref-height: 30;
+	-fx-font-size: 16;
+	-fx-font-style: italic;
+}
+
+.FSFinishStep{
+	-fx-alignment: center-left;
+	-fx-background-color:  rgb(40, 42, 54);
+	-fx-text-fill: #9aa8d4;
+	-fx-pref-height: 30;
+    -fx-pref-width: 245;
+    -fx-padding: 0 0.0 0 10 ;
+}
+.FSFinishStepEntered{
+	-fx-text-fill: white;
+}
+
+.FSNextReset{
+	-fx-alignment: center;
+	-fx-background-color:  rgb(40, 42, 54);
+	-fx-text-fill: #9aa8d4;
+	-fx-pref-height: 30;
+    -fx-pref-width: 80;
+	-fx-background-color: rgb(52, 55, 70);
+	-fx-border-color: #425578;
+	-fx-border-width: 2px;
+	
+}
+
+.FSNextResetEntered{
+	-fx-text-fill: white;
+	-fx-background-color: #3c3d51;
+
+}
+.nexResBox{
+	-fx-pref-height: 30;
+    -fx-pref-width: 245;
+    -fx-alignment: center ;
+    -fx-padding: 0 0.0 0 10 ;
+}
+
+.FSlb{
+	-fx-text-fill: white;
+	-fx-underline: true;
+	-fx-font-style: italic ;
+	-fx-font-size: 18;
+	-fx-padding: 0 0 0 28; 
 }
 

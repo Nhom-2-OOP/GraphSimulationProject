@@ -12,6 +12,7 @@ import java.util.TreeSet;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -22,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import nhom2.graph.*;
@@ -94,6 +96,7 @@ public class DFSButton<V, E> extends Button{
 			}
 		}
 	}
+
 	private void DFS(Vertex<V> startVertex, GraphPanel<V, E> graphView) {
 		Map<Vertex<V>, VertexNode<V>> tmp = graphView.vertexNodes;
 		Set<Vertex<V>> vertex = tmp.keySet();
@@ -141,33 +144,36 @@ public class DFSButton<V, E> extends Button{
 	
 	//DFS button
 	public DFSButton(GridPane root, GraphPanel<V, E> graphView) {
+
 		GridPane grid = new GridPane();
-		Label lbStartVertex = new Label("Start Vertex:");
-		TextField tfStartVertex = new TextField();
-		Button finish = new Button("Hiển thị kết quả");
-		Button step = new Button("Hiển thị từng bước");
-		Button reset = new Button("Reset");
 		BackButton backBut = new BackButton(root);
 
-		
-		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
-		tfStartVertex.setPrefWidth(85);
-		tfStartVertex.setMaxWidth(85);
+		GridPane gridChild = new GridPane();
+		Label lbStartVertex = new Label("Start Vertex:");
+		TextField tfStartVertex = new TextField();
+		tfStartVertex.setPromptText("Nhập đỉnh");
+		Button finish = new Button("Hiển thị kết quả");
+		Button step = new Button("Hiển thị từng bước");
+
+		Button next = new Button("Next");
 		next.setVisible(false);
+		Button reset = new Button("Reset");
 		reset.setVisible(false);
-		
+		Label lb = new Label();
+
+		gridChild.setVgap(30);
+
+		gridChild.add(lbStartVertex, 0, 0);
+		gridChild.add(tfStartVertex, 0, 1);
+		gridChild.add(finish, 0, 2);
+		gridChild.add(step, 0, 3);
+		HBox nexResBox = new HBox(60);
+		nexResBox.getChildren().addAll(next, reset);
+		gridChild.add(lb, 0, 4);
+		gridChild.add(nexResBox, 0, 4);
+
 		grid.add(backBut, 0, 0);
-		grid.add(lbStartVertex, 0, 1);
-		grid.add(tfStartVertex, 1, 1);
-		grid.add(finish, 1, 2);
-		grid.add(step, 1, 3);
-		grid.add(next, 2, 3);
-		grid.add(reset, 1, 4);
-		grid.add(lb, 2, 3);
-		grid.setHgap(10);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(10, 10, 10, 10));
-		grid.setMinSize(500, 200);
+
 		
 		EventHandler<ActionEvent> current = backBut.getOnAction();
 		
@@ -181,22 +187,35 @@ public class DFSButton<V, E> extends Button{
 			}
 	    });
 
-		
+		grid.add(gridChild, 0, 1);
+
+		gridChild.setPadding(new Insets(30, 10, 0, 10));
+		gridChild.setHalignment(tfStartVertex, HPos.RIGHT);
+
+		lbStartVertex.getStyleClass().add("lbStartVerTexFS");
+		tfStartVertex.getStyleClass().add("tfStartVertexFS");
+		finish.getStyleClass().add("FSFinishStep");
+		step.getStyleClass().add("FSFinishStep");
+		next.getStyleClass().add("FSNextReset");
+		reset.getStyleClass().add("FSNextReset");
+		nexResBox.getStyleClass().add("nexResBox");
+		lb.getStyleClass().add("FSlb");
+
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				root.getChildren().remove(2);
 				root.add(grid, 1, 0);
 				backBut.setGridBack(gridBack);
-				}
+			}
 		});
-		
+
 		this.setOnMouseEntered(mouseEvent -> {
 			this.getStyleClass().add("Col1ChooseButtonEntered");		
 		});
 		this.setOnMouseExited(mouseEvent -> {
 			this.getStyleClass().remove(2);
 		});
-		
+
 		//button hiển thị kết quả
 		finish.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -219,11 +238,12 @@ public class DFSButton<V, E> extends Button{
 					alert.show();
 					return;
 				}
+
 				reset.setVisible(true);
 				DFS(startVertex,graphView);
 			}
 		});
-		
+
 		//button hiển thị từng bước
 		step.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -237,6 +257,7 @@ public class DFSButton<V, E> extends Button{
 					tmp.setStyle("-fx-stroke: #45597e");
 					if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
 				}
+
 				tfStartVertex.commitValue();
 				String dataStart = tfStartVertex.getText();
 				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
@@ -255,15 +276,16 @@ public class DFSButton<V, E> extends Button{
 					mark.put(iterator, 0);
 				Map<Vertex<V>, Edge<E, V>> temp = graphView.theGraph.adjList.get(startVertex);
 				if(temp.size()==0) {
+
 					lb.setText("Done!");
 					next.setVisible(false);
 					return;
 				}
 				tmpnext = startVertex;
 			}
-			
+
 		});
-		
+
 		next.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -275,9 +297,9 @@ public class DFSButton<V, E> extends Button{
 				currVertexNode.setStyle("-fx-fill: red");
 				DFSstep(currVertex,graphView);
 			}
-			
+
 		});
-		
+
 		reset.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -291,8 +313,35 @@ public class DFSButton<V, E> extends Button{
 				}
 				reset.setVisible(false);
 			}
-			
+
+		});
+		
+		finish.setOnMouseEntered(mouseEvent -> {
+			finish.getStyleClass().add("FSFinishStepEntered");
+		});
+		finish.setOnMouseExited(mouseEvent -> {
+			finish.getStyleClass().remove(2);
+		});
+		step.setOnMouseEntered(mouseEvent -> {
+			step.getStyleClass().add("FSFinishStepEntered");
+		});
+		step.setOnMouseExited(mouseEvent -> {
+			step.getStyleClass().remove(2);
+		});
+		
+		
+		next.setOnMouseEntered(mouseEvent -> {
+			next.getStyleClass().add("FSNextResetEntered");
+		});
+		next.setOnMouseExited(mouseEvent -> {
+			next.getStyleClass().remove(2);
+		});
+		reset.setOnMouseEntered(mouseEvent -> {
+			reset.getStyleClass().add("FSNextResetEntered");
+		});
+		reset.setOnMouseExited(mouseEvent -> {
+			reset.getStyleClass().remove(2);
 		});
 	}
-	
+
 }
