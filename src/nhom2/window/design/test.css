@@ -1,0 +1,109 @@
+.graphView {
+	-fx-border-color: blue;
+	-fx-border-width: 0px;
+	-fx-background-color: rgb(52, 55, 70);
+
+}
+
+.rootMain {
+	-fx-background-color: rgb(40, 42, 54);
+	/* -fx-text-fill: #9aa8d4; */
+	-fx-text-fill: red;
+}
+
+.buttonArea {
+	-fx-background-color: rgb(52, 55, 70);
+	-fx-border-color: blue;
+	-fx-border-width: 0px;
+}
+
+.button {
+	-fx-font-size: 16;
+	-fx-cursor: hand;
+}
+
+.buttonOfButtonArea {
+	-fx-background-color: rgb(52, 55, 70);
+	-fx-text-fill: white;
+}
+
+.labelOfButtonArea {
+	-fx-text-fill: white;
+}
+
+.btnHome {
+	-fx-background-image: url("homeDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 80.0%;
+}
+.btnHomeEntered{
+		-fx-background-image: url("homeEntered.png");
+	
+}
+
+.btnInput {
+	-fx-background-image: url("inputDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 80.0%;
+}
+.btnInputEntered{
+		-fx-background-image: url("inputEntered.png");
+	
+}
+
+.btnCaptureGP {
+	-fx-background-image: url("saveDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 80.0%;
+}
+.btnCaptureGPEntered{
+		-fx-background-image: url("saveEntered.png");
+	
+}
+
+.btnPla {
+	-fx-background-image: url("placementDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 80.0%;
+}
+.btnPlaEntered{
+		-fx-background-image: url("placementEntered.png");
+	
+}
+
+.btnPathFinding {
+	-fx-background-image: url("pathFindingDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 80.0%;
+}
+.btnPathFindingEntered{
+		-fx-background-image: url("pathFindingEntered.png");
+	
+}
+
+.ColoringButton {
+	-fx-background-image: url("colorDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 80.0%;
+}
+.ColoringButtonEntered{
+		-fx-background-image: url("colorEntered.png");
+	
+}
+
+.InfoButton {
+	-fx-background-image: url("infoDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 80.0%;
+}
+.InfoButtonEntered{
+		-fx-background-image: url("infoEntered.png");
+	
+}

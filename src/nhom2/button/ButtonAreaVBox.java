@@ -84,25 +84,7 @@ public class ButtonAreaVBox {
 		btnPathFinding.getStyleClass().add("btnPathFinding");
 		ColoringButton.getStyleClass().add("ColoringButton");
 		InfoButton.getStyleClass().add("InfoButton");
-	
-//	    ColorAdjust colorAdjust = new ColorAdjust(); 
-//	      
-//	      //Setting the contrast value 
-//	      colorAdjust.setContrast(0.4);     
-//	      
-	      //Setting the hue value 
-//	      colorAdjust.setHue(-10);     
-	      
-	      //Setting the brightness value 
-//	      colorAdjust.setBrightness(0.5);  
-//	      
-//	      Setting the saturation value 
-//	      colorAdjust.setSaturation(0.9);  
-		
-	      
-		
-		
-		
+ 		
 		return buttonArea;
 	}
 	
