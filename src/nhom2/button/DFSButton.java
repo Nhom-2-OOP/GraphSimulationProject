@@ -97,8 +97,27 @@ public class DFSButton<V, E> extends Button{
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		grid.setMinSize(500, 200);
 		
+		EventHandler<ActionEvent> current = backBut.getOnAction();
+		
+		backBut.setOnAction(e -> {
+	        current.handle(e);
+	        for (VertexNode<V> tmp : graphView.vertexNodes.values())
+				tmp.setStyle("-fx-fill: #96d1cd");
+			for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
+				tmp.setStyle("-fx-stroke: #45597e");
+				if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+			}
+	    });
+
+		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
+				for (VertexNode<V> tmp : graphView.vertexNodes.values())
+					tmp.setStyle("-fx-fill: #96d1cd");
+				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
+					tmp.setStyle("-fx-stroke: #45597e");
+					if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+				}
 				root.getChildren().remove(2);
 				root.add(grid, 1, 0);
 				backBut.setGridBack(gridBack);
