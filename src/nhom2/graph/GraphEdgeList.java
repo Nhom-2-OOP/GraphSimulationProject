@@ -19,6 +19,7 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
     	this.isDirected = isDirectedGraph;
     }
 	
+	
 	public void setIsDirected(boolean value) {
 		this.isDirected = value;
 	}
@@ -56,10 +57,7 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 	}
 	
 	public Collection<Vertex<V>> incidentVertex(Vertex<V> v) {
-		Collection<Vertex<V>> adjVertices = new ArrayList<Vertex<V>>();
-		for(Edge<E, V> i : this.incidentEdges(v))
-			adjVertices.add(this.opposite(v, i));
-        return adjVertices;
+		return this.adjList.get(v).keySet();
 	}
 
 	@Override
@@ -81,6 +79,11 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 	public boolean areAdjacent(Vertex<V> u, Vertex<V> v) {
 		// DPT O(1)
 		return adjList.get(u).get(v) != null;
+	}
+	
+	public Edge getEdge(Vertex<V> u, Vertex<V> v) {
+		// DPT O(1)
+		return adjList.get(u).get(v);
 	}
 	
 	// Tao ra MyVertex implement interface Vertex
@@ -248,6 +251,16 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		for (Vertex v: this.adjList.get(this.vertices.get("A")).keySet()){
 			System.out.println(v.element());
 		}
+	}
+
+
+	public Map<Vertex<V>, Map<Vertex<V>, Edge<E, V>>> getAdjList() {
+		return adjList;
+	}
+
+
+	public void setAdjList(Map<Vertex<V>, Map<Vertex<V>, Edge<E, V>>> adjList) {
+		this.adjList = adjList;
 	}
 	
 }
