@@ -14,7 +14,9 @@ import java.util.TreeSet;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
 import nhom2.graph.*;
@@ -86,34 +89,41 @@ public class BFSButton<V, E> extends Button{
 		this.GraphView = graphView;
 		
 		GridPane grid = new GridPane();
+		
+		BackButton backBut = new BackButton(root);
+		
+		GridPane gridChild = new GridPane();
 		Label lbStartVertex = new Label("Start Vertex:");
 		TextField tfStartVertex = new TextField();
+		tfStartVertex.setPromptText("Nhập đỉnh");
 		Button finish = new Button("Hiển thị kết quả");
 		Button step = new Button("Hiển thị từng bước");
 		Button next = new Button("Next");
-		Button reset = new Button("Reset");
-		Label lb = new Label();
-		BackButton backBut = new BackButton(root);
-
-		
-		tfStartVertex.setPromptText("Nhập đỉnh");
-		tfStartVertex.setPrefWidth(85);
-		tfStartVertex.setMaxWidth(85);
 		next.setVisible(false);
+		Button reset = new Button("Reset");
 		reset.setVisible(false);
+		Label lb = new Label();
+			
+		gridChild.add(lbStartVertex, 0, 0);
+		gridChild.add(tfStartVertex, 0, 1);
+		gridChild.add(finish, 0, 2);
+		gridChild.add(step, 0, 3);
+		gridChild.add(next, 0, 4);
+		gridChild.add(reset, 1, 4);
+		gridChild.add(lb, 0, 5);
 		
 		grid.add(backBut, 0, 0);
-		grid.add(lbStartVertex, 0, 1);
-		grid.add(tfStartVertex, 0, 2);
-		grid.add(finish, 0, 3);
-		grid.add(step, 0, 4);
-		grid.add(next, 0, 5);
-		grid.add(reset, 0, 6);
-		grid.add(lb, 0, 7);
-		grid.setHgap(10);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(10, 10, 10, 10));
-		grid.setMinSize(500, 200);
+		grid.add(gridChild, 0, 1);
+	
+		gridChild.setPadding(new Insets(30, 0, 0, 10));
+		gridChild.setHalignment(tfStartVertex, HPos.CENTER);
+		
+		lbStartVertex.getStyleClass().add("lbStartVerTexFS");
+		tfStartVertex.getStyleClass().add("tfStartVertexFS");
+		finish.getStyleClass().add("FSFinishStep");
+		step.getStyleClass().add("FSFinishStep");
+		next.getStyleClass().add("FSNextReset");
+		reset.getStyleClass().add("FSNextReset");
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
@@ -174,6 +184,13 @@ public class BFSButton<V, E> extends Button{
 			}
 		});
 		
+		finish.setOnMouseEntered(mouseEvent -> {
+			finish.getStyleClass().add("FSFinishStepEntered");
+		});
+		finish.setOnMouseExited(mouseEvent -> {
+			finish.getStyleClass().remove(2);
+		});
+		
 		//button hiển thị từng bước
 		step.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -219,6 +236,13 @@ public class BFSButton<V, E> extends Button{
 				curVertex = startVertex;
 			}
 			
+		});
+		
+		step.setOnMouseEntered(mouseEvent -> {
+			step.getStyleClass().add("FSFinishStepEntered");
+		});
+		step.setOnMouseExited(mouseEvent -> {
+			step.getStyleClass().remove(2);
 		});
 
 		next.setOnAction(new EventHandler<ActionEvent>() {
