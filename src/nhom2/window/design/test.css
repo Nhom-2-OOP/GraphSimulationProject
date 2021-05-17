@@ -95,6 +95,16 @@
 	-fx-background-image: url("colorEntered.png");
 }
 
+.FindingButton {
+	-fx-background-image: url("searchDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+}
+.FindingButtonEntered {
+	-fx-background-image: url("searchEntered.png");
+}
+
 .InfoButton {
 	-fx-background-image: url("infoDark.png");
 	-fx-background-position: center;

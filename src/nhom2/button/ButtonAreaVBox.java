@@ -47,6 +47,11 @@ public class ButtonAreaVBox {
 		ColoringButton ColoringButton = new ColoringButton(graphView);
 //		ColoringButton.setText("Color Graph");
 		SubScene subSceneColoring = new SubScene(ColoringButton, sizeButton, sizeButton);
+		
+		// Tao nut to mau do thi
+		FindVertexButton FindingButton = new FindVertexButton(root, graphView);
+//		ColoringButton.setText("Color Graph");
+		SubScene subSceneFinding = new SubScene(FindingButton, sizeButton, sizeButton);
 
 		// Tao nut thông tin thành viên
 		Button InfoButton = new InfoButton();
@@ -55,7 +60,7 @@ public class ButtonAreaVBox {
 		
 		// Tao layout VBox
 		VBox buttonAreaTop = new VBox(0);
-		buttonAreaTop.getChildren().addAll(subSceneHome,subSceneInput, subSceneCaptureGP, subScenePla, subScenePathFinding, subSceneColoring);
+		buttonAreaTop.getChildren().addAll(subSceneHome,subSceneInput, subSceneCaptureGP, subScenePla, subScenePathFinding, subSceneColoring, FindingButton);
 		buttonAreaTop.setAlignment(Pos.TOP_CENTER);
 		buttonArea.setVgrow(buttonAreaTop, Priority.ALWAYS);
 
@@ -75,6 +80,7 @@ public class ButtonAreaVBox {
 		btnPla.getStyleClass().add("buttonOfButtonArea");
 		btnPathFinding.getStyleClass().add("buttonOfButtonArea");
 		ColoringButton.getStyleClass().add("buttonOfButtonArea");
+		FindingButton.getStyleClass().add("buttonOfButtonArea");
 		InfoButton.getStyleClass().add("buttonOfButtonArea");
 		
 		btnHome.getStyleClass().add("btnHome");
@@ -83,6 +89,7 @@ public class ButtonAreaVBox {
 		btnPla.getStyleClass().add("btnPla");
 		btnPathFinding.getStyleClass().add("btnPathFinding");
 		ColoringButton.getStyleClass().add("ColoringButton");
+		FindingButton.getStyleClass().add("FindingButton");
 		InfoButton.getStyleClass().add("InfoButton");
  		
 		return buttonArea;
@@ -128,6 +135,12 @@ public class ButtonAreaVBox {
 		labColor.setPrefSize(245, sizeButton);
 		Pane btnColor = new Pane(labColor);
 		labelBtnArea.getChildren().add(btnColor);
+		
+		Label labFind= new Label(" Tìm đỉnh");
+		labFind.getStyleClass().add("labelOfButtonArea");
+		labFind.setPrefSize(245, sizeButton);
+		Pane btnFind = new Pane(labFind);
+		labelBtnArea.getChildren().add(btnFind);
 		
 		labelBtnArea.setPadding(new Insets(0, 0,0, 10));
 		return labelBtnArea;
