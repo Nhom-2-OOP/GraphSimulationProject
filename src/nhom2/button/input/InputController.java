@@ -72,7 +72,7 @@ public class InputController  implements Initializable {
 	}
 	@FXML
 	private void inputFromExternal(ActionEvent e) {
-		char [] data = new char [100000];
+		char [] data = new char [10000000];
 		boolean isOpened = true;
 		try {
 			FileChooser fileChooser = new FileChooser();
@@ -132,10 +132,15 @@ public class InputController  implements Initializable {
 	    
 	    	int size = t.length;
 	    	for(int i=1;i<size;i++) { 
-	    		//System.out.println(t[0]);
+	    		//System.out.println(t[0] + " " + t[i]);
 	    		g.insertEdge(t[0],t[i],t[0] + t[i]);
 	    	}
 	    }
+//	    for (Edge<String, String> edge : g.edges.values()) {
+//            Vertex vertex = edge.Vertices()[0];
+//            Vertex oppositeVertex = edge.Vertices()[1];
+//            System.out.println(vertex.element() + " " + oppositeVertex.element());
+//        }
 	    Main.setGraph(g);
 	}
 	private static void informSuccess() {

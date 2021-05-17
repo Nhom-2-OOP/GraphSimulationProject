@@ -235,6 +235,12 @@ public class GraphPanel<V, E> extends Pane{
 		vertexNodes.clear();;
         edgeNodes.clear();; 
 		this.getChildren().clear();
+		
+//		for (Edge<E,V> edge : theGraph.edges.values()) {
+//            Vertex vertex = edge.Vertices()[0];
+//            Vertex oppositeVertex = edge.Vertices()[1];
+//            System.out.println(vertex.element() + " " + oppositeVertex.element());
+//        }
        
         initNodes();
         this.init();
@@ -504,6 +510,8 @@ public class GraphPanel<V, E> extends Pane{
     	for (Edge<E, V> edge : theGraph.edges.values()) {
             Vertex<V> vertex = edge.Vertices()[0];
             Vertex<V> oppositeVertex = edge.Vertices()[1];
+            
+//          System.out.println(vertex.element() + " " + oppositeVertex.element());
 
             VertexNode<V> graphVertexIn = vertexNodes.get(vertex);
             VertexNode<V> graphVertexOppositeOut = vertexNodes.get(oppositeVertex);

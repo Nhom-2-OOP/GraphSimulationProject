@@ -177,6 +177,8 @@ public class BFSButton<V, E> extends Button{
 					VertexView.setStyle("-fx-fill: red");
 					if (v != startVertex) {
 						EdgeLine EdgeView = (EdgeLine)GraphView.edgeNodes.get(GraphView.theGraph.getEdge(parVertex.get(v), v));
+//						System.out.print(parVertex.get(v).element() + " ");
+//						System.out.println(v.element());
 						EdgeView.setStyle("-fx-stroke: blue");
 						if(GraphView.theGraph.isDirected == true) EdgeView.getAttachedArrow().setStyle("-fx-stroke: blue");
 					}
