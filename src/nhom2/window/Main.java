@@ -50,8 +50,7 @@ public class Main extends Application {
 		GridPane root = new GridPane();
 
 		//		GridPane root = new GridPane();
-		root.setHgap(10);
-//		root.setPadding(new Insets(10, 10, 10, 0));
+//		root.setPadding(new Insets(0, 0, 100, 0));
 
 		//row0
 		RowConstraints r = new RowConstraints();
@@ -73,22 +72,17 @@ public class Main extends Application {
 
 
 		// col 1
-
 		c = new ColumnConstraints();
 		c.setPrefWidth(245);
 		c.setHalignment(HPos.LEFT);
 		root.getColumnConstraints().add(c);
 		Pane col1Pane = new Pane();
-//		col1Pane.heightProperty().bind(root.heightProperty());
-//		Text testText = new Text(10, 50, "col1 include text");
 		VBox labelButton = new ButtonAreaVBox().label();
 		
 		col1Pane.getChildren().add(labelButton);
-//		col1Pane.prefHeight(500);
 		
 		//col 2
 		c = new ColumnConstraints();
-		//		c.setPercentWidth(85);
 		c.setHalignment(HPos.CENTER);
 		root.getColumnConstraints().add(c);
 		Pane graphPane = new Pane(); 

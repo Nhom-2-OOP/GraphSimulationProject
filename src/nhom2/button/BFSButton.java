@@ -104,12 +104,12 @@ public class BFSButton<V, E> extends Button{
 		
 		grid.add(backBut, 0, 0);
 		grid.add(lbStartVertex, 0, 1);
-		grid.add(tfStartVertex, 1, 1);
-		grid.add(finish, 1, 2);
-		grid.add(step, 1, 3);
-		grid.add(next, 2, 3);
-		grid.add(reset, 1, 4);
-		grid.add(lb, 2, 3);
+		grid.add(tfStartVertex, 0, 2);
+		grid.add(finish, 0, 3);
+		grid.add(step, 0, 4);
+		grid.add(next, 0, 5);
+		grid.add(reset, 0, 6);
+		grid.add(lb, 0, 7);
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(10, 10, 10, 10));
@@ -123,7 +123,14 @@ public class BFSButton<V, E> extends Button{
 				}
 		});
 		
-
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("Col1ChooseButtonEntered");		
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(2);
+		});
+		
+		
 		finish.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {

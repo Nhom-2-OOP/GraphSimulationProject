@@ -150,7 +150,6 @@ public class FindPathButton<V, E> extends Button {
 									listNV, btNext, reset, back,
 									pathPane, lbnext, checkbox);
 
-//>>>>>>> 03fc62d6096351f593db189f814a5f2128e132b6
 		try {
 			Parent root = pane;
 			this.View = new Scene(root);
@@ -165,6 +164,13 @@ public class FindPathButton<V, E> extends Button {
 				stage.setTitle("Lựa chọn đường đi");
 				stage.show();
 			}
+		});
+		
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("Col1ChooseButtonEntered");		
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(2);
 		});
 
 		// nut Find

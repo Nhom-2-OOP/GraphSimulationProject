@@ -27,6 +27,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
@@ -47,26 +48,29 @@ public class PlacementButton extends Button{
 		//BackButton
 		BackButton backBut = new BackButton(root);
 		
-		
 		//Tap nut sap xep dinh ngau nhiÃªn
 		RandomPlacementButton btnRanPla = new RandomPlacementButton(graphView);
 		btnRanPla.setText("Sắp xếp đỉnh ngẫu nhiên");
-		SubScene subSceneRanPla = new SubScene(btnRanPla,245,30);
 
 		// Tao nut sap dinh theo vong tron
 		CircularPlacementButton btnCircularPla = new CircularPlacementButton(graphView);
 		btnCircularPla.setText("Sắp xếp đỉnh theo hình tròn");
-		SubScene subSceneCircularPla = new SubScene(btnCircularPla,245,30);
 
 		// Tao nut sap dinh tu dong
 		AutoPlacementButton btnAutoPla = new AutoPlacementButton(graphView);
 		btnAutoPla.setText("Sắp xếp đỉnh tự động");
-		SubScene subSceneAutoPla = new SubScene(btnAutoPla,245,30);
 
-		VBox placeList = new VBox(10);
-		placeList.getChildren().addAll(backBut, subSceneRanPla, subSceneCircularPla, subSceneAutoPla);
-		grid.getChildren().add(placeList);
-				
+		VBox placeList = new VBox();
+		
+		btnRanPla.getStyleClass().add("Col1ChooseButton");
+		btnCircularPla.getStyleClass().add("Col1ChooseButton");
+		btnAutoPla.getStyleClass().add("Col1ChooseButton");
+
+		placeList.getChildren().addAll(btnRanPla, btnCircularPla, btnAutoPla);
+		placeList.setPadding(new Insets(30, 0, 0, 10));
+		grid.add(backBut, 0, 0);
+		grid.add(placeList, 0, 1);	
+
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				backBut.setGridBack(Main.getNodeCol1Start());

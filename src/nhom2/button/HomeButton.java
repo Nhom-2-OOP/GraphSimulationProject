@@ -37,7 +37,7 @@ public class HomeButton extends Button {
 
 
 	public HomeButton(GridPane root) {
-		System.out.println(this.getStyle());
+//		System.out.println(this.getStyle());
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				root.getChildren().remove(2);

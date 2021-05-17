@@ -1,5 +1,6 @@
 package nhom2.button;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
@@ -130,6 +131,7 @@ public class ButtonAreaVBox {
 		Pane btnColor = new Pane(labColor);
 		labelBtnArea.getChildren().add(btnColor);
 		
+		labelBtnArea.setPadding(new Insets(0, 0,0, 10));
 		return labelBtnArea;
 	}
 

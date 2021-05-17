@@ -105,6 +105,13 @@ public class DFSButton<V, E> extends Button{
 				}
 		});
 		
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("Col1ChooseButtonEntered");		
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(2);
+		});
+		
 		//button hiển thị kết quả
 		finish.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

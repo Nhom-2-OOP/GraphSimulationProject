@@ -49,26 +49,29 @@ public class PathFindingButton extends Button{
 		// Tao nut tu tim duong di
 		FindPathButton<String, String> btnFindPath = new FindPathButton(stage, graphView);
 		btnFindPath.setText("Tự tìm đường đi");
-		SubScene subSceneFindPath = new SubScene(btnFindPath,245,30);
 
 		// Tao nut tu dong tim duong di
 		Button btnAutoFindPath = new AutoFindPaths<String, String>(graphView);
 		btnAutoFindPath.setText("Tự động tìm đường");
-		SubScene subSceneAutoFindPath = new SubScene(btnAutoFindPath,245,30);
 
 		// Tao nut BFS
 		BFSButton<String, String> BFSButton = new BFSButton(root, graphView);
 		BFSButton.setText("Tìm đường theo BFS");
-		SubScene subSceneBFS = new SubScene(BFSButton,245,30);
 
 		// Tao nut DFS
 		DFSButton<String, String> DFSButton = new DFSButton(root, graphView);
 		DFSButton.setText("Tìm đường theo DFS");
-		SubScene subSceneDFS = new SubScene(DFSButton,245,30);
 
-		VBox placeList = new VBox(10);
-		placeList.getChildren().addAll(backBut, subSceneFindPath, subSceneAutoFindPath, subSceneBFS, subSceneDFS);
-		grid.getChildren().add(placeList);
+		VBox placeList = new VBox(0);
+		
+		btnFindPath.getStyleClass().add("Col1ChooseButton");
+		BFSButton.getStyleClass().add("Col1ChooseButton");
+		DFSButton.getStyleClass().add("Col1ChooseButton");
+		
+		placeList.getChildren().addAll(btnFindPath, BFSButton, DFSButton);
+		placeList.setPadding(new Insets(30, 0, 0, 10));
+		grid.add(backBut, 0, 0);
+		grid.add(placeList, 0, 1);	
 
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {

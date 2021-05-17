@@ -37,5 +37,12 @@ public class AutoPlacementButton extends Button{
 			}
 			
 		});
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("Col1ChooseButtonEntered");		
+
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(2);
+		});
 	}
 }

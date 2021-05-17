@@ -1,12 +1,16 @@
-.graphView {
-	-fx-border-color: blue;
-	-fx-border-width: 0px;
-	-fx-background-color: rgb(52, 55, 70);
+.button {
+	-fx-font-size: 16;
+	-fx-cursor: hand;
 }
 
 .rootMain {
 	-fx-background-color: rgb(40, 42, 54);
-	/* -fx-text-fill: #9aa8d4; */
+}
+
+.graphView {
+	-fx-border-color: blue;
+	-fx-border-width: 0px;
+	-fx-background-color: rgb(52, 55, 70);
 }
 
 .buttonArea {
@@ -15,18 +19,13 @@
 	-fx-border-width: 0px;
 }
 
-.button {
-	-fx-font-size: 16;
-	-fx-cursor: hand;
-}
-
 .buttonOfButtonArea {
 	-fx-background-color: rgb(52, 55, 70);
-	-fx-text-fill: white;
 }
 
 .labelOfButtonArea {
-	-fx-text-fill: #9aa8d4;
+	/* -fx-text-fill: #8addf2; */
+	-fx-text-fill: #6a9955;
 	-fx-font-style: italic;
 }
 
@@ -34,7 +33,7 @@
 	-fx-background-image: url("homeDark.png");
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
-	-fx-background-size: 80.0%;
+	-fx-background-size: 70.0%;
 }
 
 .btnHomeEntered {
@@ -45,7 +44,7 @@
 	-fx-background-image: url("inputDark.png");
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
-	-fx-background-size: 80.0%;
+	-fx-background-size: 70.0%;
 }
 
 .btnInputEntered {
@@ -56,7 +55,7 @@
 	-fx-background-image: url("saveDark.png");
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
-	-fx-background-size: 80.0%;
+	-fx-background-size: 70.0%;
 }
 
 .btnCaptureGPEntered {
@@ -67,7 +66,7 @@
 	-fx-background-image: url("placementDark.png");
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
-	-fx-background-size: 80.0%;
+	-fx-background-size: 70.0%;
 }
 
 .btnPlaEntered {
@@ -78,7 +77,7 @@
 	-fx-background-image: url("pathFindingDark.png");
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
-	-fx-background-size: 80.0%;
+	-fx-background-size: 70.0%;
 }
 
 .btnPathFindingEntered {
@@ -89,7 +88,7 @@
 	-fx-background-image: url("colorDark.png");
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
-	-fx-background-size: 80.0%;
+	-fx-background-size: 70.0%;
 }
 
 .ColoringButtonEntered {
@@ -100,7 +99,7 @@
 	-fx-background-image: url("infoDark.png");
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
-	-fx-background-size: 80.0%;
+	-fx-background-size: 70.0%;
 }
 
 .InfoButtonEntered {
@@ -111,7 +110,8 @@
 	-fx-background-image: url("backDark.png");
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
-	-fx-background-size: 80.0%;
+	-fx-background-size: 70.0%;
+	-fx-background-color:  rgb(40, 42, 54);
 }
 
 .BackButtonEntered {
@@ -119,4 +119,17 @@
 }
 
 
+.Col1ChooseButton{
+	-fx-alignment: center-left;
+	-fx-background-color:  rgb(40, 42, 54);
+		-fx-text-fill: #9aa8d4;
+	
+	-fx-pref-height: 30;
+    -fx-pref-width: 245;
+	-fx-padding: 10 0.0 10 10 ;
+}
+
+.Col1ChooseButtonEntered{
+	-fx-text-fill: white;
+}
 

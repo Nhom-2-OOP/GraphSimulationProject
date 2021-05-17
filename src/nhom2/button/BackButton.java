@@ -43,8 +43,9 @@ public class BackButton extends Button {
 	}
 
 	public BackButton(GridPane root) {
-		this.setText("Back");
+		this.setPrefSize(40, 20);
 		this.getStyleClass().add("BackButton");
+		this.setPadding(new Insets(20, 0, 0, 0));
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				root.getChildren().remove(2);
