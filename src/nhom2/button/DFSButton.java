@@ -12,6 +12,7 @@ import java.util.TreeSet;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -22,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import nhom2.graph.*;
@@ -141,40 +143,84 @@ public class DFSButton<V, E> extends Button{
 	
 	//DFS button
 	public DFSButton(GridPane root, GraphPanel<V, E> graphView) {
+
+		
 		GridPane grid = new GridPane();
+		
+		BackButton backBut = new BackButton(root);
+		
+		GridPane gridChild = new GridPane();
 		Label lbStartVertex = new Label("Start Vertex:");
 		TextField tfStartVertex = new TextField();
+		tfStartVertex.setPromptText("Nhập đỉnh");
 		Button finish = new Button("Hiển thị kết quả");
 		Button step = new Button("Hiển thị từng bước");
-		Button reset = new Button("Reset");
-		BackButton backBut = new BackButton(root);
+		
+		EventHandler<ActionEvent> current = backBut.getOnAction();
+		
+		backBut.setOnAction(e -> {
+	        current.handle(e);
+	        for (VertexNode<V> tmp : graphView.vertexNodes.values())
+				tmp.setStyle("-fx-fill: #96d1cd");
+			for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
+				tmp.setStyle("-fx-stroke: #45597e");
+				if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+			}
+	    });
 
 		
 		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
 		tfStartVertex.setPrefWidth(85);
 		tfStartVertex.setMaxWidth(85);
 		next.setVisible(false);
+		Button reset = new Button("Reset");
 		reset.setVisible(false);
+			
+		gridChild.setVgap(30);
+		
+		gridChild.add(lbStartVertex, 0, 0);
+		gridChild.add(tfStartVertex, 0, 1);
+		gridChild.add(finish, 0, 2);
+		gridChild.add(step, 0, 3);
+		HBox nexResBox = new HBox(60);
+		nexResBox.getChildren().addAll(next, reset);
+		gridChild.add(lb, 0, 4);
+		gridChild.add(nexResBox, 0, 4);
 		
 		grid.add(backBut, 0, 0);
-		grid.add(lbStartVertex, 0, 1);
-		grid.add(tfStartVertex, 1, 1);
-		grid.add(finish, 1, 2);
-		grid.add(step, 1, 3);
-		grid.add(next, 2, 3);
-		grid.add(reset, 1, 4);
-		grid.add(lb, 2, 3);
-		grid.setHgap(10);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(10, 10, 10, 10));
-		grid.setMinSize(500, 200);
+		grid.add(gridChild, 0, 1);
+	
+		gridChild.setPadding(new Insets(30, 10, 0, 10));
+		gridChild.setHalignment(tfStartVertex, HPos.RIGHT);
+
+		lbStartVertex.getStyleClass().add("lbStartVerTexFS");
+		tfStartVertex.getStyleClass().add("tfStartVertexFS");
+		finish.getStyleClass().add("FSFinishStep");
+		step.getStyleClass().add("FSFinishStep");
+		next.getStyleClass().add("FSNextReset");
+		reset.getStyleClass().add("FSNextReset");
+		nexResBox.getStyleClass().add("nexResBox");
+		lb.getStyleClass().add("FSlb");
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
+				for (VertexNode<V> tmp : graphView.vertexNodes.values())
+					tmp.setStyle("-fx-fill: #96d1cd");
+				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
+					tmp.setStyle("-fx-stroke: #45597e");
+					if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+				}
 				root.getChildren().remove(2);
 				root.add(grid, 1, 0);
 				backBut.setGridBack(gridBack);
 				}
+		});
+		
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("Col1ChooseButtonEntered");		
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(2);
 		});
 		
 		//button hiển thị kết quả
