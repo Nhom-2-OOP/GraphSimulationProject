@@ -20,5 +20,11 @@ public class ColoringButton extends Button {
 			}
 			
 		});
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("ColoringButtonEntered");
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(4);
+		});
 	}
 }

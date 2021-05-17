@@ -71,7 +71,6 @@ public class PathFindingButton extends Button{
 		grid.getChildren().add(placeList);
 
 		
-		this.setText("PathFinding");
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				root.getChildren().remove(2);
@@ -80,6 +79,13 @@ public class PathFindingButton extends Button{
 				DFSButton.setNodeBack(grid);
 				BFSButton.setNodeBack(grid);
 			}
+		});
+		
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("btnPathFindingEntered");
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(4);
 		});
 
 	}

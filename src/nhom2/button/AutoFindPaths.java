@@ -167,6 +167,9 @@ public class AutoFindPaths<V,E> extends Button {
 			}
 		});		
 	}
+	
+	
+	
 	public void SetUp (TextField text1, TextField text2) {
 		text1.commitValue();
 		text2.commitValue();

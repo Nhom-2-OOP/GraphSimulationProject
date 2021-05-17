@@ -1,6 +1,7 @@
 package nhom2.window;
 
 import javafx.scene.control.Button;
+import javafx.scene.effect.ColorAdjust;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -120,6 +121,22 @@ public class Main extends Application {
 		stage.setMinHeight(700);
 		stage.setScene(scene);
 		stage.show();  
+		
+//	      ColorAdjust colorAdjust = new ColorAdjust(); 
+//	      
+//	      //Setting the contrast value 
+//	      colorAdjust.setContrast(0.4);     
+//	      
+//	      //Setting the hue value 
+//	      colorAdjust.setHue(-0.05);     
+	      
+//	      //Setting the brightness value 
+//	      colorAdjust.setBrightness(0.5);  
+//	      
+//	      //Setting the saturation value 
+//	      colorAdjust.setSaturation(0.8);  
+//		
+//	      root.setEffect(colorAdjust);
 		
 		root.getStyleClass().add("rootMain");
 		root.setManaged(false);

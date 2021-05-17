@@ -4,6 +4,8 @@ import javafx.geometry.Pos;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -31,7 +33,6 @@ public class ButtonAreaVBox {
 //		btnCaptureGP.setText("Save");
 		SubScene subSceneCaptureGP = new SubScene(btnCaptureGP, sizeButton, sizeButton);
 
-
 		//Nut PlacementButon
 		PlacementButton btnPla = new PlacementButton(root, graphView);
 		SubScene subScenePla = new SubScene(btnPla, sizeButton, sizeButton);
@@ -42,12 +43,12 @@ public class ButtonAreaVBox {
 
 		// Tao nut to mau do thi
 		ColoringButton ColoringButton = new ColoringButton(graphView);
-		ColoringButton.setText("Color Graph");
+//		ColoringButton.setText("Color Graph");
 		SubScene subSceneColoring = new SubScene(ColoringButton, sizeButton, sizeButton);
 
 		// Tao nut thông tin thành viên
 		Button InfoButton = new InfoButton();
-		InfoButton.setText("Thông tin nhóm");
+//		InfoButton.setText("Thông tin nhóm");
 		SubScene subSceneInfo = new SubScene(InfoButton,sizeButton,sizeButton);
 
 
@@ -83,8 +84,25 @@ public class ButtonAreaVBox {
 		btnPathFinding.getStyleClass().add("btnPathFinding");
 		ColoringButton.getStyleClass().add("ColoringButton");
 		InfoButton.getStyleClass().add("InfoButton");
-
-		 
+	
+//	    ColorAdjust colorAdjust = new ColorAdjust(); 
+//	      
+//	      //Setting the contrast value 
+//	      colorAdjust.setContrast(0.4);     
+//	      
+	      //Setting the hue value 
+//	      colorAdjust.setHue(-10);     
+	      
+	      //Setting the brightness value 
+//	      colorAdjust.setBrightness(0.5);  
+//	      
+//	      Setting the saturation value 
+//	      colorAdjust.setSaturation(0.9);  
+		
+	      
+		
+		
+		
 		return buttonArea;
 	}
 	

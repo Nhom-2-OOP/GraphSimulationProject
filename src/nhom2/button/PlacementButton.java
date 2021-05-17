@@ -66,7 +66,6 @@ public class PlacementButton extends Button{
 		placeList.getChildren().addAll(backBut, subSceneRanPla, subSceneCircularPla, subSceneAutoPla);
 		grid.getChildren().add(placeList);
 		
-		this.setText("Placement");
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				backBut.setGridBack(Main.getNodeCol1Start());
@@ -74,7 +73,13 @@ public class PlacementButton extends Button{
 				root.add(grid, 1, 0);
 			}
 		});
-
+		
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("btnPlaEntered");
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(4);
+		});
 	}
 
 }

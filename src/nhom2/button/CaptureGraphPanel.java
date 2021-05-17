@@ -55,6 +55,13 @@ public class CaptureGraphPanel extends Button{
 			
 		});
 		
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("btnCaptureGPEntered");
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(4);
+		});
+		
 	}
 	private static void informSuccess() {
 		Alert inform = new Alert(Alert.AlertType.INFORMATION);

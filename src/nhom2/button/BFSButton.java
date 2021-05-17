@@ -190,6 +190,7 @@ public class BFSButton<V, E> extends Button{
 				backBut.setGridBack(gridBack);
 			}
 		});
+		
 
 		finish.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -208,6 +209,7 @@ public class BFSButton<V, E> extends Button{
 			}
 		});
 
+		
 		step.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

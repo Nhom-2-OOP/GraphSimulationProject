@@ -39,5 +39,11 @@ public class InputButton extends Button  {
 				stage.show();
 			}
 		});
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("btnInputEntered");
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(4);
+		});
 	}
 }

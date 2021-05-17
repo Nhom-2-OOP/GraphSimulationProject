@@ -16,6 +16,12 @@ public class InfoButton extends Button{
 			}
 			
 		});
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("InfoButtonEntered");
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(4);
+		});
 	}
 
 }
