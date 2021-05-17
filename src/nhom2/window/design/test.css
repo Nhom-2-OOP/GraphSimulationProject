@@ -133,7 +133,7 @@
 .lbStartVerTexFS{
 	-fx-text-fill: #9aa8d4;
 	-fx-font-size: 20;
-	-fx-padding: 0 0 10 10 ;
+	-fx-padding: 0 0 0 10 ;
 	
 }
 
@@ -150,7 +150,7 @@
 	-fx-text-fill: #9aa8d4;
 	-fx-pref-height: 30;
     -fx-pref-width: 245;
-	-fx-padding: 30 0.0 0 10 ;
+    -fx-padding: 0 0.0 0 10 ;
 }
 .FSFinishStepEntered{
 	-fx-text-fill: white;
@@ -161,12 +161,11 @@
 	-fx-background-color:  rgb(40, 42, 54);
 	-fx-text-fill: #9aa8d4;
 	-fx-pref-height: 30;
-    -fx-pref-width: 100;
-    -fx-border-color: blue;
-	-fx-border-width: 0px;
+    -fx-pref-width: 80;
 	-fx-background-color: rgb(52, 55, 70);
-		-fx-border-color: #9e5b8b;
-	-fx-border-width: 1px;
+	-fx-border-color: #425578;
+	-fx-border-width: 2px;
+	
 }
 
 .FSNextResetEntered{
@@ -178,6 +177,14 @@
 	-fx-pref-height: 30;
     -fx-pref-width: 245;
     -fx-alignment: center ;
-    -fx-padding: 30 0.0 0 10 ;
+    -fx-padding: 0 0.0 0 10 ;
+}
+
+.FSlb{
+	-fx-text-fill: white;
+	-fx-underline: true;
+	-fx-font-style: italic ;
+	-fx-font-size: 18;
+	-fx-padding: 0 0 0 28; 
 }
 

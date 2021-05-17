@@ -105,14 +105,16 @@ public class BFSButton<V, E> extends Button{
 		reset.setVisible(false);
 		Label lb = new Label();
 			
+		gridChild.setVgap(30);
+		
 		gridChild.add(lbStartVertex, 0, 0);
 		gridChild.add(tfStartVertex, 0, 1);
 		gridChild.add(finish, 0, 2);
 		gridChild.add(step, 0, 3);
-		HBox nexResBox = new HBox(70);
+		HBox nexResBox = new HBox(60);
 		nexResBox.getChildren().addAll(next, reset);
+		gridChild.add(lb, 0, 4);
 		gridChild.add(nexResBox, 0, 4);
-		gridChild.add(lb, 0, 5);
 		
 		grid.add(backBut, 0, 0);
 		grid.add(gridChild, 0, 1);
@@ -120,7 +122,6 @@ public class BFSButton<V, E> extends Button{
 		gridChild.setPadding(new Insets(30, 10, 0, 10));
 		gridChild.setHalignment(tfStartVertex, HPos.RIGHT);
 
-		
 		lbStartVertex.getStyleClass().add("lbStartVerTexFS");
 		tfStartVertex.getStyleClass().add("tfStartVertexFS");
 		finish.getStyleClass().add("FSFinishStep");
@@ -128,6 +129,7 @@ public class BFSButton<V, E> extends Button{
 		next.getStyleClass().add("FSNextReset");
 		reset.getStyleClass().add("FSNextReset");
 		nexResBox.getStyleClass().add("nexResBox");
+		lb.getStyleClass().add("FSlb");
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
@@ -249,6 +251,7 @@ public class BFSButton<V, E> extends Button{
 				if(GraphView.theGraph.isDirected == true) EdgeView.getAttachedArrow().setStyle("-fx-stroke: blue");
 				if (VisitingOrder.size() == 1) {
 					lb.setText("Done!");
+					lb.setVisible(true);
 					next.setVisible(false);
 					return;
 				}
@@ -260,6 +263,7 @@ public class BFSButton<V, E> extends Button{
 			@Override
 			public void handle(ActionEvent event) {
 				lb.setText("");
+				lb.setVisible(false);
 				next.setVisible(false);
 				for (VertexNode<V> tmp : graphView.vertexNodes.values())
 					tmp.setStyle("-fx-fill: #96d1cd");
@@ -288,7 +292,6 @@ public class BFSButton<V, E> extends Button{
 		
 		next.setOnMouseEntered(mouseEvent -> {
 			next.getStyleClass().add("FSNextResetEntered");
-			System.out.println(next.getStyleClass());
 		});
 		next.setOnMouseExited(mouseEvent -> {
 			next.getStyleClass().remove(2);
