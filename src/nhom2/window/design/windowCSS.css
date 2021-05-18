@@ -7,10 +7,16 @@
 	-fx-background-color: rgb(40, 42, 54);
 }
 
+.graphPane{
+		-fx-background-color: rgb(52, 55, 70);
+	
+}
+
 .graphView {
-	-fx-border-color: blue;
+	-fx-border-color: #9aa8d4;
 	-fx-border-width: 0px;
 	-fx-background-color: rgb(52, 55, 70);
+	-fx-border-style: segments(10, 15, 15, 15)  line-cap round ;
 }
 
 .buttonArea {

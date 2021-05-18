@@ -4,7 +4,10 @@ import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nhom2.button.ButtonAreaVBox;
 import nhom2.graph.*;
@@ -12,7 +15,7 @@ import nhom2.graphview.*;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.geometry.HPos;
-
+import nhom2.graphview.Zoom.SceneGestures;
 
 public class Main extends Application {
 	public static GraphEdgeList<String, String> g= build_sample_digraph();
@@ -26,13 +29,12 @@ public class Main extends Application {
 		graphView = new GraphPanel<>(g);
 		
 		
-		SubScene subSceneGraphPanel = new SubScene(graphView,800,600);
+		SubScene subSceneGraphPanel = new SubScene(graphView,0,0);
 		GridPane root = new GridPane();
 
 		//row0
 		RowConstraints r = new RowConstraints();
 		r.setPercentHeight(100);
-		//		r.setValignment(VPos.CENTER);
 		root.getRowConstraints().add(r);
 
 		// col 0
@@ -49,7 +51,6 @@ public class Main extends Application {
 		root.getColumnConstraints().add(c);
 		Pane col1Pane = new Pane();
 		VBox labelButton = new ButtonAreaVBox().label();
-		
 		col1Pane.getChildren().add(labelButton);
 		
 		//col 2
@@ -58,8 +59,10 @@ public class Main extends Application {
 		root.getColumnConstraints().add(c);
 		Pane graphPane = new Pane(); 
 		
+		Screen screen = Screen.getPrimary();
+		
 		root.setHgrow(graphPane, Priority.ALWAYS);
-		graphPane.resize(500, 500);
+		graphPane.resize(screen.getVisualBounds().getWidth() - 300, screen.getVisualBounds().getHeight());
 		graphPane.getChildren().add(subSceneGraphPanel);
 		subSceneGraphPanel.heightProperty().bind(graphPane.heightProperty());
 		subSceneGraphPanel.widthProperty().bind(graphPane.widthProperty());
@@ -80,13 +83,21 @@ public class Main extends Application {
 
 		stage = new Stage();
 		stage.setTitle("Nhóm 2 - OOP - Graph Visualization");
-		stage.setMinWidth(800);
-		stage.setMinHeight(700);
+		
+		stage.setMinHeight(screen.getVisualBounds().getHeight());
+		stage.setMinWidth(screen.getVisualBounds().getWidth());
+		stage.setMaximized(true);
 		stage.setScene(scene);
 		stage.show();  
 		
 		root.getStyleClass().add("rootMain");
-		root.setManaged(false);
+		
+		graphPane.getStyleClass().add("graphPane");
+		SceneGestures sceneGestures = new SceneGestures(graphView);
+		subSceneGraphPanel.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
+		subSceneGraphPanel.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
+		subSceneGraphPanel.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
+
 	}
 
 
