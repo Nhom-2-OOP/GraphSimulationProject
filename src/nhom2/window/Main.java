@@ -106,7 +106,7 @@ public class Main extends Application {
 		GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(true);
 
 		g.insertEdge("A", "B", "AB1");
-		g.insertEdge("A", "C", "AC");
+//		g.insertEdge("A", "C", "AC");
 		g.insertEdge("A", "G", "AG");
 		g.insertEdge("A", "H", "AH");    
 		g.insertEdge("A", "D", "AD");

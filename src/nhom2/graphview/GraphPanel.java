@@ -482,7 +482,7 @@ public class GraphPanel<V, E> extends Pane{
         // Them cac vertex vao vertexNodes. DPT O(n + m)
     	if (this.theGraph == null) return;
     	for (Vertex<V> vertex : theGraph.VertexList()) {
-    		VertexNode<V> NewVertexNode = new VertexNode(vertex, 0, 0, 10, true);
+    		VertexNode<V> NewVertexNode = new VertexNode(vertex, 0, 0, 13, true);
             vertexNodes.put(vertex, NewVertexNode);
             this.getChildren().add(NewVertexNode);
             if (needLabel) {
