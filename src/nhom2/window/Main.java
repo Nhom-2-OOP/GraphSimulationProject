@@ -126,10 +126,7 @@ public class Main extends Application {
 		g.insertEdge("DD", "II", "DI1");
 		g.insertEdge("DD", "JJ", "DJ1");
 
-
-//		g.insertEdge("BB", "B", "BBB1");
 		g.insertEdge("BB", "B", "BBB2");
-//		g.insertEdge("B", "BB", "BBB3");
 		g.insertEdge("I", "BB", "ADD1");
 		g.insertEdge("I", "H", "HII");
 		g.insertEdge("C", "H", "HCII");
@@ -140,11 +137,6 @@ public class Main extends Application {
 
 
 	public static void setGraph(GraphEdgeList<String, String> NewGraph) {
-//		for (Edge<String, String> edge : NewGraph.edges.values()) {
-//            Vertex vertex = edge.Vertices()[0];
-//            Vertex oppositeVertex = edge.Vertices()[1];
-//            System.out.println(vertex.element() + " " + oppositeVertex.element());
-//        }
 		g = NewGraph;
 		graphView.Renew(NewGraph, true); 
 	}
