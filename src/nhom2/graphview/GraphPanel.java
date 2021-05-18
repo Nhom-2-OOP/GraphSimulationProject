@@ -173,22 +173,33 @@ public class GraphPanel<V, E> extends Pane{
         if (needLabel) {
         	Label label = new Label((String)vertex.element());
             label.addStyleClass("vertex-label");
-            label.setOnMouseEntered((MouseEvent mouseEvent) -> {
+            label.setOnMouseClicked((MouseEvent mouseEvent) -> {
                 if (!mouseEvent.isPrimaryButtonDown()) {
-                    getScene().setCursor(Cursor.HAND);
+                    getScene().setCursor(Cursor.DEFAULT);
                 }
 
             });
-            this.getChildren().add(label);
-            NewVertexNode.attachLabel(label);
+            label.setOnMouseEntered((MouseEvent mouseEvent) -> {
+                if (!mouseEvent.isPrimaryButtonDown()) {
+                    getScene().setCursor(Cursor.HAND);
+                    //System.out.println("f");
+                }
+
+            });
+            label.setOnMouseExited((MouseEvent mouseEvent) -> {
+                if (!mouseEvent.isPrimaryButtonDown()) {
+                    getScene().setCursor(Cursor.DEFAULT);
+                }
+
+            });
             label.setOnMousePressed((MouseEvent mouseEvent) -> {
-                if (mouseEvent.isPrimaryButtonDown()) {
+                if (!mouseEvent.isPrimaryButtonDown()) 
+                {
                     // record a delta distance for the drag and drop operation.
                     NewVertexNode.dragDeltaX = NewVertexNode.getCenterX() - mouseEvent.getX();
                     NewVertexNode.dragDeltaY = NewVertexNode.getCenterY() - mouseEvent.getY();
                     getScene().setCursor(Cursor.MOVE);
                     NewVertexNode.isDragging = true;
-
                     mouseEvent.consume();
                 }
             });
@@ -221,6 +232,8 @@ public class GraphPanel<V, E> extends Pane{
 				}           	
             }
             );
+            this.getChildren().add(label);
+            NewVertexNode.attachLabel(label);
         }
         MenuItem item1 = new MenuItem("Thông tin đỉnh");
         item1.setOnAction(new EventHandler<ActionEvent>() {
@@ -521,9 +534,53 @@ public class GraphPanel<V, E> extends Pane{
             if (needLabel) {
             	Label label = new Label((String)vertex.element());
                 label.addStyleClass("vertex-label");
+                label.setOnMouseClicked((MouseEvent mouseEvent) -> {
+                    if (!mouseEvent.isPrimaryButtonDown()) {
+                        label.getScene().setCursor(Cursor.DEFAULT);
+                    }
+
+                });
                 label.setOnMouseEntered((MouseEvent mouseEvent) -> {
                     if (!mouseEvent.isPrimaryButtonDown()) {
-                        getScene().setCursor(Cursor.HAND);
+                        label.getScene().setCursor(Cursor.HAND);
+                        //System.out.println("f");
+                    }
+
+                });
+                label.setOnMouseExited((MouseEvent mouseEvent) -> {
+                    if (!mouseEvent.isPrimaryButtonDown()) {
+                        label.getScene().setCursor(Cursor.DEFAULT);
+                    }
+
+                });
+                label.setOnMousePressed((MouseEvent mouseEvent) -> {
+                    if (!mouseEvent.isPrimaryButtonDown()) 
+                    {
+                        // record a delta distance for the drag and drop operation.
+                        NewVertexNode.dragDeltaX = NewVertexNode.getCenterX() - mouseEvent.getX();
+                        NewVertexNode.dragDeltaY = NewVertexNode.getCenterY() - mouseEvent.getY();
+                        label.getScene().setCursor(Cursor.MOVE);
+                        NewVertexNode.isDragging = true;
+                        mouseEvent.consume();
+                    }
+                });
+
+                label.setOnMouseReleased((MouseEvent mouseEvent) -> {
+                    label.getScene().setCursor(Cursor.HAND);
+                    NewVertexNode.isDragging = false;
+
+                    mouseEvent.consume();
+                });
+
+                label.setOnMouseDragged((MouseEvent mouseEvent) -> {
+                    if (mouseEvent.isPrimaryButtonDown()) {
+                        double newX = mouseEvent.getX() + NewVertexNode.dragDeltaX;
+                        NewVertexNode.setCenterX(NewVertexNode.boundCenterCoordinate(newX, 0, NewVertexNode.getParent().getLayoutBounds().getWidth()));
+
+                        double newY = mouseEvent.getY() + NewVertexNode.dragDeltaY;
+                        NewVertexNode.setCenterY(NewVertexNode.boundCenterCoordinate(newY, 0, NewVertexNode.getParent().getLayoutBounds().getHeight()));
+                        
+                        mouseEvent.consume();
                     }
 
                 });

@@ -84,7 +84,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
                 // record a delta distance for the drag and drop operation.
                 dragDeltaX = getCenterX() - mouseEvent.getX();
                 dragDeltaY = getCenterY() - mouseEvent.getY();
-                getScene().setCursor(Cursor.MOVE);
+                //getScene().setCursor(Cursor.MOVE);
                 isDragging = true;
 
                 mouseEvent.consume();
