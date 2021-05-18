@@ -20,8 +20,10 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	private final Vertex<T> underlyingVertex;
 	private final Set<VertexNode<T>> adjacentVertices;
 	private Label attachedLabel = null;
-	private boolean isDragging = false;
+	public boolean isDragging = false;
 	public ContextMenu contextMenu = new ContextMenu();
+	public double dragDeltaX = 0;
+	public double dragDeltaY = 0;//new Point(0, 0);
 	
 	private class Point{
 
@@ -55,7 +57,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
         }
     }
 	
-	private double boundCenterCoordinate(double value, double min, double max) {
+	public double boundCenterCoordinate(double value, double min, double max) {
         double radius = getRadius();
 
         if (value < min + radius) {
@@ -68,7 +70,6 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
     }
 
 	private void enableDrag() {
-        final Point dragDelta = new Point(0, 0);
         
         this.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
         	
@@ -81,8 +82,8 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
         setOnMousePressed((MouseEvent mouseEvent) -> {
             if (mouseEvent.isPrimaryButtonDown()) {
                 // record a delta distance for the drag and drop operation.
-                dragDelta.x = getCenterX() - mouseEvent.getX();
-                dragDelta.y = getCenterY() - mouseEvent.getY();
+                dragDeltaX = getCenterX() - mouseEvent.getX();
+                dragDeltaY = getCenterY() - mouseEvent.getY();
                 getScene().setCursor(Cursor.MOVE);
                 isDragging = true;
 
@@ -99,11 +100,11 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 
         setOnMouseDragged((MouseEvent mouseEvent) -> {
             if (mouseEvent.isPrimaryButtonDown()) {
-                double newX = mouseEvent.getX() + dragDelta.x;
+                double newX = mouseEvent.getX() + dragDeltaX;
                 double x = boundCenterCoordinate(newX, 0, getParent().getLayoutBounds().getWidth());
                 setCenterX(x);
 
-                double newY = mouseEvent.getY() + dragDelta.y;
+                double newY = mouseEvent.getY() + dragDeltaY;
                 double y = boundCenterCoordinate(newY, 0, getParent().getLayoutBounds().getHeight());
                 setCenterY(y);
                 mouseEvent.consume();

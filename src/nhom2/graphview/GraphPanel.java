@@ -69,6 +69,8 @@ public class GraphPanel<V, E> extends Pane{
 	public Map<Edge<E, V>, EdgeLine<E,V>> edgeNodes;
 	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
 	
+	public double VertexR = 15;
+	
 	public boolean isColored = false;
 	
 	public EventHandler<MouseEvent> Handler;
@@ -165,7 +167,7 @@ public class GraphPanel<V, E> extends Pane{
 	
 	public void Insert(V v, double x, double y) {
 		Vertex<V> vertex = this.theGraph.insertVertex(v);
-		VertexNode<V> NewVertexNode = new VertexNode(vertex, x, y, 10, true);
+		VertexNode<V> NewVertexNode = new VertexNode(vertex, x, y, this.VertexR, true);
         vertexNodes.put(vertex, NewVertexNode);
         this.getChildren().add(NewVertexNode);
         if (needLabel) {
@@ -179,6 +181,37 @@ public class GraphPanel<V, E> extends Pane{
             });
             this.getChildren().add(label);
             NewVertexNode.attachLabel(label);
+            label.setOnMousePressed((MouseEvent mouseEvent) -> {
+                if (mouseEvent.isPrimaryButtonDown()) {
+                    // record a delta distance for the drag and drop operation.
+                    NewVertexNode.dragDeltaX = NewVertexNode.getCenterX() - mouseEvent.getX();
+                    NewVertexNode.dragDeltaY = NewVertexNode.getCenterY() - mouseEvent.getY();
+                    getScene().setCursor(Cursor.MOVE);
+                    NewVertexNode.isDragging = true;
+
+                    mouseEvent.consume();
+                }
+            });
+
+            label.setOnMouseReleased((MouseEvent mouseEvent) -> {
+                getScene().setCursor(Cursor.HAND);
+                NewVertexNode.isDragging = false;
+
+                mouseEvent.consume();
+            });
+
+            label.setOnMouseDragged((MouseEvent mouseEvent) -> {
+                if (mouseEvent.isPrimaryButtonDown()) {
+                    double newX = mouseEvent.getX() + NewVertexNode.dragDeltaX;
+                    NewVertexNode.setCenterX(NewVertexNode.boundCenterCoordinate(newX, 0, NewVertexNode.getParent().getLayoutBounds().getWidth()));
+
+                    double newY = mouseEvent.getY() + NewVertexNode.dragDeltaY;
+                    NewVertexNode.setCenterY(NewVertexNode.boundCenterCoordinate(newY, 0, NewVertexNode.getParent().getLayoutBounds().getHeight()));
+                    
+                    mouseEvent.consume();
+                }
+
+            });
             label.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 
 				@Override
@@ -482,7 +515,7 @@ public class GraphPanel<V, E> extends Pane{
         // Them cac vertex vao vertexNodes. DPT O(n + m)
     	if (this.theGraph == null) return;
     	for (Vertex<V> vertex : theGraph.VertexList()) {
-    		VertexNode<V> NewVertexNode = new VertexNode(vertex, 0, 0, 13, true);
+    		VertexNode<V> NewVertexNode = new VertexNode(vertex, 0, 0, this.VertexR, true);
             vertexNodes.put(vertex, NewVertexNode);
             this.getChildren().add(NewVertexNode);
             if (needLabel) {

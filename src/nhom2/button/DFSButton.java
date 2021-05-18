@@ -109,8 +109,7 @@ public class DFSButton<V, E> extends Button{
 	private Map<Vertex<V>, Vertex<V>> preVertexStep = new HashMap();//
 	private Stack<Vertex<V>> stackStep = new Stack<>();
 	private Vertex<V> tmpnext;
-	private void DFSstep(Vertex<V> startVertex, GraphPanel<V, E> graphView) {
-		Vertex<V> currVertex = startVertex;
+	private void DFSstep(Vertex<V> currVertex, GraphPanel<V, E> graphView) {
 		Vertex<V> tmpcurr = currVertex;
 		mark.put(currVertex, 1);
 		Map<Vertex<V>, Edge<E, V>> temp = graphView.theGraph.adjList.get(currVertex);
@@ -134,7 +133,14 @@ public class DFSButton<V, E> extends Button{
 			edgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
 		tmpnext = currVertex;
 		stackStep.pop();
-		if(stackStep.isEmpty()) {
+		temp = graphView.theGraph.adjList.get(currVertex);
+		adjVertex = temp.keySet();
+		iterator = adjVertex.iterator();
+		int i=1;
+		while(iterator.hasNext()) {
+			if(mark.get((Vertex<V>)iterator.next()).intValue()==0) {i=0; break;}
+		}
+		if(stackStep.isEmpty() && i==1) {
 			lb.setText("Done!");
 			next.setVisible(false);
 			return;
@@ -143,7 +149,7 @@ public class DFSButton<V, E> extends Button{
 	
 	//DFS button
 	public DFSButton(GridPane root, GraphPanel<V, E> graphView) {
-GridPane grid = new GridPane();
+		GridPane grid = new GridPane();
 		
 		BackButton backBut = new BackButton(root);
 		
@@ -275,14 +281,11 @@ GridPane grid = new GridPane();
 				});
 				
 				next.setOnAction(new EventHandler<ActionEvent>() {
-
 					@Override
 					public void handle(ActionEvent event) {
 						Vertex<V> currVertex = tmpnext;
 						while(stackStep.contains(currVertex))
 							stackStep.remove(currVertex);
-						VertexNode<V> currVertexNode = graphView.vertexNodes.get(currVertex);
-						currVertexNode.setStyle("-fx-fill: red");
 						DFSstep(currVertex,graphView);
 					}
 					
