@@ -20,14 +20,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import nhom2.graphview.GraphPanel;
 public class InputButton extends Button  {
-	private Scene View;
+	private static Scene View;
 	public static Stage stage;
 	public InputButton(Stage s)  {
 
 		try {
 			Parent root = FXMLLoader.load(InputButton.class.getResource("input/InputButton.fxml"));
-			this.View = new Scene(root);
-			this.stage = s;
+			InputButton.View = new Scene(root);
+			InputButton.stage = s;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
