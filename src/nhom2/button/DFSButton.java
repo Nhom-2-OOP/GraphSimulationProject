@@ -143,9 +143,7 @@ public class DFSButton<V, E> extends Button{
 	
 	//DFS button
 	public DFSButton(GridPane root, GraphPanel<V, E> graphView) {
-
-		
-		GridPane grid = new GridPane();
+GridPane grid = new GridPane();
 		
 		BackButton backBut = new BackButton(root);
 		
@@ -209,115 +207,101 @@ public class DFSButton<V, E> extends Button{
 			this.getStyleClass().remove(2);
 		});
 		
-		EventHandler<ActionEvent> current = backBut.getOnAction();
-		
-		backBut.setOnAction(e -> {
-	        current.handle(e);
-	        for (VertexNode<V> tmp : graphView.vertexNodes.values())
-				tmp.setStyle("-fx-fill: #96d1cd");
-			for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
-				tmp.setStyle("-fx-stroke: #45597e");
-				if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
-			}
-	    });
-
-		
 		//button hiển thị kết quả
-		finish.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				lb.setText("");
-				next.setVisible(false);
-				for (VertexNode<V> tmp : graphView.vertexNodes.values())
-					tmp.setStyle("-fx-fill: #96d1cd");
-				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
-					tmp.setStyle("-fx-stroke: #45597e");
-					if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
-				}
-				reset.setVisible(false);
-				tfStartVertex.commitValue();
-				String dataStart = tfStartVertex.getText();
-				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
-				if (startVertex == null) {
-					Alert alert = new Alert(AlertType.CONFIRMATION);
-					alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
-					alert.show();
-					return;
-				}
-				reset.setVisible(true);
-				DFS(startVertex,graphView);
-			}
-		});
-		
-		//button hiển thị từng bước
-		step.setOnAction(new EventHandler<ActionEvent>() {
+				finish.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						lb.setText("");
+						next.setVisible(false);
+						for (VertexNode<V> tmp : graphView.vertexNodes.values())
+							tmp.setStyle("-fx-fill: #96d1cd");
+						for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
+							tmp.setStyle("-fx-stroke: #45597e");
+							if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+						}
+						reset.setVisible(false);
+						tfStartVertex.commitValue();
+						String dataStart = tfStartVertex.getText();
+						Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
+						if (startVertex == null) {
+							Alert alert = new Alert(AlertType.CONFIRMATION);
+							alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
+							alert.show();
+							return;
+						}
+						reset.setVisible(true);
+						DFS(startVertex,graphView);
+					}
+				});
+				
+				//button hiển thị từng bước
+				step.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-				stackStep.removeAllElements();
-				lb.setText("");
-				for (VertexNode<V> tmp : graphView.vertexNodes.values())
-					tmp.setStyle("-fx-fill: #96d1cd");
-				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
-					tmp.setStyle("-fx-stroke: #45597e");
-					if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
-				}
-				tfStartVertex.commitValue();
-				String dataStart = tfStartVertex.getText();
-				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
-				if (startVertex == null) {
-					Alert alert = new Alert(AlertType.CONFIRMATION);
-					alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
-					alert.show();
-					return;
-				}
-				reset.setVisible(true);
-				next.setVisible(true);
-				graphView.vertexNodes.get(startVertex).setStyle("-fx-fill: red");
-				Map<Vertex<V>, VertexNode<V>> tmp = graphView.vertexNodes;
-				Set<Vertex<V>> vertex = tmp.keySet();
-				for(Vertex<V> iterator : vertex)
-					mark.put(iterator, 0);
-				Map<Vertex<V>, Edge<E, V>> temp = graphView.theGraph.adjList.get(startVertex);
-				if(temp.size()==0) {
-					lb.setText("Done!");
-					next.setVisible(false);
-					return;
-				}
-				tmpnext = startVertex;
-			}
-			
-		});
-		
-		next.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						stackStep.removeAllElements();
+						lb.setText("");
+						for (VertexNode<V> tmp : graphView.vertexNodes.values())
+							tmp.setStyle("-fx-fill: #96d1cd");
+						for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
+							tmp.setStyle("-fx-stroke: #45597e");
+							if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+						}
+						tfStartVertex.commitValue();
+						String dataStart = tfStartVertex.getText();
+						Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
+						if (startVertex == null) {
+							Alert alert = new Alert(AlertType.CONFIRMATION);
+							alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
+							alert.show();
+							return;
+						}
+						reset.setVisible(true);
+						next.setVisible(true);
+						graphView.vertexNodes.get(startVertex).setStyle("-fx-fill: red");
+						Map<Vertex<V>, VertexNode<V>> tmp = graphView.vertexNodes;
+						Set<Vertex<V>> vertex = tmp.keySet();
+						for(Vertex<V> iterator : vertex)
+							mark.put(iterator, 0);
+						Map<Vertex<V>, Edge<E, V>> temp = graphView.theGraph.adjList.get(startVertex);
+						if(temp.size()==0) {
+							lb.setText("Done!");
+							next.setVisible(false);
+							return;
+						}
+						tmpnext = startVertex;
+					}
+					
+				});
+				
+				next.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-				Vertex<V> currVertex = tmpnext;
-				while(stackStep.contains(currVertex))
-					stackStep.remove(currVertex);
-				VertexNode<V> currVertexNode = graphView.vertexNodes.get(currVertex);
-				currVertexNode.setStyle("-fx-fill: red");
-				DFSstep(currVertex,graphView);
-			}
-			
-		});
-		
-		reset.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				lb.setText("");
-				next.setVisible(false);
-				for (VertexNode<V> tmp : graphView.vertexNodes.values())
-					tmp.setStyle("-fx-fill: #96d1cd");
-				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
-					tmp.setStyle("-fx-stroke: #45597e");
-					if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
-				}
-				reset.setVisible(false);
-			}
-			
-		});
+					@Override
+					public void handle(ActionEvent event) {
+						Vertex<V> currVertex = tmpnext;
+						while(stackStep.contains(currVertex))
+							stackStep.remove(currVertex);
+						VertexNode<V> currVertexNode = graphView.vertexNodes.get(currVertex);
+						currVertexNode.setStyle("-fx-fill: red");
+						DFSstep(currVertex,graphView);
+					}
+					
+				});
+				
+				reset.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						lb.setText("");
+						next.setVisible(false);
+						for (VertexNode<V> tmp : graphView.vertexNodes.values())
+							tmp.setStyle("-fx-fill: #96d1cd");
+						for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
+							tmp.setStyle("-fx-stroke: #45597e");
+							if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+						}
+						reset.setVisible(false);
+					}	
+				});
 	}
 	
 }
