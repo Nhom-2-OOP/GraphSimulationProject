@@ -12,10 +12,10 @@ public class NodeGestures {
 
     private DragContext nodeDragContext = new DragContext();
 
-    GraphPanel canvas;
+    GraphPanel graphView;
 
-    public NodeGestures( GraphPanel canvas) {
-        this.canvas = canvas;
+    public NodeGestures( GraphPanel graphView) {
+        this.graphView = graphView;
 
     }
 
@@ -54,7 +54,7 @@ public class NodeGestures {
             if( !event.isPrimaryButtonDown())
                 return;
 
-            double scale = canvas.getScale();
+            double scale = graphView.getScale();
 
             Node node = (Node) event.getSource();
 

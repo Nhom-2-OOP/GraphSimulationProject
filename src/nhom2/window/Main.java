@@ -10,11 +10,13 @@ import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nhom2.button.ButtonAreaVBox;
+import nhom2.button.ScaleButton;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import nhom2.graphview.Zoom.SceneGestures;
 
 public class Main extends Application {
@@ -63,16 +65,23 @@ public class Main extends Application {
 		
 		root.setHgrow(graphPane, Priority.ALWAYS);
 		graphPane.resize(screen.getVisualBounds().getWidth() - 300, screen.getVisualBounds().getHeight());
+		
+		
+		ScaleButton scaleBut = new ScaleButton(graphView);	
 		graphPane.getChildren().add(subSceneGraphPanel);
+		graphPane.getChildren().add(scaleBut);
+
+		
 		subSceneGraphPanel.heightProperty().bind(graphPane.heightProperty());
 		subSceneGraphPanel.widthProperty().bind(graphPane.widthProperty());
+		
 		graphView.init();
 
 
 		//buttonArea
 		GridPane buttonArea = new ButtonAreaVBox().area(graphView, subSceneGraphPanel, stage, root);
 		
-		root.add(graphPane, 2, 0);		
+		root.add(graphPane, 2, 0);	
 		root.add(buttonArea, 0, 0);
 		root.add(col1Pane, 1, 0);
 		nodeCol1Start = root.getChildren().get(2);
@@ -93,7 +102,7 @@ public class Main extends Application {
 		root.getStyleClass().add("rootMain");
 		
 		graphPane.getStyleClass().add("graphPane");
-		SceneGestures sceneGestures = new SceneGestures(graphView);
+		SceneGestures sceneGestures = new SceneGestures(graphView, scaleBut);
 		subSceneGraphPanel.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
 		subSceneGraphPanel.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
 		subSceneGraphPanel.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());

@@ -5,127 +5,163 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import nhom2.graphview.GraphPanel;
 import nhom2.graphview.Zoom.DragContext;
+import nhom2.button.ScaleButton;
 
-/**
+
+
+/*
  * Listeners for making the scene's canvas draggable and zoomable
  */
 public class SceneGestures {
 
-    private static final double MAX_SCALE = 10.0d;
-    private static final double MIN_SCALE = .1d;
+	private static final double MAX_SCALE = 10.0d;
+	public static double getMaxScale() {
+		return MAX_SCALE;
+	}
 
-    private DragContext sceneDragContext = new DragContext();
+	public static double getMinScale() {
+		return MIN_SCALE;
+	}
 
-    GraphPanel graphView;
+	private static final double MIN_SCALE = .1d;
 
-    public SceneGestures( GraphPanel canvas) {
-        this.graphView = canvas;
-    }
+	private DragContext sceneDragContext = new DragContext();
 
-    public EventHandler<MouseEvent> getOnMousePressedEventHandler() {
-        return onMousePressedEventHandler;
-    }
+	GraphPanel graphView;
+	ScaleButton scaleBut;
 
-    public EventHandler<MouseEvent> getOnMouseDraggedEventHandler() {
-        return onMouseDraggedEventHandler;
-    }
+	public SceneGestures(GraphPanel graphView, ScaleButton scaleBut) {
+		this.graphView = graphView;
+		this.scaleBut = scaleBut;
+	}
 
-    public EventHandler<ScrollEvent> getOnScrollEventHandler() {
-        return onScrollEventHandler;
-    }
+	public EventHandler<MouseEvent> getOnMousePressedEventHandler() {
+		return onMousePressedEventHandler;
+	}
 
-    private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
+	public EventHandler<MouseEvent> getOnMouseDraggedEventHandler() {
+		return onMouseDraggedEventHandler;
+	}
 
-        public void handle(MouseEvent event) {
+	public EventHandler<ScrollEvent> getOnScrollEventHandler() {
+		return onScrollEventHandler;
+	}
 
-            // right mouse button => panning
-            if( !event.isSecondaryButtonDown())
-                return;
+	private EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
-            sceneDragContext.mouseAnchorX = event.getSceneX();
-            sceneDragContext.mouseAnchorY = event.getSceneY();
+		public void handle(MouseEvent event) {
 
-            sceneDragContext.translateAnchorX = graphView.getTranslateX();
-            sceneDragContext.translateAnchorY = graphView.getTranslateY();
+			// right mouse button => panning
+			if( !event.isSecondaryButtonDown())
+				return;
 
-        }
+			sceneDragContext.mouseAnchorX = event.getSceneX();
+			sceneDragContext.mouseAnchorY = event.getSceneY();
 
-    };
+			sceneDragContext.translateAnchorX = graphView.getTranslateX();
+			sceneDragContext.translateAnchorY = graphView.getTranslateY();
 
-    private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
-        public void handle(MouseEvent event) {
+		}
 
-            // right mouse button => panning
-            if( !event.isSecondaryButtonDown())
-                return;
-            if(graphView.getTranslateX() == 0 && graphView.getTranslateY() == 0) {
-            	graphView.setStyle("-fx-border-width: 0px;");
-            }
-            else {
-            	graphView.setStyle("-fx-border-width: 1px;");
-            }
-            
-            graphView.setTranslateX(sceneDragContext.translateAnchorX + event.getSceneX() - sceneDragContext.mouseAnchorX);
-            graphView.setTranslateY(sceneDragContext.translateAnchorY + event.getSceneY() - sceneDragContext.mouseAnchorY);
+	};
 
-            event.consume();
+	private EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
+		public void handle(MouseEvent event) {
 
-        }
-    };
+			// right mouse button => panning
+			if( !event.isSecondaryButtonDown())
+				return;
+			if(graphView.getScale() == 1 && graphView.getTranslateX() == 0 && graphView.getTranslateY() == 0) {
+				graphView.setStyle("-fx-border-width: 0px;");
+			}
+			else {
+				graphView.setStyle("-fx-border-width: 1px;");
+			}
 
-    /**
-     * Mouse wheel handler: zoom to pivot point
-     */
-    private EventHandler<ScrollEvent> onScrollEventHandler = new EventHandler<ScrollEvent>() {
+			graphView.setTranslateX(sceneDragContext.translateAnchorX + event.getSceneX() - sceneDragContext.mouseAnchorX);
+			graphView.setTranslateY(sceneDragContext.translateAnchorY + event.getSceneY() - sceneDragContext.mouseAnchorY);
 
-        @Override
-        public void handle(ScrollEvent event) {
+			event.consume();
 
-            double delta = 1.2;
+		}
+	};
 
-            double scale = graphView.getScale(); // currently we only use Y, same value is used for X
-            double oldScale = scale;
+	/**
+	 * Mouse wheel handler: zoom to pivot point
+	 */
+	private EventHandler<ScrollEvent> onScrollEventHandler = new EventHandler<ScrollEvent>() {
 
-            if (event.getDeltaY() < 0)
-                scale /= delta;
-            else
-                scale *= delta;
+		@Override
+		public void handle(ScrollEvent event) {
 
-            scale = clamp( scale, MIN_SCALE, MAX_SCALE);
+			double delta = 1.2;
 
-            double f = (scale / oldScale)-1;
+			double scale = graphView.getScale(); // currently we only use Y, same value is used for X
+			double oldScale = scale;
 
-            double dx = (event.getSceneX() - (graphView.getBoundsInParent().getWidth()/2 + graphView.getBoundsInParent().getMinX()));
-            double dy = (event.getSceneY() - (graphView.getBoundsInParent().getHeight()/2 + graphView.getBoundsInParent().getMinY()));
+			if (event.getDeltaY() < 0)
+				scale /= delta;
+			else
+				scale *= delta;
 
-            if(scale == 1 && graphView.getTranslateX() == 0 && graphView.getTranslateY() == 0) {
-            	graphView.setStyle("-fx-border-width: 0px;");
-            }
-            else {
-            	graphView.setStyle("-fx-border-width: 1px;");
-            }
-            
-            graphView.setScale( scale);
+			scale = clamp( scale, MIN_SCALE, MAX_SCALE);
 
-            // note: pivot value must be untransformed, i. e. without scaling
-            graphView.setPivot(f*dx, f*dy);
+			double f = (scale / oldScale)-1;
 
-            event.consume();
+			double dx = (event.getSceneX() - (graphView.getBoundsInParent().getWidth()/2 + graphView.getBoundsInParent().getMinX()));
+			double dy = (event.getSceneY() - (graphView.getBoundsInParent().getHeight()/2 + graphView.getBoundsInParent().getMinY()));
 
-        }
+			if(scale == 1 && graphView.getTranslateX() == 0 && graphView.getTranslateY() == 0) {
+				graphView.setStyle("-fx-border-width: 0px;");
+			}
+			else {
+				graphView.setStyle("-fx-border-width: 1px;");
+			}
 
-    };
+			graphView.setScale( scale);
+
+			// note: pivot value must be untransformed, i. e. without scaling
+			graphView.setPivot(f*dx, f*dy);
+			
+			scaleBut.txtScale.setText(String.valueOf((int)(graphView.getScale()*100)) + "%");
+
+			if(graphView.getScale() > 1) {
+				if(scaleBut.showScaleBut.getStyleClass().size() == 3) {
+					scaleBut.showScaleBut.getStyleClass().remove(2);
+				}
+				scaleBut.getChildren().get(0).getStyleClass().add("showScaleButIn");
+			}
+			else if (graphView.getScale() < 1){
+				if(scaleBut.showScaleBut.getStyleClass().size() == 3) {
+					scaleBut.showScaleBut.getStyleClass().remove(2);
+				}
+				scaleBut.getChildren().get(0).getStyleClass().add("showScaleButOut");
+			}
+			else {
+				if(scaleBut.showScaleBut.getStyleClass().size() == 3) {
+					scaleBut.showScaleBut.getStyleClass().remove(2);
+				}
+				scaleBut.getChildren().get(0).getStyleClass().add("showScaleBut11");
+			}
 
 
-    public static double clamp( double value, double min, double max) {
+			event.consume();
 
-        if( Double.compare(value, min) < 0)
-            return min;
 
-        if( Double.compare(value, max) > 0)
-            return max;
+		}
 
-        return value;
-    }
+	};
+
+
+	public static double clamp( double value, double min, double max) {
+
+		if( Double.compare(value, min) < 0)
+			return min;
+
+		if( Double.compare(value, max) > 0)
+			return max;
+
+		return value;
+	}
 }
 
