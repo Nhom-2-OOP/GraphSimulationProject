@@ -27,6 +27,7 @@
 	/* -fx-text-fill: #8addf2; */
 	-fx-text-fill: #6a9955;
 	-fx-font-style: italic;
+	-fx-font-size: 15;
 }
 
 .btnHome {
@@ -38,6 +39,7 @@
 
 .btnHomeEntered {
 	-fx-background-image: url("homeEntered.png");
+	-fx-background-color: #3c3d51;
 }
 
 .btnInput {
@@ -49,6 +51,8 @@
 
 .btnInputEntered {
 	-fx-background-image: url("inputEntered.png");
+		-fx-background-color: #3c3d51;
+	
 }
 
 .btnCaptureGP {
@@ -60,6 +64,21 @@
 
 .btnCaptureGPEntered {
 	-fx-background-image: url("saveEntered.png");
+		-fx-background-color: #3c3d51;
+	
+}
+
+
+.FindingButton {
+	-fx-background-image: url("searchDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+}
+.FindingButtonEntered {
+	-fx-background-image: url("searchEntered.png");
+		-fx-background-color: #3c3d51;
+	
 }
 
 .btnPla {
@@ -71,6 +90,8 @@
 
 .btnPlaEntered {
 	-fx-background-image: url("placementEntered.png");
+		-fx-background-color: #3c3d51;
+	
 }
 
 .btnPathFinding {
@@ -82,6 +103,8 @@
 
 .btnPathFindingEntered {
 	-fx-background-image: url("pathFindingEntered.png");
+		-fx-background-color: #3c3d51;
+	
 }
 
 .ColoringButton {
@@ -93,16 +116,8 @@
 
 .ColoringButtonEntered {
 	-fx-background-image: url("colorEntered.png");
-}
-
-.FindingButton {
-	-fx-background-image: url("searchDark.png");
-	-fx-background-position: center;
-	-fx-background-repeat: no-repeat;
-	-fx-background-size: 70.0%;
-}
-.FindingButtonEntered {
-	-fx-background-image: url("searchEntered.png");
+		-fx-background-color: #3c3d51;
+	
 }
 
 .InfoButton {
@@ -113,6 +128,8 @@
 }
 .InfoButtonEntered {
 	-fx-background-image: url("infoEntered.png");
+		-fx-background-color: #3c3d51;
+	
 }
 
 .BackButton {
@@ -177,12 +194,12 @@
 	-fx-border-width: 2px;
 	
 }
-
 .FSNextResetEntered{
 	-fx-text-fill: white;
 	-fx-background-color: #3c3d51;
 
 }
+
 .nexResBox{
 	-fx-pref-height: 30;
     -fx-pref-width: 245;
@@ -196,5 +213,12 @@
 	-fx-font-style: italic ;
 	-fx-font-size: 18;
 	-fx-padding: 0 0 0 28; 
+}
+
+.likeNexResBox{
+	-fx-pref-height: 30;
+    -fx-pref-width: 245;
+    -fx-alignment:center-left  ;
+    -fx-padding: 0 0.0 0 10 ;
 }
 

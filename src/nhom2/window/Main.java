@@ -1,36 +1,17 @@
 package nhom2.window;
 
-import javafx.scene.control.Button;
-import javafx.scene.effect.ColorAdjust;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import nhom2.button.AutoPlacementButton;
-import nhom2.button.BFSButton;
-import nhom2.button.CaptureGraphPanel;
-import nhom2.button.CircularPlacementButton;
-import nhom2.button.ColoringButton;
-import nhom2.button.DFSButton;
-import nhom2.button.AutoFindPaths;
-import nhom2.button.FindPathButton;
-import nhom2.button.InfoButton;
-import nhom2.button.InputButton;
-import nhom2.button.RandomPlacementButton;
 import nhom2.button.ButtonAreaVBox;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.text.Text;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
 
 
 public class Main extends Application {
@@ -46,23 +27,13 @@ public class Main extends Application {
 		
 		
 		SubScene subSceneGraphPanel = new SubScene(graphView,800,600);
-		//graphView.start_automatic_layout();
 		GridPane root = new GridPane();
-
-		//		GridPane root = new GridPane();
-//		root.setPadding(new Insets(0, 0, 100, 0));
 
 		//row0
 		RowConstraints r = new RowConstraints();
 		r.setPercentHeight(100);
 		//		r.setValignment(VPos.CENTER);
 		root.getRowConstraints().add(r);
-
-//		//row1
-//		r = new RowConstraints();
-//		r.setPercentHeight(20);
-//		r.setValignment(VPos.CENTER);
-//		root.getRowConstraints().add(r);
 
 		// col 0
 		ColumnConstraints c = new ColumnConstraints();
@@ -105,9 +76,7 @@ public class Main extends Application {
 
 		Scene scene = new Scene(root);
 
-		scene.getStylesheets().add(getClass().getResource("design/test.css").toExternalForm());
-		//System.out.println(scene.getStylesheets());
-
+		scene.getStylesheets().add(getClass().getResource("design/windowCSS.css").toExternalForm());
 
 		stage = new Stage();
 		stage.setTitle("Nhóm 2 - OOP - Graph Visualization");
@@ -158,7 +127,7 @@ public class Main extends Application {
 		g.insertEdge("DD", "JJ", "DJ1");
 
 
-		g.insertEdge("BB", "B", "BBB1");
+//		g.insertEdge("BB", "B", "BBB1");
 		g.insertEdge("BB", "B", "BBB2");
 		g.insertEdge("B", "BB", "BBB3");
 		g.insertEdge("I", "BB", "ADD1");

@@ -152,22 +152,8 @@ public class DFSButton<V, E> extends Button{
 		GridPane gridChild = new GridPane();
 		Label lbStartVertex = new Label("Start Vertex:");
 		TextField tfStartVertex = new TextField();
-		tfStartVertex.setPromptText("Nhập đỉnh");
 		Button finish = new Button("Hiển thị kết quả");
 		Button step = new Button("Hiển thị từng bước");
-		
-		EventHandler<ActionEvent> current = backBut.getOnAction();
-		
-		backBut.setOnAction(e -> {
-	        current.handle(e);
-	        for (VertexNode<V> tmp : graphView.vertexNodes.values())
-				tmp.setStyle("-fx-fill: #96d1cd");
-			for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
-				tmp.setStyle("-fx-stroke: #45597e");
-				if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
-			}
-	    });
-
 		
 		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
 		tfStartVertex.setPrefWidth(85);
@@ -222,6 +208,19 @@ public class DFSButton<V, E> extends Button{
 		this.setOnMouseExited(mouseEvent -> {
 			this.getStyleClass().remove(2);
 		});
+		
+		EventHandler<ActionEvent> current = backBut.getOnAction();
+		
+		backBut.setOnAction(e -> {
+	        current.handle(e);
+	        for (VertexNode<V> tmp : graphView.vertexNodes.values())
+				tmp.setStyle("-fx-fill: #96d1cd");
+			for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
+				tmp.setStyle("-fx-stroke: #45597e");
+				if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+			}
+	    });
+
 		
 		//button hiển thị kết quả
 		finish.setOnAction(new EventHandler<ActionEvent>() {

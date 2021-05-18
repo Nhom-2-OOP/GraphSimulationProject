@@ -13,7 +13,9 @@ import java.util.TreeSet;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,7 +27,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -48,24 +52,35 @@ public class FindVertexButton<V,E> extends Button{
 		//BackButton
 		BackButton backBut = new BackButton(root);
 
+		GridPane gridChild = new GridPane();
 		Label lbStartVertex = new Label("Nhập tên đỉnh:");
 		TextField tfStartVertex = new TextField();
 		Button find = new Button("Tìm");
+				
 		tfStartVertex.setPromptText("Tên đỉnh");
 		
-		tfStartVertex.setPrefWidth(85);
-		tfStartVertex.setMaxWidth(85);
+		gridChild.setVgap(30);
+		
+		gridChild.add(lbStartVertex, 0, 0);
+		gridChild.add(tfStartVertex, 0, 1);	
+		HBox likeNexResBox = new HBox(60);
+		likeNexResBox.getChildren().add(find);
+		gridChild.add(likeNexResBox, 0, 2);
 		
 		grid.add(backBut, 0, 0);
-		grid.add(lbStartVertex, 0, 1);
-		grid.add(tfStartVertex, 0, 2);
-		grid.add(find, 0, 3);
-
-		grid.setHgap(10);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(10, 10, 10, 10));
-		grid.setMinSize(500, 200);
+		grid.add(gridChild, 0, 1);
 		
+		gridChild.setPadding(new Insets(30, 10, 0, 10));
+		gridChild.setHalignment(tfStartVertex, HPos.RIGHT);
+		
+		gridChild.prefWidthProperty().bind(grid.widthProperty());
+		
+		lbStartVertex.getStyleClass().add("lbStartVerTexFS");
+		tfStartVertex.getStyleClass().add("tfStartVertexFS");
+		find.getStyleClass().add("FSNextReset");
+		likeNexResBox.getStyleClass().add("likeNexResBox");
+
+
 		EventHandler<ActionEvent> current = backBut.getOnAction();
 		
 		backBut.setOnAction(e -> {
@@ -93,6 +108,12 @@ public class FindVertexButton<V,E> extends Button{
 			}
 		});
 		
+		find.setOnMouseEntered(mouseEvent -> {
+			find.getStyleClass().add("FSNextResetEntered");
+		});
+		find.setOnMouseExited(mouseEvent -> {
+			find.getStyleClass().remove(2);
+		});
 
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
@@ -103,7 +124,7 @@ public class FindVertexButton<V,E> extends Button{
 		});
 		
 		this.setOnMouseEntered(mouseEvent -> {
-			this.getStyleClass().add("FindButtonEntered");
+			this.getStyleClass().add("FindingButtonEntered");
 		});
 		this.setOnMouseExited(mouseEvent -> {
 			this.getStyleClass().remove(4);

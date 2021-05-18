@@ -97,33 +97,19 @@ public class BFSButton<V, E> extends Button{
 		GridPane gridChild = new GridPane();
 		Label lbStartVertex = new Label("Start Vertex:");
 		TextField tfStartVertex = new TextField();
-		tfStartVertex.setPromptText("Nhập đỉnh");
 		Button finish = new Button("Hiển thị kết quả");
 		Button step = new Button("Hiển thị từng bước");
 		Button next = new Button("Next");
 		Label lb = new Label();
 		
-		EventHandler<ActionEvent> current = backBut.getOnAction();
-		
-		backBut.setOnAction(e -> {
-	        current.handle(e);
-	        for (VertexNode<V> tmp : graphView.vertexNodes.values())
-				tmp.setStyle("-fx-fill: #96d1cd");
-			for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
-				tmp.setStyle("-fx-stroke: #45597e");
-				if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
-			}
-	    });
-
-		
 		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
-		tfStartVertex.setPrefWidth(85);
-		tfStartVertex.setMaxWidth(85);
+		
 		next.setVisible(false);
 		Button reset = new Button("Reset");
 		reset.setVisible(false);
 			
 		gridChild.setVgap(30);
+
 		
 		gridChild.add(lbStartVertex, 0, 0);
 		gridChild.add(tfStartVertex, 0, 1);
@@ -170,6 +156,18 @@ public class BFSButton<V, E> extends Button{
 			this.getStyleClass().remove(2);
 		});
 		
+		
+		EventHandler<ActionEvent> current = backBut.getOnAction();
+		
+		backBut.setOnAction(e -> {
+	        current.handle(e);
+	        for (VertexNode<V> tmp : graphView.vertexNodes.values())
+				tmp.setStyle("-fx-fill: #96d1cd");
+			for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
+				tmp.setStyle("-fx-stroke: #45597e");
+				if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+			}
+	    });
 		
 		finish.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

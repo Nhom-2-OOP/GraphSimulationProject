@@ -27,13 +27,16 @@ public class ButtonAreaVBox {
 
 		// Tao nut input do thi
 		InputButton btnInput = new InputButton(stage);
-//		btnInput.setText("Input đồ thị");
 		SubScene subSceneInput = new SubScene(btnInput,sizeButton,sizeButton);
 
 		// Tao nut luu anh do thi
 		CaptureGraphPanel btnCaptureGP = new CaptureGraphPanel(subSceneGraphPanel, stage);
-//		btnCaptureGP.setText("Save");
 		SubScene subSceneCaptureGP = new SubScene(btnCaptureGP, sizeButton, sizeButton);
+		
+		
+		// Tao nut tim dinh
+		FindVertexButton FindingButton = new FindVertexButton(root, graphView);
+		SubScene subSceneFinding = new SubScene(FindingButton, sizeButton, sizeButton);
 
 		//Nut PlacementButon
 		PlacementButton btnPla = new PlacementButton(root, graphView);
@@ -45,22 +48,16 @@ public class ButtonAreaVBox {
 
 		// Tao nut to mau do thi
 		ColoringButton ColoringButton = new ColoringButton(graphView);
-//		ColoringButton.setText("Color Graph");
 		SubScene subSceneColoring = new SubScene(ColoringButton, sizeButton, sizeButton);
-		
-		// Tao nut to mau do thi
-		FindVertexButton FindingButton = new FindVertexButton(root, graphView);
-//		ColoringButton.setText("Color Graph");
-		SubScene subSceneFinding = new SubScene(FindingButton, sizeButton, sizeButton);
+
 
 		// Tao nut thông tin thành viên
 		Button InfoButton = new InfoButton();
-//		InfoButton.setText("Thông tin nhóm");
 		SubScene subSceneInfo = new SubScene(InfoButton,sizeButton,sizeButton);
 		
 		// Tao layout VBox
 		VBox buttonAreaTop = new VBox(0);
-		buttonAreaTop.getChildren().addAll(subSceneHome,subSceneInput, subSceneCaptureGP, subScenePla, subScenePathFinding, subSceneColoring, FindingButton);
+		buttonAreaTop.getChildren().addAll(subSceneHome,subSceneInput, subSceneCaptureGP, subSceneFinding, subScenePla, subScenePathFinding, subSceneColoring);
 		buttonAreaTop.setAlignment(Pos.TOP_CENTER);
 		buttonArea.setVgrow(buttonAreaTop, Priority.ALWAYS);
 
@@ -117,6 +114,11 @@ public class ButtonAreaVBox {
 		Pane btnCaptureGP = new Pane(labCap);
 		labelBtnArea.getChildren().add(btnCaptureGP);
 		
+		Label labFind= new Label(" Tìm đỉnh");
+		labFind.getStyleClass().add("labelOfButtonArea");
+		labFind.setPrefSize(245, sizeButton);
+		Pane btnFind = new Pane(labFind);
+		labelBtnArea.getChildren().add(btnFind);
 		
 		Label labPla = new Label(" Sắp xếp đỉnh");
 		labPla.getStyleClass().add("labelOfButtonArea");
@@ -135,12 +137,6 @@ public class ButtonAreaVBox {
 		labColor.setPrefSize(245, sizeButton);
 		Pane btnColor = new Pane(labColor);
 		labelBtnArea.getChildren().add(btnColor);
-		
-		Label labFind= new Label(" Tìm đỉnh");
-		labFind.getStyleClass().add("labelOfButtonArea");
-		labFind.setPrefSize(245, sizeButton);
-		Pane btnFind = new Pane(labFind);
-		labelBtnArea.getChildren().add(btnFind);
 		
 		labelBtnArea.setPadding(new Insets(0, 0,0, 10));
 		return labelBtnArea;
