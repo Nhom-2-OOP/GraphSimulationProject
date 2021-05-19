@@ -3,7 +3,7 @@
 }
 
 .vertex {
-    -fx-stroke-width:2;
+    -fx-stroke-width:1;
     -fx-stroke: #45597e;
     -fx-stroke-type: inside; /* you should keep this if using arrows */
     -fx-fill: #96d1cd;
@@ -15,7 +15,7 @@
 }
 
 .edge {
-    -fx-stroke-width: 4;
+    -fx-stroke-width: 3;
     -fx-stroke: #45597e;  
     /*-fx-stroke-dash-array: 2 5 2 5; /* remove for clean edges */  
     -fx-fill: transparent; /*important for curved edges */
