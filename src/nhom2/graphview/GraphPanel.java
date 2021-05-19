@@ -31,7 +31,9 @@ import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
@@ -60,6 +62,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+
+
 public class GraphPanel<V, E> extends Pane{
 	
 	public PlacementStrategy placementStrategy;
@@ -83,6 +87,7 @@ public class GraphPanel<V, E> extends Pane{
     
     public boolean edgesWithArrows;
     private boolean needLabel;
+    DoubleProperty myScale = new SimpleDoubleProperty(1.0);
 	
     
     public GraphPanel(GraphEdgeList<V, E> theGraph) {
@@ -112,7 +117,10 @@ public class GraphPanel<V, E> extends Pane{
         } catch (MalformedURLException ex) {
             Logger.getLogger(GraphPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+        scaleXProperty().bind(myScale);
+        scaleYProperty().bind(myScale);
+
         attractionForce = 20;
         attractionScale = 10;
         repulsionForce = 10000;
@@ -164,6 +172,20 @@ public class GraphPanel<V, E> extends Pane{
         
         this.setOnMouseClicked(Handler);
 	}
+	
+    public double getScale() {
+        return myScale.get();
+    }
+
+    public void setScale( double scale) {
+        myScale.set(scale);
+    }
+
+    public void setPivot( double x, double y) {
+        setTranslateX(getTranslateX()-x);
+        setTranslateY(getTranslateY()-y);
+    }
+	
 	
 	public void Insert(V v, double x, double y) {
 		Vertex<V> vertex = this.theGraph.insertVertex(v);

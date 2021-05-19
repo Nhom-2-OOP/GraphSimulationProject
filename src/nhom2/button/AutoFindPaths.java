@@ -165,7 +165,13 @@ public class AutoFindPaths<V,E> extends Button {
 				stage.setTitle("Tìm đường đi giữa hai đỉnh cho trước");
 		        stage.show();	
 			}
-		});		
+		});	
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("Col1ChooseButtonEntered");		
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(2);
+		});
 	}
 	
 	
