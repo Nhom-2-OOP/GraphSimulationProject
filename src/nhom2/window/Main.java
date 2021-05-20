@@ -158,6 +158,14 @@ public class Main extends Application {
 
 	public static void setGraph(GraphEdgeList<String, String> NewGraph) {
 		g = NewGraph;
+		int n = g.vertices.size();
+		if (n > 100) {
+			if (n <= 1000) GraphPanel.VertexR = 10;
+			else GraphPanel.VertexR = 5;
+		}
+		else {
+			GraphPanel.VertexR = 15;
+		}
 		graphView.Renew(NewGraph, true); 
 	}
 }

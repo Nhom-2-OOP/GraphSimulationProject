@@ -73,7 +73,7 @@ public class GraphPanel<V, E> extends Pane{
 	public Map<Edge<E, V>, EdgeLine<E,V>> edgeNodes;
 	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
 	
-	public double VertexR = 15;
+	public static double VertexR = 15;
 	
 	public boolean isColored = false;
 	
@@ -194,7 +194,8 @@ public class GraphPanel<V, E> extends Pane{
         this.getChildren().add(NewVertexNode);
         if (needLabel) {
         	Label label = new Label((String)vertex.element());
-            label.addStyleClass("vertex-label");
+            label.setStyle("-fx-font: bold " +(int)(this.VertexR/2)  + "pt \"sans-serif\";\n"
+            		+ "    -fx-fill: #45597e;");
             label.setOnMouseClicked((MouseEvent mouseEvent) -> {
                 if (!mouseEvent.isPrimaryButtonDown()) {
                     getScene().setCursor(Cursor.DEFAULT);
@@ -555,7 +556,8 @@ public class GraphPanel<V, E> extends Pane{
             this.getChildren().add(NewVertexNode);
             if (needLabel) {
             	Label label = new Label((String)vertex.element());
-                label.addStyleClass("vertex-label");
+            	label.setStyle("-fx-font: bold " +(int)(this.VertexR/2)  + "pt \"sans-serif\";\n"
+                		+ "    -fx-fill: #45597e;");
                 label.setOnMouseClicked((MouseEvent mouseEvent) -> {
                     if (!mouseEvent.isPrimaryButtonDown()) {
                         label.getScene().setCursor(Cursor.DEFAULT);
@@ -687,8 +689,8 @@ public class GraphPanel<V, E> extends Pane{
     			@Override
     			public void handle(MouseEvent arg0) {
     				// TODO Auto-generated method stub
-    				tmp.setEndX(arg0.getSceneX() - diffX);
-    	            tmp.setEndY(arg0.getSceneY() - diffY);
+    				tmp.setEndX(arg0.getX());
+    	            tmp.setEndY(arg0.getY());
     			}
     	};
     	//this.addEventFilter(MouseEvent.MOUSE_MOVED, myHandler01);
