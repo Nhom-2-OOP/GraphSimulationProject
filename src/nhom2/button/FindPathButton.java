@@ -233,8 +233,12 @@ public class FindPathButton<V, E> extends Button {
 					
 					// thay đổi màu đỉnh và cạnh
 					// the coloring of both start and end vertex is permanent
-					if(inputVertex != endVertex && inputVertex != startVertex) 
-						inputVertexNode.setStyle("-fx-fill: yellow");
+					if(inputVertex != endVertex && inputVertex != startVertex) {
+						inputVertexNode.setStyle("-fx-fill: lime");
+						
+					}
+					if(traceVertex.peek() != startVertex)
+						graphView.vertexNodes.get(traceVertex.peek()).setStyle("-fx-fill : yellow");
 					inputEdgeNode.setStyle("-fx-stroke: blue");
 					if (graphView.edgesWithArrows)
 						inputEdgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
@@ -300,25 +304,28 @@ public class FindPathButton<V, E> extends Button {
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				if (countStep > 0) {
-					currentVertex = traceVertex.pop();
-					VertexNode<V> backVertexNode = graphView.vertexNodes.get(currentVertex);
+	
+					Vertex<V> garbageVertex = traceVertex.pop();
+					currentVertex = traceVertex.peek();
+					if(currentVertex != startVertex) graphView.vertexNodes.get(currentVertex).setStyle("-fx-fill : lime");
+					VertexNode<V> backVertexNode = graphView.vertexNodes.get(garbageVertex);
 					Edge<E, V> backEdge = traceEdge.pop();
 					EdgeLine<E, V> backEdgeNode = graphView.edgeNodes.get(backEdge);
 					
 					// backtracking
-					int lenVertex = currentVertex.element().toString().length();
+					int lenVertex = garbageVertex.element().toString().length();
 					textPath.deleteText(textPath.getText().length() - 2 - lenVertex, textPath.getText().length());
 					// the coloring of both start and end vertex is permanent
-					if(currentVertex != endVertex && currentVertex != startVertex && !traceVertex.contains(currentVertex)) 
-						backVertexNode.setStyle("-fx-fill: #96d1cd");
+					if(garbageVertex != endVertex && garbageVertex != startVertex) 
+						if(!traceVertex.contains(garbageVertex))
+							backVertexNode.setStyle("-fx-fill: #96d1cd");
+						else
+							backVertexNode.setStyle("-fx-fill: yellow");
 					if(!traceEdge.contains(backEdge)) {
 						backEdgeNode.setStyle(" -fx-stroke: #45597e");
 						if (graphView.edgesWithArrows)
 							backEdgeNode.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
 					}
-					
-					currentVertex = traceVertex.peek();
-
 					setListNextVertex(graphView, currentVertex);
 				} else {
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -330,5 +337,8 @@ public class FindPathButton<V, E> extends Button {
 		});
 
 	}
-
 }
+
+// the coloring of start and end vertex are always red
+// Current vertex is green
+// Visted vertex is yellow
