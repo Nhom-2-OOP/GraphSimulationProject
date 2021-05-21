@@ -1,6 +1,8 @@
 package nhom2.button;
 
 import java.util.Set;
+import java.util.Stack;
+import java.util.HashMap;
 import java.util.Map;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -32,8 +34,9 @@ public class FindPathButton<V, E> extends Button {
 	private Stage stage;
 	protected Scene View;
 	private Vertex<V> currentVertex;
-	private Vertex<V> endVertex;
-	private Vertex<V> collection[] = new Vertex[21];
+	private Vertex<V> endVertex, startVertex;
+	private Stack<Vertex<V>> traceVertex = new Stack<>();
+	private Stack<Edge<E,V>> traceEdge = new Stack<>();
 	private int countStep = 0;
 	private TextField textPath = new TextField("");
 	private ListView<String> listNV = new ListView<String>();
@@ -193,7 +196,7 @@ public class FindPathButton<V, E> extends Button {
 				String dataEnd = tfEndVertex.getText();
 
 				// thuat toan
-				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
+				startVertex = graphView.theGraph.vertices.get(dataStart);
 				endVertex = graphView.theGraph.vertices.get(dataEnd);
 
 				if (startVertex == null || endVertex == null) {
@@ -203,7 +206,7 @@ public class FindPathButton<V, E> extends Button {
 					return;
 				}
 
-				collection[0] = startVertex;
+				traceVertex.push(startVertex);
 				// chuyển màu riêng 2 đỉnh start và end
 				VertexNode<V> startVertexNode = graphView.vertexNodes.get(startVertex);
 				VertexNode<V> endVertexNode = graphView.vertexNodes.get(endVertex);
@@ -217,7 +220,7 @@ public class FindPathButton<V, E> extends Button {
 			}
 		});
 
-		// nut OK
+		// nut Next
 		btNext.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -227,16 +230,21 @@ public class FindPathButton<V, E> extends Button {
 					VertexNode<V> inputVertexNode = graphView.vertexNodes.get(inputVertex);
 					Edge<E, V> inputEdge = graphView.theGraph.adjList.get(currentVertex).get(inputVertex);
 					EdgeLine<E, V> inputEdgeNode = graphView.edgeNodes.get(inputEdge);
+					
 					// thay đổi màu đỉnh và cạnh
-					inputVertexNode.setStyle("-fx-fill: yellow");
+					// the coloring of both start and end vertex is permanent
+					if(inputVertex != endVertex && inputVertex != startVertex) 
+						inputVertexNode.setStyle("-fx-fill: yellow");
 					inputEdgeNode.setStyle("-fx-stroke: blue");
 					if (graphView.edgesWithArrows)
 						inputEdgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
-
+					
+						
 					textPath.appendText("->" + input);
 					currentVertex = inputVertex;
 					countStep++;
-					collection[countStep] = inputVertex;
+					traceVertex.push(inputVertex);
+					traceEdge.push(inputEdge);
 				} catch (NullPointerException e) {
 					Alert alert = new Alert(Alert.AlertType.WARNING);
 					alert.setContentText("Please choose vertex!");
@@ -280,6 +288,8 @@ public class FindPathButton<V, E> extends Button {
 				countStep = 0;
 				textPath.setText("");
 				listNV.getItems().clear();
+				traceEdge.clear();
+				traceVertex.clear();
 			}
 
 		});
@@ -290,19 +300,24 @@ public class FindPathButton<V, E> extends Button {
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				if (countStep > 0) {
-					currentVertex = collection[countStep - 1];
-					VertexNode<V> backVertexNode = graphView.vertexNodes.get(collection[countStep]);
-					Edge<E, V> backEdge = graphView.theGraph.adjList.get(currentVertex).get(collection[countStep]);
+					currentVertex = traceVertex.pop();
+					VertexNode<V> backVertexNode = graphView.vertexNodes.get(currentVertex);
+					Edge<E, V> backEdge = traceEdge.pop();
 					EdgeLine<E, V> backEdgeNode = graphView.edgeNodes.get(backEdge);
-
+					
 					// backtracking
-					int lenVertex = collection[countStep].element().toString().length();
+					int lenVertex = currentVertex.element().toString().length();
 					textPath.deleteText(textPath.getText().length() - 2 - lenVertex, textPath.getText().length());
-					backVertexNode.setStyle("-fx-fill: #96d1cd");
-					backEdgeNode.setStyle(" -fx-stroke: #45597e");
-					if (graphView.edgesWithArrows)
-						backEdgeNode.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
-					currentVertex = collection[--countStep];
+					// the coloring of both start and end vertex is permanent
+					if(currentVertex != endVertex && currentVertex != startVertex && !traceVertex.contains(currentVertex)) 
+						backVertexNode.setStyle("-fx-fill: #96d1cd");
+					if(!traceEdge.contains(backEdge)) {
+						backEdgeNode.setStyle(" -fx-stroke: #45597e");
+						if (graphView.edgesWithArrows)
+							backEdgeNode.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+					}
+					
+					currentVertex = traceVertex.peek();
 
 					setListNextVertex(graphView, currentVertex);
 				} else {
