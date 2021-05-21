@@ -304,30 +304,39 @@ public class FindPathButton<V, E> extends Button {
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				if (countStep > 0) {
-	
+					countStep--;
 					Vertex<V> garbageVertex = traceVertex.pop();
 					currentVertex = traceVertex.peek();
+					
+					// highlight đỉnh hiện tại nếu khác đỉnh gốc
 					if(currentVertex != startVertex) graphView.vertexNodes.get(currentVertex).setStyle("-fx-fill : lime");
+					
 					VertexNode<V> backVertexNode = graphView.vertexNodes.get(garbageVertex);
 					Edge<E, V> backEdge = traceEdge.pop();
 					EdgeLine<E, V> backEdgeNode = graphView.edgeNodes.get(backEdge);
 					
 					// backtracking
+					
+					// get back TextField textPath
 					int lenVertex = garbageVertex.element().toString().length();
 					textPath.deleteText(textPath.getText().length() - 2 - lenVertex, textPath.getText().length());
+					
 					// the coloring of both start and end vertex is permanent
 					if(garbageVertex != endVertex && garbageVertex != startVertex) 
 						if(!traceVertex.contains(garbageVertex))
 							backVertexNode.setStyle("-fx-fill: #96d1cd");
 						else
 							backVertexNode.setStyle("-fx-fill: yellow");
+					
 					if(!traceEdge.contains(backEdge)) {
 						backEdgeNode.setStyle(" -fx-stroke: #45597e");
 						if (graphView.edgesWithArrows)
 							backEdgeNode.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
 					}
+					
 					setListNextVertex(graphView, currentVertex);
-				} else {
+				} 
+				else {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setContentText("Cannot Back!");
 					alert.showAndWait();
