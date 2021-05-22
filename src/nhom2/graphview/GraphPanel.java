@@ -117,7 +117,7 @@ public class GraphPanel<V, E> extends Pane{
         } catch (MalformedURLException ex) {
             Logger.getLogger(GraphPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         scaleXProperty().bind(myScale);
         scaleYProperty().bind(myScale);
 

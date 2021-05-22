@@ -10,9 +10,11 @@ import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nhom2.button.ButtonAreaVBox;
+import nhom2.button.MapButton;
 import nhom2.button.ScaleButton;
 import nhom2.graph.*;
 import nhom2.graphview.*;
+import nhom2.graphview.MiniMap.MiniMap;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.geometry.HPos;
@@ -62,14 +64,19 @@ public class Main extends Application {
 		Pane graphPane = new Pane(); 
 		
 		Screen screen = Screen.getPrimary();
+		ScaleButton scaleBut = new ScaleButton(graphView);	
 		
+		
+		MiniMap miniMap = new MiniMap( graphView);
+		
+		MapButton mapBut = new MapButton(miniMap);
+
 		root.setHgrow(graphPane, Priority.ALWAYS);
 		graphPane.resize(screen.getVisualBounds().getWidth() - 300, screen.getVisualBounds().getHeight());
-		
-		
-		ScaleButton scaleBut = new ScaleButton(graphView);	
 		graphPane.getChildren().add(subSceneGraphPanel);
 		graphPane.getChildren().add(scaleBut);
+		graphPane.getChildren().add(mapBut);
+		graphPane.getChildren().add(miniMap);
 
 		
 		subSceneGraphPanel.heightProperty().bind(graphPane.heightProperty());

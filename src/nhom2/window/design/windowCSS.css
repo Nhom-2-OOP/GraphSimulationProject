@@ -57,6 +57,7 @@
 .btnInputEntered {
 	-fx-background-image: url("inputEntered.png");
 	-fx-background-color: #3c3d51;
+	
 }
 
 .btnCaptureGP {
@@ -259,3 +260,33 @@
 	-fx-alignment: center;
 }
 
+.borderMap{
+	-fx-border-color: #9aa8d4;
+	-fx-border-width: 3px;
+	
+}
+
+.minimizeMapBut{
+	-fx-text-fill: #9aa8d4;
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 90.0%;
+	-fx-background-color: rgb(52, 55, 70);
+	-fx-background-image: url("minimizeDark.png");
+}
+
+.minimizeMapButEnter{
+	-fx-background-image: url("minimizeEntered.png");
+}
+
+.mapButton{
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+	-fx-background-color: rgb(52, 55, 70);
+	-fx-background-image: url("mapDark.png");
+}
+.mapButtonEnter{
+		-fx-background-image: url("mapEntered.png");
+	
+}
