@@ -88,6 +88,8 @@ public class GraphPanel<V, E> extends Pane{
     public boolean edgesWithArrows;
     private boolean needLabel;
     DoubleProperty myScale = new SimpleDoubleProperty(1.0);
+    
+    
 	
     
     public GraphPanel(GraphEdgeList<V, E> theGraph) {

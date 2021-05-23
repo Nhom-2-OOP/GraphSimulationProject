@@ -1,9 +1,16 @@
 package nhom2.window;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
@@ -20,6 +27,9 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import nhom2.graphview.Zoom.SceneGestures;
+import nhom2.window.MulTab.GraphTab;
+import nhom2.window.PaneGraph.PaneGraph;
+//import sun.tools.tree.ThisExpression;
 
 public class Main extends Application {
 	public static GraphEdgeList<String, String> g= build_sample_digraph();
@@ -31,10 +41,11 @@ public class Main extends Application {
 
 		// Tao scene bieu dien do thi
 		graphView = new GraphPanel<>(g);
-		
-		
-		SubScene subSceneGraphPanel = new SubScene(graphView,0,0);
+
+		Screen screen = Screen.getPrimary();
+
 		GridPane root = new GridPane();
+		root.getStyleClass().add("rootMain");
 
 		//row0
 		RowConstraints r = new RowConstraints();
@@ -61,34 +72,51 @@ public class Main extends Application {
 		c = new ColumnConstraints();
 		c.setHalignment(HPos.CENTER);
 		root.getColumnConstraints().add(c);
-		Pane graphPane = new Pane(); 
 		
-		Screen screen = Screen.getPrimary();
-		ScaleButton scaleBut = new ScaleButton(graphView);	
-		
-		
-		MiniMap miniMap = new MiniMap( graphView);
-		
-		MapButton mapBut = new MapButton(miniMap);
 
-		root.setHgrow(graphPane, Priority.ALWAYS);
-		graphPane.resize(screen.getVisualBounds().getWidth() - 300, screen.getVisualBounds().getHeight());
-		graphPane.getChildren().add(subSceneGraphPanel);
-		graphPane.getChildren().add(scaleBut);
-		graphPane.getChildren().add(mapBut);
-		graphPane.getChildren().add(miniMap);
+		Button test = new Button();
+		
+//		GridPane col2GP = new GridPane();
+//		SubScene subtest = new SubScene (test, 40, 40);
+//		col2GP.add(subtest, 0, 0);
+//		col2GP.add(graphPane, 0, 1);
+//		
+		
+		TabPane tabPane = new TabPane();
+		
+		GraphTab tab1 = new GraphTab(g);
+		tabPane.getTabs().add(tab1);
 
 		
-		subSceneGraphPanel.heightProperty().bind(graphPane.heightProperty());
-		subSceneGraphPanel.widthProperty().bind(graphPane.widthProperty());
+//		GraphTab tab2 = new GraphTab(g);
+//		tabPane.getTabs().add(tab2);
 		
-		graphView.init();
-
+		
+		
+		tabPane.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+		    @Override
+		    public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+		        System.out.println(tabPane.getSelectionModel().getSelectedIndex());
+		    }
+		}); 
+		
+		
+		
+		
+		
+		
+		
 
 		//buttonArea
-		GridPane buttonArea = new ButtonAreaVBox().area(graphView, subSceneGraphPanel, stage, root);
+		GridPane buttonArea = new ButtonAreaVBox().area(graphView, stage, root);
 		
-		root.add(graphPane, 2, 0);	
+//		root.add(graphPane, 2, 0);	
+//		root.add(col2GP, 2, 0);
+		root.add(tabPane, 2, 0);
+		
+		
+		
+		
 		root.add(buttonArea, 0, 0);
 		root.add(col1Pane, 1, 0);
 		nodeCol1Start = root.getChildren().get(2);
@@ -106,14 +134,7 @@ public class Main extends Application {
 		stage.setScene(scene);
 		stage.show();  
 		
-		root.getStyleClass().add("rootMain");
 		
-		graphPane.getStyleClass().add("graphPane");
-		SceneGestures sceneGestures = new SceneGestures(graphView, scaleBut);
-		subSceneGraphPanel.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
-		subSceneGraphPanel.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
-		subSceneGraphPanel.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
-
 	}
 
 

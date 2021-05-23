@@ -24,9 +24,9 @@ import javax.imageio.ImageIO;
 
 
 public class CaptureGraphPanel extends Button{
-	private SubScene View;
-	public CaptureGraphPanel(SubScene view, Stage stage) {
-		this.View = view;
+	private GraphPanel view;
+	public CaptureGraphPanel(GraphPanel graphView, Stage stage) {
+		this.view = graphView;
 		this.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

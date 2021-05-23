@@ -9,6 +9,8 @@
 
 .graphPane {
 	-fx-background-color: rgb(52, 55, 70);
+	-fx-border-color: red;
+	-fx-border-width: 0px;
 }
 
 .graphView {

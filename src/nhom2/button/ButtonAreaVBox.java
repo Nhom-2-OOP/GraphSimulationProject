@@ -18,7 +18,7 @@ import nhom2.graphview.GraphPanel;
 
 public class ButtonAreaVBox {
 	int sizeButton = 55;
-	public GridPane area(GraphPanel graphView, SubScene subSceneGraphPanel, Stage stage, GridPane root) {
+	public GridPane area(GraphPanel<String, String> graphView, Stage stage, GridPane root) {
 		GridPane buttonArea = new GridPane();
 
 		//Tao nut Home
@@ -30,7 +30,7 @@ public class ButtonAreaVBox {
 		SubScene subSceneInput = new SubScene(btnInput,sizeButton,sizeButton);
 
 		// Tao nut luu anh do thi
-		CaptureGraphPanel btnCaptureGP = new CaptureGraphPanel(subSceneGraphPanel, stage);
+		CaptureGraphPanel btnCaptureGP = new CaptureGraphPanel(graphView, stage);
 		SubScene subSceneCaptureGP = new SubScene(btnCaptureGP, sizeButton, sizeButton);
 		
 		
