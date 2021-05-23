@@ -593,7 +593,6 @@ public class GraphPanel<V, E> extends Pane{
     public void addWeightedFeature() {
     	deleteWeightedFeature();
     	this.edgesWithWeight = true;
-    	theGraph.setWeightedFeature();
     	for(Edge<E,V> edge : edgeNodes.keySet()) {
     		EdgeLine<E,V> edgeline = edgeNodes.get(edge);
     		Label weight = new Label(theGraph.edgeWeight.get(edge).toString());

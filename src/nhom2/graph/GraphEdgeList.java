@@ -1,6 +1,8 @@
 package nhom2.graph;
 
 import java.util.*;
+import java.util.Map.Entry;
+
 import nhom2.graph.*;
 
 public class GraphEdgeList<V,E> implements Graph<V,E>{
@@ -12,7 +14,7 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 	public Map<Edge<E,V>, Integer> edgeWeight;
 	public boolean isDirected;
 	public boolean isWeighted;
-	public boolean isRandomWeight = true;
+	
 	
 	public GraphEdgeList(boolean isDirectedGraph) {
     	this.vertices = new HashMap<>();
@@ -269,19 +271,34 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		this.adjList = adjList;
 	}
 	
+	public void setWeightedFeature(Vector<Vector <Integer> > weight) {
+		this.isWeighted = true;
+		edgeWeight = new HashMap<>();
+		Vector <String> vecLabel = new Vector<String> ();
+		for (Entry<V, Vertex<V>> entry : this.vertices.entrySet()) {
+			vecLabel.add((String) entry.getKey());
+		}
+		Set<E> key = edges.keySet();
+		int i =0, j=0;
+		for(String s : vecLabel) {
+		   for(String s1 : vecLabel) {
+			   if(weight.get(i).get(j) != 0) {
+				   if(key.contains(s + " " + s1)) {
+					   edgeWeight.put(edges.get(s + " " + s1), weight.get(i).get(j));
+				   }
+			   }
+			   j++;
+		   }
+		   i++;
+		}
+	}
 	public void setWeightedFeature() {
 		this.isWeighted = true;
 		edgeWeight = new HashMap<>();
-		if(isRandomWeight == true) {
-			Random rd = new Random();
-			for(Edge<E, V> edge : edges.values()) {
-				Integer num = new Integer(rd.nextInt(MAX_WEIGHT));
-				edgeWeight.put(edge, num);
-			}
-		}
-		else {
-			// HM take on
+		Random rd = new Random();
+		for(Edge<E, V> edge : edges.values()) {
+			Integer num = new Integer(rd.nextInt(MAX_WEIGHT));
+			edgeWeight.put(edge, num);
 		}
 	}
-
 }

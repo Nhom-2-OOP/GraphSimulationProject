@@ -117,7 +117,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
+	
 
 
 
@@ -159,5 +159,8 @@ public class Main extends Application {
 	public static void setGraph(GraphEdgeList<String, String> NewGraph) {
 		g = NewGraph;
 		graphView.Renew(NewGraph, true); 
+	}
+	public static GraphPanel<String, String> getGraph() {
+		return graphView;
 	}
 }

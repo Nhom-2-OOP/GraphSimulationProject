@@ -10,10 +10,11 @@
    <children>
       <Button fx:id="FromExternal" layoutX="449.0" layoutY="355.0" mnemonicParsing="false" onAction="#inputFromExternal" prefHeight="31.0" prefWidth="127.0" text="Mở file txt" />
       <TextArea fx:id="Input" layoutX="29.0" layoutY="78.0" prefHeight="200.0" prefWidth="371.0" />
-      <Text layoutX="170.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập đồ thị" wrappingWidth="201.9831027984619" />
-      <Button fx:id="save" layoutX="254.0" layoutY="301.0" mnemonicParsing="false" onAction="#input" prefHeight="31.0" prefWidth="127.0" text="Lưu" />
-      <Text layoutX="449.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đồ thị có hướng:" wrappingWidth="127.33333333333326" />
+      <Button fx:id="Save" layoutX="254.0" layoutY="301.0" mnemonicParsing="false" onAction="#input" prefHeight="31.0" prefWidth="127.0" text="Lưu" />
       <CheckBox fx:id="yesBox" layoutX="421.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleYesBox" text="Có" />
       <CheckBox fx:id="noBox" layoutX="421.0" layoutY="208.0" mnemonicParsing="false" onAction="#handleNoBox" text="Không" />
+      <Button fx:id="addWeight" layoutX="29.0" layoutY="358.0" mnemonicParsing="false" onAction="#weight" text="Thêm trọng số" />
+      <Text layoutX="174.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập đồ thị" />
+      <Text layoutX="449.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đồ thị có hướng" />
    </children>
 </AnchorPane>
