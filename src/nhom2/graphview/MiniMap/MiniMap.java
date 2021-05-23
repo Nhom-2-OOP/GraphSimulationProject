@@ -111,28 +111,18 @@ public class MiniMap extends GridPane{
 				if(xView < 0) {
 					viewWidth.set(w0 * mapScale + xView);
 					xView = 0;
-				}
-				if(yView < 0) {
-//					System.out.println((h0 * mapScale + yView) + " and " + height);
-					viewHeight.set(h0 * mapScale + yView);
+				}				
+				if(yView < 0 ) {
+					viewHeight.set(Math.min(height - 10, h0 * mapScale + yView));
 					yView = 0;
-					
 				}
-				
-				if(yView > height - h0 * mapScale) {
+				else if(yView > height - h0 * mapScale) {
 					
 					viewHeight.set(h0 * mapScale - yView + height - h0 * mapScale - 10);
 				}
 
-				
 				subView.setTranslateX(xView);
 				subView.setTranslateY(yView);
-//			}
-
-			
-			
-			
-			
 			
 		}));
 		timeline.setCycleCount(Animation.INDEFINITE);
