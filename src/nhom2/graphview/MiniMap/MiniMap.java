@@ -1,38 +1,24 @@
 package nhom2.graphview.MiniMap;
 
-
-
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.SubScene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Transform;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import nhom2.graphview.GraphPanel;
-import nhom2.graphview.Zoom.SceneGestures;
 
 
 public class MiniMap extends GridPane{
@@ -47,7 +33,6 @@ public class MiniMap extends GridPane{
 		Screen screen = Screen.getPrimary();
 		this.width = size;
 		this.height = size/(screen.getVisualBounds().getWidth() - 300) * screen.getVisualBounds().getHeight();
-//		this.height = size/graphView.getWidth() * graphView.getHeight();
 		this.setTranslateX(screen.getVisualBounds().getWidth() - 339 - size);
 		this.setTranslateY(0);
 		
