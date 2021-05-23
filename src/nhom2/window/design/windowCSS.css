@@ -1,0 +1,261 @@
+.button {
+	-fx-font-size: 16;
+	-fx-cursor: hand;
+}
+
+.rootMain {
+	-fx-background-color: rgb(40, 42, 54);
+}
+
+.graphPane {
+	-fx-background-color: rgb(52, 55, 70);
+}
+
+.graphView {
+	-fx-border-color: #9aa8d4;
+	-fx-border-width: 0px;
+	-fx-background-color: rgb(52, 55, 70);
+	-fx-border-style: segments(10, 15, 15, 15) line-cap round;
+}
+
+.buttonArea {
+	-fx-background-color: rgb(52, 55, 70);
+	-fx-border-color: blue;
+	-fx-border-width: 0px;
+}
+
+.buttonOfButtonArea {
+	-fx-background-color: rgb(52, 55, 70);
+}
+
+.labelOfButtonArea {
+	/* -fx-text-fill: #8addf2; */
+	-fx-text-fill: #6a9955;
+	-fx-font-style: italic;
+	-fx-font-size: 15;
+}
+
+.btnHome {
+	-fx-background-image: url("homeDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+}
+
+.btnHomeEntered {
+	-fx-background-image: url("homeEntered.png");
+	-fx-background-color: #3c3d51;
+}
+
+.btnInput {
+	-fx-background-image: url("inputDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+}
+
+.btnInputEntered {
+	-fx-background-image: url("inputEntered.png");
+	-fx-background-color: #3c3d51;
+}
+
+.btnCaptureGP {
+	-fx-background-image: url("saveDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+}
+
+.btnCaptureGPEntered {
+	-fx-background-image: url("saveEntered.png");
+	-fx-background-color: #3c3d51;
+}
+
+.FindingButton {
+	-fx-background-image: url("searchDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+}
+
+.FindingButtonEntered {
+	-fx-background-image: url("searchEntered.png");
+	-fx-background-color: #3c3d51;
+}
+
+.btnPla {
+	-fx-background-image: url("placementDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+}
+
+.btnPlaEntered {
+	-fx-background-image: url("placementEntered.png");
+	-fx-background-color: #3c3d51;
+}
+
+.btnPathFinding {
+	-fx-background-image: url("pathFindingDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+}
+
+.btnPathFindingEntered {
+	-fx-background-image: url("pathFindingEntered.png");
+	-fx-background-color: #3c3d51;
+}
+
+.ColoringButton {
+	-fx-background-image: url("colorDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+}
+
+.ColoringButtonEntered {
+	-fx-background-image: url("colorEntered.png");
+	-fx-background-color: #3c3d51;
+}
+
+.InfoButton {
+	-fx-background-image: url("infoDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+}
+
+.InfoButtonEntered {
+	-fx-background-image: url("infoEntered.png");
+	-fx-background-color: #3c3d51;
+}
+
+.BackButton {
+	-fx-background-image: url("backDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+	-fx-background-color: rgb(40, 42, 54);
+}
+
+.BackButtonEntered {
+	-fx-background-image: url("backEntered.png");
+}
+
+.Col1ChooseButton {
+	-fx-alignment: center-left;
+	-fx-background-color: rgb(40, 42, 54);
+	-fx-text-fill: #9aa8d4;
+	-fx-pref-height: 30;
+	-fx-pref-width: 245;
+	-fx-padding: 10 0.0 10 10;
+}
+
+.Col1ChooseButtonEntered {
+	-fx-text-fill: white;
+}
+
+.lbStartVerTexFS {
+	-fx-text-fill: #9aa8d4;
+	-fx-font-size: 20;
+	-fx-padding: 0 0 0 10;
+}
+
+.tfStartVertexFS {
+	-fx-max-width: 210;
+	-fx-pref-height: 30;
+	-fx-font-size: 16;
+	-fx-font-style: italic;
+}
+
+.FSFinishStep {
+	-fx-alignment: center-left;
+	-fx-background-color: rgb(40, 42, 54);
+	-fx-text-fill: #9aa8d4;
+	-fx-pref-height: 30;
+	-fx-pref-width: 245;
+	-fx-padding: 0 0.0 0 10;
+}
+
+.FSFinishStepEntered {
+	-fx-text-fill: white;
+}
+
+.FSNextReset {
+	-fx-alignment: center;
+	-fx-background-color: rgb(40, 42, 54);
+	-fx-text-fill: #9aa8d4;
+	-fx-pref-height: 30;
+	-fx-pref-width: 80;
+	-fx-background-color: rgb(52, 55, 70);
+	-fx-border-color: #425578;
+	-fx-border-width: 2px;
+}
+
+.FSNextResetEntered {
+	-fx-text-fill: white;
+	-fx-background-color: #3c3d51;
+}
+
+.nexResBox {
+	-fx-pref-height: 30;
+	-fx-pref-width: 245;
+	-fx-alignment: center;
+	-fx-padding: 0 0.0 0 10;
+}
+
+.FSlb {
+	-fx-text-fill: white;
+	-fx-underline: true;
+	-fx-font-style: italic;
+	-fx-font-size: 18;
+	-fx-padding: 0 0 0 28;
+}
+
+.likeNexResBox {
+	-fx-pref-height: 30;
+	-fx-pref-width: 245;
+	-fx-alignment: center-left;
+	-fx-padding: 0 0.0 0 10;
+}
+
+.showScaleBut11 {
+	-fx-background-color: rgb(52, 55, 70);
+	-fx-background-image: url("zoom11Dark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+}
+
+.showScaleBut11Entered {
+	-fx-background-image: url("zoom11Enter.png");
+}
+
+.showScaleButIn {
+	-fx-background-image: url("zoomInDark.png");
+}
+
+.showScaleButInEntered {
+	-fx-background-image: url("zoomInEnter.png");
+	-fx-background-color: rgb(52, 55, 70);
+}
+
+.showScaleButOut {
+	-fx-background-image: url("zoomOutDark.png");
+	-fx-background-color: rgb(52, 55, 70);
+}
+
+.showScaleButOutEntered {
+	-fx-background-image: url("zoomOutEnter.png");
+	-fx-background-color: rgb(52, 55, 70);
+}
+
+.txtScale {
+	-fx-font-size: 18;
+	-fx-cursor: default;
+	-fx-pref-height: 50;
+	-fx-pref-width: 80;
+	-fx-alignment: center;
+}
+

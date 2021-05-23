@@ -1,0 +1,190 @@
+.graph {
+    -fx-background-color: #64719b;    
+}
+
+.vertex {
+    -fx-stroke-width:1;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #96d1cd;
+}
+
+.vertex-label {
+    -fx-font: bold 7pt "sans-serif";
+    -fx-fill: #45597e;
+}
+
+.edge {
+    -fx-stroke-width: 3;
+    -fx-stroke: #61619e;  
+    /*-fx-stroke-dash-array: 2 5 2 5; /* remove for clean edges */  
+    -fx-fill: transparent; /*important for curved edges */
+    -fx-stroke-line-cap: round;
+    -fx-opacity: 0.8;
+}
+.edge-weighted{
+	-fx-font: bold 7pt "sans-serif";
+    -fx-fill: red;
+}
+.usingedge {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;  
+    /*-fx-stroke-dash-array: 2 5 2 5; /* remove for clean edges */  
+    -fx-fill: transparent; /*important for curved edges */
+    -fx-stroke-line-cap: round;
+    -fx-opacity: 0.8;
+}
+
+.edge-label {
+    -fx-font: normal 5pt "sans-serif";
+}
+
+.arrow {
+    -fx-stroke-width: 2;
+    -fx-stroke: #61619e;  
+    -fx-opacity: 0.8;
+}
+
+.myVertex {
+    -fx-stroke-width: 5;
+    -fx-stroke: green;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: yellowgreen;
+}
+
+.vertexcolor1 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #fff8dc;
+}
+
+.vertexcolor2 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #b4eeb4;
+}
+
+.vertexcolor3 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #FFD1B9;
+}
+
+.vertexcolor4 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #FFFFFF;
+}
+
+.vertexcolor5 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #D4DC36;
+}
+
+.vertexcolor6 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #c38f67;
+}
+
+.vertexcolor7 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #cd3333;
+}
+
+.vertexcolor8 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #458b00;
+}
+
+.vertexcolor9 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #ff7f24;
+}
+
+.vertexcolor10 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #ffe7ba;
+}
+
+.vertexcolor11 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #8b3626;
+}
+
+.vertexcolor12 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #caff70;
+}
+
+.vertexcolor13 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #bf3eff;
+}
+
+.vertexcolor14 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #686E70;
+}
+
+.vertexcolor15 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #ff1493;
+}
+
+.vertexcolor16 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #54ff9f;
+}
+
+.vertexcolor17 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #eead0e;
+}
+.vertexcolor18 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #eed2ee;
+}
+.vertexcolor19 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #ffe7ba;
+}
+.vertexcolor20 {
+    -fx-stroke-width: 2;
+    -fx-stroke: #45597e;
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #8b8b00;
+}

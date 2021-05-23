@@ -1,0 +1,16 @@
+eclipse.preferences.version=1
+encoding//src/nhom2/button/AutoFindPaths.java=UTF-8
+encoding//src/nhom2/button/AutoPlacementButton.java=UTF-8
+encoding//src/nhom2/button/BFSButton.java=UTF-8
+encoding//src/nhom2/button/ButtonAreaVBox.java=UTF-8
+encoding//src/nhom2/button/CaptureGraphPanel.java=UTF-8
+encoding//src/nhom2/button/CircularPlacementButton.java=UTF-8
+encoding//src/nhom2/button/DFSButton.java=UTF-8
+encoding//src/nhom2/button/FindPathButton.java=UTF-8
+encoding//src/nhom2/button/FindVertexButton.java=UTF-8
+encoding//src/nhom2/button/PathFindingButton.java=UTF-8
+encoding//src/nhom2/button/PlacementButton.java=UTF-8
+encoding//src/nhom2/button/input/InputController.java=UTF-8
+encoding//src/nhom2/coloring/Coloring.java=UTF-8
+encoding//src/nhom2/graphview/GraphPanel.java=UTF-8
+encoding//src/nhom2/window/Main.java=UTF-8
