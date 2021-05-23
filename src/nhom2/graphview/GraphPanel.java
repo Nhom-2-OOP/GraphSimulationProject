@@ -141,28 +141,7 @@ public class GraphPanel<V, E> extends Pane{
                 runLayoutIteration();
             }
         };
-        
-        contextMenuRoot = new ContextMenu();
-        MenuItem item1 = new MenuItem("Add weighted feature");
-        item1.setOnAction(new EventHandler<ActionEvent>(){
-
-			@Override
-			public void handle(ActionEvent arg0) {
-				addWeightedFeature();
-			}
-        	
-        });
-      
-        contextMenuRoot.getItems().addAll(item1);
-        this.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-
-			@Override
-			public void handle(ContextMenuEvent arg0) {
-				//contextMenuRoot.show(,arg0.getSceneX(), arg0.getSceneY());
-			}
-        	
-        });
-        
+         
         Handler = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
@@ -444,7 +423,36 @@ public class GraphPanel<V, E> extends Pane{
         return theGraph.TotalEdgesBetween(u, v);
     }
     
-    private EdgeLine CreateAndAddEdge(Edge<E, V> edge, VertexNode<V> graphVertexInbound, VertexNode<V> graphVertexOutbound) {
+    public void deleteWeightedFeature() {
+		if(this.edgesWithWeight == true) {
+			this.edgesWithWeight = false;
+			for(EdgeLine<E,V> edgeline : edgeNodes.values()) {
+	    		this.getChildren().remove(edgeline.getAttachedLabel());
+	    	}
+		}
+	}
+
+	public void addWeightedFeature() {
+		deleteWeightedFeature();
+		this.edgesWithWeight = true;
+		this.theGraph.setWeightedFeature();
+		for(Edge<E,V> edge : edgeNodes.keySet()) {
+			EdgeLine<E,V> edgeline = edgeNodes.get(edge);
+			Label weight = new Label(theGraph.edgeWeight.get(edge).toString());
+			edgeline.attachLabel(weight);
+			this.getChildren().add(weight);
+		}
+	}
+	
+	public void addWeightToEdge(EdgeLine<E,V> edgeline, String num) {
+		if(edgeline.getAttachedLabel() != null) 
+			this.getChildren().remove(edgeline.getAttachedLabel());
+		Label weight = new Label(num);
+		edgeline.attachLabel(weight);
+		this.getChildren().add(weight);
+	}
+	
+	private EdgeLine CreateAndAddEdge(Edge<E, V> edge, VertexNode<V> graphVertexInbound, VertexNode<V> graphVertexOutbound) {
 
         EdgeLine graphEdge;
         
@@ -524,7 +532,7 @@ public class GraphPanel<V, E> extends Pane{
         	  }
           }
       });
-      
+    
       MenuItem item2 = new MenuItem("Thêm trọng số");
       item2.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -541,16 +549,34 @@ public class GraphPanel<V, E> extends Pane{
 				
 				dialog.showAndWait();
 				String rs = dialog.getEditor().getText();
-				System.out.println(rs);
 				
-				Label weight = new Label(rs);
-				graphEdge.attachLabel(weight);
-				// this.getChildren(). ????
+				addWeightToEdge(graphEdge, rs);
+//				Label weight = new Label(rs);
+//				graphEdge.attachLabel(weight);
+//			    this.getChildren(). ???
 			}
 		}
     	  
       });
-      graphEdge.contextMenu.getItems().addAll(item1, item2);
+      
+      MenuItem item3 = new MenuItem("Bật đồ thị trọng số");
+      item3.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent arg0) {
+				addWeightedFeature();
+			}
+      	
+      });
+      
+      MenuItem item4 = new MenuItem("Tắt đồ thị trọng số");
+      item4.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent arg0) {
+				deleteWeightedFeature();
+			}
+      });
+      
+      graphEdge.contextMenu.getItems().addAll(item1, item2, item3, item4);
       graphEdge.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
             public void handle(ContextMenuEvent event) {
@@ -570,35 +596,13 @@ public class GraphPanel<V, E> extends Pane{
   	  	inform.setHeaderText("Xóa cạnh thành công");
   	  	inform.showAndWait();
     }
-    
-
-    
+     
     public void init(){
         this.placementStrategy.place(this.widthProperty().doubleValue(), this.heightProperty().doubleValue(), this.theGraph,this.vertexNodes.values());
       }
     
     public void start_automatic_layout() {
     	timer.start();
-    }
-    
-    public void deleteWeightedFeature() {
-    	if(this.edgesWithWeight == true) {
-    		this.edgesWithWeight = false;
-    		for(EdgeLine<E,V> edgeline : edgeNodes.values()) {
-        		this.getChildren().remove(edgeline.getAttachedLabel());
-        	}
-    	}
-    }
-    
-    public void addWeightedFeature() {
-    	deleteWeightedFeature();
-    	this.edgesWithWeight = true;
-    	for(Edge<E,V> edge : edgeNodes.keySet()) {
-    		EdgeLine<E,V> edgeline = edgeNodes.get(edge);
-    		Label weight = new Label(theGraph.edgeWeight.get(edge).toString());
-    		edgeline.attachLabel(weight);
-    		this.getChildren().add(weight);
-    	}
     }
     
     public void deleteVertex(VertexNode v) {
@@ -722,16 +726,8 @@ public class GraphPanel<V, E> extends Pane{
                 	addEdge(NewVertexNode);
                 }
             });
-            MenuItem item4 = new MenuItem("Add weighted feature");
-            item4.setOnAction(new EventHandler<ActionEvent>(){
-
-    			@Override
-    			public void handle(ActionEvent arg0) {
-    				addWeightedFeature();
-    			}
-            	
-            });
-            NewVertexNode.contextMenu.getItems().addAll(item1, item2, item3, item4);
+           
+            NewVertexNode.contextMenu.getItems().addAll(item1, item2, item3);
             NewVertexNode.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
  
             @Override
@@ -821,8 +817,7 @@ public class GraphPanel<V, E> extends Pane{
     	this.setOnMouseClicked(myHandler02);
     	//this.addEventFilter(MouseEvent.MOUSE_CLICKED, myHandler02);
     }
-
-    
+   
     public void setColor() {
     	Coloring coloring = new Coloring();
     	if(this.isColored==false) {
