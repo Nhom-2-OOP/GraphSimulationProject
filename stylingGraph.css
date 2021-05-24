@@ -1,5 +1,5 @@
 .graph {
-    -fx-background-color: RGB(33, 34, 44);    
+    -fx-background-color: #64719b;    
 }
 
 .vertex {
@@ -16,11 +16,15 @@
 
 .edge {
     -fx-stroke-width: 3;
-    -fx-stroke: #45597e;  
+    -fx-stroke: #61619e;  
     /*-fx-stroke-dash-array: 2 5 2 5; /* remove for clean edges */  
     -fx-fill: transparent; /*important for curved edges */
     -fx-stroke-line-cap: round;
     -fx-opacity: 0.8;
+}
+.edge-weighted{
+	-fx-font: bold 7pt "sans-serif";
+    -fx-fill: red;
 }
 .usingedge {
     -fx-stroke-width: 2;
@@ -37,7 +41,7 @@
 
 .arrow {
     -fx-stroke-width: 2;
-    -fx-stroke: #45597e;  
+    -fx-stroke: #61619e;  
     -fx-opacity: 0.8;
 }
 

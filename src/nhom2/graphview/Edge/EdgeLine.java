@@ -1,11 +1,13 @@
-  
+
 package nhom2.graphview.Edge;
 
 import nhom2.graph.Edge;
 import nhom2.graphview.Arrow;
 import nhom2.graphview.Label.Label;
+import nhom2.graphview.Label.LabelledObject;
 import nhom2.graphview.Styling.StyleImplementing;
 import nhom2.graphview.Vertex.VertexNode;
+import javafx.beans.value.*;
 import javafx.scene.Cursor;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.input.MouseEvent;
@@ -13,8 +15,8 @@ import javafx.scene.shape.*;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
-public class EdgeLine<E,V> extends Line implements EdgeView<E,V>{
-//	private static final double MAX_EDGE_CURVE_ANGLE = 20;
+public class EdgeLine<E,V> extends Line implements EdgeView<E,V>, LabelledObject{
+	private static final double MAX_EDGE_CURVE_ANGLE = 20;
 	
 	private final Edge<E, V> underlyingEdge;
 	
@@ -65,9 +67,10 @@ public class EdgeLine<E,V> extends Line implements EdgeView<E,V>{
 	@Override
 	public void attachLabel(Label label) {
 		// TODO Auto-generated method stub
+		label.addStyleClass("edge-weighted");
 		this.attachedLabel = label;
-        label.xProperty().bind(startXProperty().add(endXProperty()).divide(2).subtract(label.getLayoutBounds().getWidth() / 2));
-        label.yProperty().bind(startYProperty().add(endYProperty()).divide(2).add(label.getLayoutBounds().getHeight() / 1.5));
+        label.xProperty().bind(startXProperty().add(endXProperty()).divide(2).subtract(label.getLayoutBounds().getWidth()));
+        label.yProperty().bind(startYProperty().add(endYProperty()).divide(2).add(label.getLayoutBounds().getHeight()));
 	}
 
 	@Override
@@ -93,8 +96,8 @@ public class EdgeLine<E,V> extends Line implements EdgeView<E,V>{
         
         /* rotate arrow around itself based on this line's angle */
         Rotate rotation = new Rotate();
-        rotation.setPivotX(0);
-        rotation.setPivotY(0);
+        rotation.pivotXProperty().bind(translateXProperty());
+        rotation.pivotYProperty().bind(translateYProperty());
         rotation.angleProperty().bind(BindingForEdge.toDegrees( 
         		BindingForEdge.atan2( endYProperty().subtract(startYProperty()), 
                 endXProperty().subtract(startXProperty()))
@@ -130,5 +133,6 @@ public class EdgeLine<E,V> extends Line implements EdgeView<E,V>{
 		// TODO Auto-generated method stub
 		return styleProxy.removeStyleClass(cssClass);
 	}
-
+	
+	
 }

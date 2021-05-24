@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+<<<<<<< HEAD
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.logging.Level;
@@ -82,6 +83,7 @@ public class GraphPanel<V, E> extends Pane{
     private final double attractionScale;
     
     public boolean edgesWithArrows;
+    private boolean edgesWithWeight;
     private boolean needLabel;
     DoubleProperty myScale = new SimpleDoubleProperty(1.0);
     
@@ -285,6 +287,35 @@ public class GraphPanel<V, E> extends Pane{
         return theGraph.TotalEdgesBetween(u, v);
     }
     
+    public void deleteWeightedFeature() {
+		if(this.edgesWithWeight == true) {
+			this.edgesWithWeight = false;
+			for(EdgeLine<E,V> edgeline : edgeNodes.values()) {
+	    		this.getChildren().remove(edgeline.getAttachedLabel());
+	    	}
+		}
+	}
+
+	public void addWeightedFeature() {
+		deleteWeightedFeature();
+		this.edgesWithWeight = true;
+		this.theGraph.setWeightedFeature();
+		for(Edge<E,V> edge : edgeNodes.keySet()) {
+			EdgeLine<E,V> edgeline = edgeNodes.get(edge);
+			Label weight = new Label(theGraph.edgeWeight.get(edge).toString());
+			edgeline.attachLabel(weight);
+			this.getChildren().add(weight);
+		}
+	}
+	
+	public void addWeightToEdge(EdgeLine<E,V> edgeline, String num) {
+		if(edgeline.getAttachedLabel() != null) 
+			this.getChildren().remove(edgeline.getAttachedLabel());
+		Label weight = new Label(num);
+		edgeline.attachLabel(weight);
+		this.getChildren().add(weight);
+	}
+    
     private EdgeLine CreateAndAddEdge(Edge<E, V> edge, VertexNode<V> graphVertexInbound, VertexNode<V> graphVertexOutbound) {
 
         EdgeLine graphEdge;
@@ -304,9 +335,8 @@ public class GraphPanel<V, E> extends Pane{
         graphEdge = NewEdgeView;
         this.getChildren().add(0, (Node)NewEdgeView);
       }
-
-      MenuItem item = new MenuItem("Xóa cạnh");
-      item.setOnAction(new EventHandler<ActionEvent>() {
+      MenuItem item1 = new MenuItem("Xóa cạnh");
+      item1.setOnAction(new EventHandler<ActionEvent>() {
           public void handle(ActionEvent e) {
         	  if (theGraph.isDirected) {
         		  if (theGraph.areAdjacent(outVertex, inVertex)) {
@@ -337,7 +367,51 @@ public class GraphPanel<V, E> extends Pane{
         	  }
           }
       });
-      graphEdge.contextMenu.getItems().add(item);
+    
+      MenuItem item2 = new MenuItem("Thêm trọng số");
+      item2.setOnAction(new EventHandler<ActionEvent>() {
+
+		@Override
+		public void handle(ActionEvent arg0) {
+			if(edgesWithWeight == false) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText("Đồ thị hiện tại không trọng số");
+				alert.showAndWait();
+			}
+			else {
+				TextInputDialog dialog = new TextInputDialog("Trọng số");
+				dialog.setContentText("Nhập trọng số");
+				
+				dialog.showAndWait();
+				String rs = dialog.getEditor().getText();
+				
+				addWeightToEdge(graphEdge, rs);
+//				Label weight = new Label(rs);
+//				graphEdge.attachLabel(weight);
+//			    this.getChildren(). ???
+			}
+		}
+    	  
+      });
+      
+      MenuItem item3 = new MenuItem("Bật đồ thị trọng số");
+      item3.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent arg0) {
+				addWeightedFeature();
+			}
+      	
+      });
+      
+      MenuItem item4 = new MenuItem("Tắt đồ thị trọng số");
+      item4.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent arg0) {
+				deleteWeightedFeature();
+			}
+      });
+      
+      graphEdge.contextMenu.getItems().addAll(item1, item2, item3, item4);
       graphEdge.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
             public void handle(ContextMenuEvent event) {
@@ -351,6 +425,7 @@ public class GraphPanel<V, E> extends Pane{
     	theGraph.removeEdge(edge);
   	  	getChildren().remove(graphEdge);
   	  	if (theGraph.isDirected) getChildren().remove(graphEdge.getAttachedArrow());
+  	  	if (theGraph.isWeighted) getChildren().remove(graphEdge.getAttachedLabel());
   	  	edgeNodes.remove(edge);
   	  	Alert inform = new Alert(Alert.AlertType.INFORMATION);
   	  	inform.setHeaderText("Xóa cạnh thành công");
@@ -474,7 +549,6 @@ public class GraphPanel<V, E> extends Pane{
     	};
     	this.setOnMouseClicked(myHandler02);
     }
-    
     
     public void setColor() {
     	Coloring coloring = new Coloring();

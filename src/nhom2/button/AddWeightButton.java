@@ -19,15 +19,15 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import nhom2.graphview.GraphPanel;
-public class InputButton extends Button  {
-	private static Scene View;
+public class AddWeightButton extends Button  {
+	public static Scene View;
 	public static Stage stage;
-	public InputButton(Stage s)  {
+	public AddWeightButton()  {
 
 		try {
-			Parent root = FXMLLoader.load(InputButton.class.getResource("input/InputButton.fxml"));
-			InputButton.View = new Scene(root);
-			InputButton.stage = s;
+			Parent root = FXMLLoader.load(AddWeightButton.class.getResource("addWeight/AddWeightButton.fxml"));
+			AddWeightButton.View = new Scene(root);
+			AddWeightButton.stage = new Stage();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -35,16 +35,13 @@ public class InputButton extends Button  {
 		this.setOnAction(new EventHandler<ActionEvent>() {
 	
 			public void handle(ActionEvent event) {
-				AddWeightButton abs = new AddWeightButton();
-				stage.setScene(View);
-				stage.show();
+				AddWeightButton.stage.setScene(AddWeightButton.View);
+				AddWeightButton.stage.show();
 			}
 		});
-		this.setOnMouseEntered(mouseEvent -> {
-			this.getStyleClass().add("btnInputEntered");
-		});
-		this.setOnMouseExited(mouseEvent -> {
-			this.getStyleClass().remove(4);
-		});
+	
+	
 	}
+	
+	
 }

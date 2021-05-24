@@ -1,3 +1,4 @@
+
 package nhom2.button;
 
 import java.util.Set;
@@ -348,6 +349,3 @@ public class FindPathButton<V, E> extends Button {
 	}
 }
 
-// the coloring of start and end vertex are always red
-// Current vertex is green
-// Visted vertex is yellow

@@ -36,6 +36,10 @@ public class PathFindingButton<V,E> extends Button{
 		// Tao nut DFS
 		DFSButton<String, String> DFSButton = new DFSButton(root, graphView);
 		DFSButton.setText("Tìm đường theo DFS");
+		
+		// Tao nut dijkstra
+		ShortestPathButton<String, String> ShortestPathButton = new ShortestPathButton(root, graphView);
+		ShortestPathButton.setText("Tìm đường đi ngắn nhất");
 
 		VBox placeList = new VBox(0);
 		
@@ -43,8 +47,9 @@ public class PathFindingButton<V,E> extends Button{
 		btnAutoFindPath.getStyleClass().add("Col1ChooseButton");
 		BFSButton.getStyleClass().add("Col1ChooseButton");
 		DFSButton.getStyleClass().add("Col1ChooseButton");
+		ShortestPathButton.getStyleClass().add("Col1ChooseButton");
 		
-		placeList.getChildren().addAll(btnFindPath,btnAutoFindPath, BFSButton, DFSButton);
+		placeList.getChildren().addAll(btnFindPath,btnAutoFindPath, BFSButton, DFSButton,ShortestPathButton);
 		placeList.setPadding(new Insets(30, 0, 0, 10));
 		grid.add(backBut, 0, 0);
 		grid.add(placeList, 0, 1);	
@@ -63,6 +68,7 @@ public class PathFindingButton<V,E> extends Button{
 				backBut.setGridBack(Main.getNodeCol1Start());
 				DFSButton.setNodeBack(grid);
 				BFSButton.setNodeBack(grid);
+				ShortestPathButton.setNodeBack(grid);
 			}
 		});
 		
