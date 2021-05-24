@@ -1,4 +1,4 @@
-package nhom2.window.PaneGraph;
+package nhom2.window.MulTab;
 
 import javafx.scene.SubScene;
 import javafx.scene.input.MouseEvent;
@@ -13,20 +13,15 @@ import nhom2.graphview.MiniMap.MiniMap;
 import nhom2.graphview.Zoom.SceneGestures;
 
 public class PaneGraph extends Pane {
-	public static GraphEdgeList<String, String> g;
-	public static GraphPanel<String, String> graphView;	
+	public GraphEdgeList<String, String> g;
 
-	public PaneGraph(GraphEdgeList<String, String> NewGraph) {
-//		
-		// Tao scene bieu dien do thi
-		this.graphView = new GraphPanel<>(NewGraph);
+	public PaneGraph(GraphPanel<String, String> graphView) {
+
 		SubScene subSceneGraphPanel = new SubScene(graphView,0,0);
 		
 		Screen screen = Screen.getPrimary();
 		ScaleButton scaleBut = new ScaleButton(graphView);	
 		
-//		setGraph(NewGraph);
-
 		MiniMap miniMap = new MiniMap(graphView);
 		
 		MapButton mapBut = new MapButton(miniMap);
@@ -49,19 +44,6 @@ public class PaneGraph extends Pane {
 		subSceneGraphPanel.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
 		graphView.init();
 
-	}
-	
-	public static void setGraph(GraphEdgeList<String, String> NewGraph) {
-		g = NewGraph;
-		int n = g.vertices.size();
-		if (n > 100) {
-			if (n <= 1000) GraphPanel.VertexR = 10;
-			else GraphPanel.VertexR = 5;
-		}
-		else {
-			GraphPanel.VertexR = 15;
-		}
-		graphView.Renew(NewGraph, true); 
 	}
 
 }

@@ -14,7 +14,7 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
 public class EdgeLine<E,V> extends Line implements EdgeView<E,V>{
-	private static final double MAX_EDGE_CURVE_ANGLE = 20;
+//	private static final double MAX_EDGE_CURVE_ANGLE = 20;
 	
 	private final Edge<E, V> underlyingEdge;
 	

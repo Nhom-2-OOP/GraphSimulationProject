@@ -43,6 +43,7 @@ import javafx.scene.control.DialogPane;
 import nhom2.button.InputButton;
 import nhom2.graph.*;
 import nhom2.window.*;
+import nhom2.window.MulTab.GraphTab;
 public class InputController  implements Initializable {
 	@FXML
 	private CheckBox yesBox;
