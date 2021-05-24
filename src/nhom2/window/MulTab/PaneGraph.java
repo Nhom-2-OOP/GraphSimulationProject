@@ -28,7 +28,6 @@ public class PaneGraph extends Pane {
 		
 		this.resize(screen.getVisualBounds().getWidth() - 300, screen.getVisualBounds().getHeight() - 40);
 		
-		
 		this.getChildren().add(subSceneGraphPanel);
 		this.getChildren().add(scaleBut);
 		this.getChildren().add(mapBut);

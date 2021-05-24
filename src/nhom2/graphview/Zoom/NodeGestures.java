@@ -5,9 +5,6 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import nhom2.graphview.GraphPanel;
 
-/**
- * Listeners for making the nodes draggable via left mouse button. Considers if parent is zoomed.
- */
 public class NodeGestures {
 
     private DragContext nodeDragContext = new DragContext();

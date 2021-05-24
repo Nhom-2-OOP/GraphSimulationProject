@@ -22,30 +22,25 @@ public class GraphTab extends Tab{
 	public GraphEdgeList<String, String> g;
 	private StringProperty nameTab = new SimpleStringProperty();
 
-
 	public GraphTab(GraphEdgeList<String, String> NewGraph) {
 		this(NewGraph, "New Graph");
 	}
 
 	public GraphTab(GraphEdgeList<String, String> NewGraph, String name) {
+		
 		// Tao scene bieu dien do thi
 		this.graphView = new GraphPanel<>(NewGraph);
 		this.buttonArea = new ButtonAreaVBox().area(graphView, stage, root);
 		PaneGraph graphPane = new PaneGraph(graphView);
 		this.setContent(graphPane);
-		
-		this.setOnClosed(event -> {
-			
-		});
 
+		// name of tab
 		nameTab.set(name);
-	
-
 		Label label = new Label();
 		label.textProperty().bind(nameTab);
-		
 		setGraphic(label);
 
+		// rename
 		TextField textField = new TextField();
 		label.setOnMouseClicked(event -> {
 			if(event.getClickCount() == 2) {
