@@ -58,17 +58,6 @@ public class BFSButton<V, E> extends Button{
 	}
 	
 	private void BFS(Vertex start) {
-//		IsVisited.put(v, new Integer(1));
-//		VisitingOrder.add(v);
-//
-//		Set<Vertex<V>> adjVertex = GraphView.theGraph.adjList.get(v).keySet();
-//		
-//		for (Vertex<V> u: adjVertex) {
-//			if (IsVisited.get(u).intValue() == 0) {
-//				FS(u);
-//				parVertex.put(u, v);
-//			}
-//		}
 		Queue<Vertex<V>> queue = new LinkedList<Vertex<V>>();
 		queue.add(start);
 		IsVisited.put(start, new Integer(1));
