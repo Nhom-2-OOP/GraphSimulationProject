@@ -33,16 +33,17 @@ public class GraphTab extends Tab{
 		this.buttonArea = new ButtonAreaVBox().area(graphView, stage, root);
 		PaneGraph graphPane = new PaneGraph(graphView);
 		this.setContent(graphPane);
-		this.setStyle("graphTab");
 		
 		this.setOnClosed(event -> {
 			
 		});
 
 		nameTab.set(name);
+	
 
 		Label label = new Label();
 		label.textProperty().bind(nameTab);
+		
 		setGraphic(label);
 
 		TextField textField = new TextField();

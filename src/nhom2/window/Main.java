@@ -7,6 +7,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.*;
@@ -80,14 +81,20 @@ public class Main extends Application {
 
 		Tab addGraphTabBut = new Tab();
 		addGraphTabBut.setText("+");
+		Label addLabel = new Label();
+		addLabel.setText("+");
+		addGraphTabBut.setGraphic(addLabel);
 		addGraphTabBut.setClosable(false);
+//		addGraphTabBut.setStyle("addGraphTabBut");
+		
+//		GraphTab addGraphTabBut = new GraphTab(new );
 
 		GraphTab tab1 = new GraphTab(g);
 
 		tabPane.getTabs().add(addGraphTabBut);
 		tabPane.getTabs().add(tab1);
 
-		tabPane.getStyleClass().add("tabPane");
+//		tabPane.getStyleClass().add("tabPane");
 
 		ArrayList<GraphTab> listTab = new ArrayList<GraphTab>();
 		//		GraphTab[] listTab = new GraphTab[11];
