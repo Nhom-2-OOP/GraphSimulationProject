@@ -46,7 +46,7 @@ public class AddWeightButtonController implements Initializable {
 	private Button Random;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		g = Main.getGraph().theGraph;
+		g = Main.graphView.theGraph;
 		n = g.NumOfVertex();
 	}
 	@FXML

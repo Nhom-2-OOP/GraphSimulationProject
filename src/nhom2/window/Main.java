@@ -77,63 +77,63 @@ public class Main extends Application {
 		root.add(buttonArea, 0, 0);
 		root.add(col1Pane, 1, 0);
 
+		ArrayList<GraphTab> listTab = new ArrayList<GraphTab>();
 
-
+		//add tab button
 		Tab addGraphTabBut = new Tab();
 		addGraphTabBut.setText("+");
 		Label addLabel = new Label();
 		addLabel.setText("+");
 		addGraphTabBut.setGraphic(addLabel);
 		addGraphTabBut.setClosable(false);
-//		addGraphTabBut.setStyle("addGraphTabBut");
-		
-//		GraphTab addGraphTabBut = new GraphTab(new );
 
+		// tab example
 		GraphTab tab1 = new GraphTab(g);
+		tab1.setButtonArea();
+		tab1.setOnCloseRequest(event -> {
+			tabPane.getSelectionModel().selectNext();
+			listTab.remove(tabPane.getSelectionModel().getSelectedIndex());
+			numOfTab--;
+		});
 
 		tabPane.getTabs().add(addGraphTabBut);
 		tabPane.getTabs().add(tab1);
 
-//		tabPane.getStyleClass().add("tabPane");
-
-		ArrayList<GraphTab> listTab = new ArrayList<GraphTab>();
-		//		GraphTab[] listTab = new GraphTab[11];
-		listTab.add(0, tab1);
+		listTab.add(0, tab1); // trash tab
 		listTab.add(1, tab1);
-		tab1.setButtonArea();
-//		tab1.setOnClosed(event -> {
-//			listTab.remove(tabPane.getSelectionModel().getSelectedIndex());
-////			tabPane.getSelectionModel().selectLast();
-//		});
-		graphView = tab1.graphView;
+
 		tabPane.getSelectionModel().select(1);;
+		graphView = tab1.graphView;
 
+		tabPane.getSelectionModel().selectedItemProperty().addListener(
+				new ChangeListener<Tab>() {
+					@Override
+					public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+						if(tabPane.getSelectionModel().isSelected(0)) {
+							if(numOfTab < 7) {
+								GraphTab newTab = new GraphTab(new GraphEdgeList<String,String>(false));
+								newTab.setButtonArea();
+								graphView = newTab.graphView;
+								tabPane.getTabs().add(newTab);
+								numOfTab++;
+								listTab.add(newTab);
+							}
+							tabPane.getSelectionModel().selectLast();
 
-		tabPane.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
-				if(tabPane.getSelectionModel().isSelected(0)) {
-					if(numOfTab < 10) {
-						GraphTab newTab = new GraphTab(new GraphEdgeList<String,String>(false));
-						tabPane.getTabs().add(newTab);
-						numOfTab++;
-						listTab.add(newTab);
+						}
+						else {
+							listTab.get(tabPane.getSelectionModel().getSelectedIndex()).setButtonArea();
+							graphView = listTab.get(tabPane.getSelectionModel().getSelectedIndex()).graphView;
+
+							tabPane.getTabs().get(tabPane.getSelectionModel().getSelectedIndex()).setOnCloseRequest(event -> {
+								tabPane.getSelectionModel().selectNext();
+								listTab.remove(tabPane.getSelectionModel().getSelectedIndex());
+								numOfTab--;
+							});
+						}			 
 					}
-					tabPane.getSelectionModel().selectLast();
 				}
-				else {
-					listTab.get(tabPane.getSelectionModel().getSelectedIndex()).setButtonArea();
-					graphView = listTab.get(tabPane.getSelectionModel().getSelectedIndex()).graphView;
-					tabPane.getTabs().get(tabPane.getSelectionModel().getSelectedIndex()).setOnClosed(event -> {
-						listTab.remove(tabPane.getSelectionModel().getSelectedIndex());
-						numOfTab--;
-						System.out.println(numOfTab);
-					});
-				}
-			}
-		}); 
-
-
+				);
 
 		nodeCol1Start = root.getChildren().get(2);
 
@@ -152,7 +152,6 @@ public class Main extends Application {
 
 
 	}
-
 
 	public static Node getNodeCol1Start() {
 		return nodeCol1Start;
@@ -190,6 +189,7 @@ public class Main extends Application {
 		g.insertEdge("I", "BB", "ADD1");
 		g.insertEdge("I", "H", "HII");
 		g.insertEdge("C", "H", "HCII");
+		
 		g.insertEdge("BB", "H", "BHBB");
 		g.insertEdge("DD", "H", "1");
 		return g;

@@ -1,65 +1,6 @@
 package nhom2.button.input;
 import javafx.scene.text.*;
 import javafx.stage.FileChooser;
-<<<<<<< HEAD
-import javafx.util.Pair;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.URL;
-import java.time.format.DateTimeFormatter;
-
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.List;
-
-import javafx.collections.ObservableList;
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.Label;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
-import nhom2.button.InputButton;
-import nhom2.graph.*;
-import nhom2.window.*;
-import nhom2.window.MulTab.GraphTab;
-public class InputController  implements Initializable {
-	@FXML
-	private CheckBox yesBox;
-	@FXML
-	private CheckBox noBox;
-	@FXML
-	private Button Save;
-	@FXML
-	private Button FromExternal;
-	@FXML
-	private TextArea Input;
-	@FXML 
-	private DialogPane dialog;
-	private static boolean IsDirected = false;
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		noBox.setSelected(true);
-	}
-=======
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
