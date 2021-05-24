@@ -34,6 +34,10 @@ public class GraphTab extends Tab{
 		PaneGraph graphPane = new PaneGraph(graphView);
 		this.setContent(graphPane);
 		this.setStyle("graphTab");
+		
+		this.setOnClosed(event -> {
+			
+		});
 
 		nameTab.set(name);
 
