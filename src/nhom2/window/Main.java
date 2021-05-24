@@ -101,6 +101,10 @@ public class Main extends Application {
 		listTab.add(0, tab1);
 		listTab.add(1, tab1);
 		tab1.setButtonArea();
+//		tab1.setOnClosed(event -> {
+//			listTab.remove(tabPane.getSelectionModel().getSelectedIndex());
+////			tabPane.getSelectionModel().selectLast();
+//		});
 		graphView = tab1.graphView;
 		tabPane.getSelectionModel().select(1);;
 
@@ -112,7 +116,6 @@ public class Main extends Application {
 					if(numOfTab < 10) {
 						GraphTab newTab = new GraphTab(new GraphEdgeList<String,String>(false));
 						tabPane.getTabs().add(newTab);
-
 						numOfTab++;
 						listTab.add(newTab);
 					}
@@ -123,6 +126,8 @@ public class Main extends Application {
 					graphView = listTab.get(tabPane.getSelectionModel().getSelectedIndex()).graphView;
 					tabPane.getTabs().get(tabPane.getSelectionModel().getSelectedIndex()).setOnClosed(event -> {
 						listTab.remove(tabPane.getSelectionModel().getSelectedIndex());
+						numOfTab--;
+						System.out.println(numOfTab);
 					});
 				}
 			}
