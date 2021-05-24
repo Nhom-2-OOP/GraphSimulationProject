@@ -294,6 +294,18 @@ public class DFSButton<V, E> extends Button{
 					tmp.setStyle("-fx-fill: #96d1cd");
 				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values())
 					tmp.setStyle("-fx-stroke: #45597e");
+				if(graphView.theGraph.isWeighted == false) {
+					Alert mess = new Alert(AlertType.CONFIRMATION);
+					mess.setHeaderText("Thuật toán không phù hợp với đồ thị không trọng số!");
+					mess.show();
+					return;
+				}
+				if(graphView.theGraph.isDirected == true) {
+					Alert mess = new Alert(AlertType.CONFIRMATION);
+					mess.setHeaderText("Thuật toán không phù hợp với đồ thị có hướng!");
+					mess.show();
+					return;
+				}
 				Kruscal(graphView);
 			}
 		});

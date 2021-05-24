@@ -13,7 +13,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import nhom2.graph.Edge;
 import nhom2.graph.Vertex;
@@ -112,6 +114,19 @@ public class MinimumSpanningTreeButton<V, E> extends Button{
 					tmp.setStyle("-fx-fill: #96d1cd");
 				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values())
 					tmp.setStyle("-fx-stroke: #45597e");
+				
+				if(graphView.theGraph.isWeighted == false) {
+					Alert mess = new Alert(AlertType.CONFIRMATION);
+					mess.setHeaderText("Thuật toán không phù hợp với đồ thị không trọng số!");
+					mess.show();
+					return;
+				}
+				if(graphView.theGraph.isDirected == true) {
+					Alert mess = new Alert(AlertType.CONFIRMATION);
+					mess.setHeaderText("Thuật toán không phù hợp với đồ thị có hướng!");
+					mess.show();
+					return;
+				}
 				
 				Kruscal(graphView);
 			}
