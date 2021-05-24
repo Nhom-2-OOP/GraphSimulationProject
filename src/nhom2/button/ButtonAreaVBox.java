@@ -5,19 +5,17 @@ import javafx.geometry.Pos;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nhom2.graphview.GraphPanel;
 
 public class ButtonAreaVBox {
+	
 	int sizeButton = 55;
+	
 	public GridPane area(GraphPanel<String, String> graphView, Stage stage, GridPane root) {
 		GridPane buttonArea = new GridPane();
 

@@ -27,10 +27,10 @@ public class SceneGestures {
 
 	private DragContext sceneDragContext = new DragContext();
 
-	GraphPanel graphView;
+	GraphPanel<String, String> graphView;
 	ScaleButton scaleBut;
 
-	public SceneGestures(GraphPanel graphView, ScaleButton scaleBut) {
+	public SceneGestures(GraphPanel<String, String>  graphView, ScaleButton scaleBut) {
 		this.graphView = graphView;
 		this.scaleBut = scaleBut;
 	}

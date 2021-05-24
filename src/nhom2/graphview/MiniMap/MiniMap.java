@@ -27,7 +27,7 @@ public class MiniMap extends GridPane{
 	double width;
 	
 	
-	public MiniMap(GraphPanel graphView) {
+	public MiniMap(GraphPanel<String, String>  graphView) {
 		this.setVisible(false);
 		this.size = 300;
 		Screen screen = Screen.getPrimary();

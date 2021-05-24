@@ -14,12 +14,12 @@ import nhom2.graphview.Zoom.SceneGestures;
 
 public class ScaleButton extends HBox{
 
-	public GraphPanel graphView;
+	public GraphPanel<String, String> graphView;
 	private Boolean txtVision = false;
 	public Button showScaleBut;
 	public TextField txtScale;
 
-	public ScaleButton(GraphPanel graphView) {
+	public ScaleButton(GraphPanel<String, String> graphView) {
 		this.graphView = graphView;
 		this.setHeight(50);
 
