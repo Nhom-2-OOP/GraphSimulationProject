@@ -292,3 +292,16 @@
 		-fx-background-image: url("mapEntered.png");
 	
 }
+
+.graphTab{
+
+	-fx-background-color: red;    
+-fx-alignment: CENTER;
+-fx-text-fill: red;
+}
+
+.tabPane{
+	-fx-tab-min-height: 30;
+	-fx-tab-max-height: 30;
+	
+}

@@ -20,10 +20,11 @@ public class GraphTab extends Tab{
 	public static GridPane root = Main.root;
 	public static Stage stage = Main.stage;
 	public GraphEdgeList<String, String> g;
+	private StringProperty nameTab = new SimpleStringProperty();
+
 
 	public GraphTab(GraphEdgeList<String, String> NewGraph) {
-		this(NewGraph, "New Tab");
-
+		this(NewGraph, "New Graph");
 	}
 
 	public GraphTab(GraphEdgeList<String, String> NewGraph, String name) {
@@ -32,12 +33,12 @@ public class GraphTab extends Tab{
 		this.buttonArea = new ButtonAreaVBox().area(graphView, stage, root);
 		PaneGraph graphPane = new PaneGraph(graphView);
 		this.setContent(graphPane);
+		this.setStyle("graphTab");
 
-		StringProperty a = new SimpleStringProperty();
-		a.set(name);
+		nameTab.set(name);
 
 		Label label = new Label();
-		label.textProperty().bind(a);
+		label.textProperty().bind(nameTab);
 		setGraphic(label);
 
 		TextField textField = new TextField();
@@ -50,13 +51,14 @@ public class GraphTab extends Tab{
 			}
 		});
 		textField.setOnAction(event -> {
-			a.setValue(textField.getText());
+			nameTab.setValue(textField.getText());
 			setGraphic(label);
 		});
 		textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
 			if(!newValue) {
-				a.setValue(textField.getText());
+				nameTab.setValue(textField.getText());
 				setGraphic(label);
+
 			}
 		});
 	}

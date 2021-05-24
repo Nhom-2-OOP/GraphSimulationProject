@@ -84,9 +84,11 @@ public class Main extends Application {
 
 		tabPane.getTabs().add(addGraphTabBut);
 		tabPane.getTabs().add(tab1);
+		
+		tabPane.getStyleClass().add("tabPane");
 
-		GraphTab[] test = new GraphTab[11];
-		test[1] = tab1;
+		GraphTab[] listTab = new GraphTab[11];
+		listTab[1] = tab1;
 		tab1.setButtonArea();
 		graphView = tab1.graphView;
 		tabPane.getSelectionModel().select(1);;
@@ -101,13 +103,13 @@ public class Main extends Application {
 						tabPane.getTabs().add(newTab);
 	
 						numOfTab++;
-						test[numOfTab] = newTab;
+						listTab[numOfTab] = newTab;
 					}
 					tabPane.getSelectionModel().selectLast();
 				}
 				else {
-					test[tabPane.getSelectionModel().getSelectedIndex()].setButtonArea();
-					graphView = test[tabPane.getSelectionModel().getSelectedIndex()].graphView;
+					listTab[tabPane.getSelectionModel().getSelectedIndex()].setButtonArea();
+					graphView = listTab[tabPane.getSelectionModel().getSelectedIndex()].graphView;
 				}
 			}
 		}); 
@@ -139,9 +141,6 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
-
-
 
 	private static GraphEdgeList<String, String> build_sample_digraph() {
 
