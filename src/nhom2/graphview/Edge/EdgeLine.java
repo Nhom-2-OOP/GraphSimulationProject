@@ -94,8 +94,8 @@ public class EdgeLine<E,V> extends Line implements EdgeView<E,V>{
         
         /* rotate arrow around itself based on this line's angle */
         Rotate rotation = new Rotate();
-        rotation.pivotXProperty().bind(translateXProperty());
-        rotation.pivotYProperty().bind(translateYProperty());
+        rotation.setPivotX(0);
+        rotation.setPivotY(0);
         rotation.angleProperty().bind(BindingForEdge.toDegrees( 
         		BindingForEdge.atan2( endYProperty().subtract(startYProperty()), 
                 endXProperty().subtract(startXProperty()))
