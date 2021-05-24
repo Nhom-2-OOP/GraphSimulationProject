@@ -2,10 +2,6 @@ package nhom2.button.input;
 import javafx.scene.text.*;
 import javafx.stage.FileChooser;
 import javafx.util.Pair;
-
-import java.awt.Desktop;
-import java.awt.Desktop.Action;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

@@ -4,6 +4,7 @@ import java.util.*;
 import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.ContextMenuEvent;
@@ -17,6 +18,7 @@ import nhom2.graphview.Styling.StyleImplementing;
 
 public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObject{
 	
+	public GraphPanel GraphView;
 	private final Vertex<T> underlyingVertex;
 	private final Set<VertexNode<T>> adjacentVertices;
 	private Label attachedLabel = null;
@@ -40,9 +42,10 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	
 	private final StyleImplementing styleProxy;
 	
-	public VertexNode(Vertex<T> v, double x, double y, double radius, boolean allowMove) {
+	public VertexNode(Vertex<T> v, double x, double y, double radius, boolean allowMove, GraphPanel graphView) {
         super(x, y, radius);
 
+        this.GraphView = graphView;
         this.underlyingVertex = v;
         this.attachedLabel = null;
         this.isDragging = false;
@@ -55,6 +58,39 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
         if (allowMove) {
             enableDrag();
         }
+        
+        MenuItem item1 = new MenuItem("Thông tin đỉnh");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+            	Alert inform = new Alert(Alert.AlertType.INFORMATION);
+        		inform.setHeaderText("Tên đỉnh: " + v.element());
+        		inform.showAndWait();
+            }
+        });
+        MenuItem item2 = new MenuItem("Xóa đỉnh");
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+            	GraphView.deleteVertex(returnThis());
+        		Alert inform = new Alert(Alert.AlertType.INFORMATION);
+        		inform.setHeaderText("Xóa đỉnh thành công");
+        		inform.showAndWait();
+            }
+        });
+        
+        MenuItem item3 = new MenuItem("Thêm cạnh");
+        item3.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {	
+            	GraphView.add(returnThis());
+            }
+        });
+        this.contextMenu.getItems().addAll(item1, item2, item3);
+        this.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+        @Override
+        public void handle(ContextMenuEvent event) {
+            returnThis().contextMenu.show(returnThis(), event.getScreenX(), event.getScreenY());;
+        }
+        });
     }
 	
 	public double boundCenterCoordinate(double value, double min, double max) {
@@ -267,6 +303,71 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 		this.attachedLabel = label;
         label.xProperty().bind(centerXProperty().subtract(3.7));
         label.yProperty().bind(centerYProperty().add(3.7));
+        label.setStyle("-fx-font: bold " +(int)(GraphPanel.VertexR/2)  + "pt \"sans-serif\";\n"
+        		+ "    -fx-fill: #45597e;");
+        label.setOnMouseClicked((MouseEvent mouseEvent) -> {
+            if (!mouseEvent.isPrimaryButtonDown()) {
+                getScene().setCursor(Cursor.DEFAULT);
+            }
+
+        });
+        label.setOnMouseEntered((MouseEvent mouseEvent) -> {
+            if (!mouseEvent.isPrimaryButtonDown()) {
+                getScene().setCursor(Cursor.HAND);
+                //System.out.println("f");
+            }
+
+        });
+        label.setOnMouseExited((MouseEvent mouseEvent) -> {
+            if (!mouseEvent.isPrimaryButtonDown()) {
+                getScene().setCursor(Cursor.DEFAULT);
+            }
+
+        });
+        label.setOnMousePressed((MouseEvent mouseEvent) -> {
+            if (!mouseEvent.isPrimaryButtonDown()) 
+            {
+                // record a delta distance for the drag and drop operation.
+                this.dragDeltaX = this.getCenterX() - mouseEvent.getX();
+                this.dragDeltaY = this.getCenterY() - mouseEvent.getY();
+                getScene().setCursor(Cursor.MOVE);
+                this.isDragging = true;
+                mouseEvent.consume();
+            }
+        });
+
+        label.setOnMouseReleased((MouseEvent mouseEvent) -> {
+            getScene().setCursor(Cursor.HAND);
+            this.isDragging = false;
+
+            mouseEvent.consume();
+        });
+
+        label.setOnMouseDragged((MouseEvent mouseEvent) -> {
+            if (mouseEvent.isPrimaryButtonDown()) {
+                double newX = mouseEvent.getX() + this.dragDeltaX;
+                this.setCenterX(this.boundCenterCoordinate(newX, 0, this.getParent().getLayoutBounds().getWidth()));
+
+                double newY = mouseEvent.getY() + this.dragDeltaY;
+                this.setCenterY(this.boundCenterCoordinate(newY, 0, this.getParent().getLayoutBounds().getHeight()));
+                
+                mouseEvent.consume();
+            }
+
+        });
+        label.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+			@Override
+			public void handle(ContextMenuEvent event) {
+				// TODO Auto-generated method stub
+				contextMenu.show((Node)returnThis(), event.getScreenX(), event.getScreenY());
+			}           	
+        }
+        );
+	}
+	
+	public VertexNode returnThis() {
+		return this;
 	}
 
 	@Override
