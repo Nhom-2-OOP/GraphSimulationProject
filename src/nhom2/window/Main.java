@@ -1,5 +1,7 @@
 package nhom2.window;
 
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -34,7 +36,7 @@ public class Main extends Application {
 		Screen screen = Screen.getPrimary();
 
 		root = new GridPane();
-//		this.root = root;
+		//		this.root = root;
 		root.getStyleClass().add("rootMain");
 
 		//row0
@@ -54,7 +56,7 @@ public class Main extends Application {
 		c.setPrefWidth(245);
 		c.setHalignment(HPos.LEFT);
 		root.getColumnConstraints().add(c);
-		
+
 		Pane col1Pane = new Pane();
 		VBox labelButton = new ButtonAreaVBox().label();
 		col1Pane.getChildren().add(labelButton);
@@ -66,15 +68,15 @@ public class Main extends Application {
 
 
 		TabPane tabPane = new TabPane();
-		
+
 		GridPane buttonArea = new ButtonAreaVBox().area(graphView, stage, root);
 
 
 		root.add(tabPane, 2, 0);
 		root.add(buttonArea, 0, 0);
 		root.add(col1Pane, 1, 0);
-		
-		
+
+
 
 		Tab addGraphTabBut = new Tab();
 		addGraphTabBut.setText("+");
@@ -84,16 +86,18 @@ public class Main extends Application {
 
 		tabPane.getTabs().add(addGraphTabBut);
 		tabPane.getTabs().add(tab1);
-		
+
 		tabPane.getStyleClass().add("tabPane");
 
-		GraphTab[] listTab = new GraphTab[11];
-		listTab[1] = tab1;
+		ArrayList<GraphTab> listTab = new ArrayList<GraphTab>();
+		//		GraphTab[] listTab = new GraphTab[11];
+		listTab.add(0, tab1);
+		listTab.add(1, tab1);
 		tab1.setButtonArea();
 		graphView = tab1.graphView;
 		tabPane.getSelectionModel().select(1);;
 
-		
+
 		tabPane.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
@@ -101,20 +105,24 @@ public class Main extends Application {
 					if(numOfTab < 10) {
 						GraphTab newTab = new GraphTab(new GraphEdgeList<String,String>(false));
 						tabPane.getTabs().add(newTab);
-	
+
 						numOfTab++;
-						listTab[numOfTab] = newTab;
+						listTab.add(newTab);
 					}
 					tabPane.getSelectionModel().selectLast();
 				}
 				else {
-					listTab[tabPane.getSelectionModel().getSelectedIndex()].setButtonArea();
-					graphView = listTab[tabPane.getSelectionModel().getSelectedIndex()].graphView;
+					listTab.get(tabPane.getSelectionModel().getSelectedIndex()).setButtonArea();
+					graphView = listTab.get(tabPane.getSelectionModel().getSelectedIndex()).graphView;
+					tabPane.getTabs().get(tabPane.getSelectionModel().getSelectedIndex()).setOnClosed(event -> {
+						listTab.remove(tabPane.getSelectionModel().getSelectedIndex());
+					});
 				}
 			}
 		}); 
 
-		
+
+
 		nodeCol1Start = root.getChildren().get(2);
 
 		Scene scene = new Scene(root);
@@ -174,7 +182,7 @@ public class Main extends Application {
 		g.insertEdge("DD", "H", "1");
 		return g;
 	}
-	
+
 	public static void setGraph(GraphEdgeList<String, String> NewGraph) {
 		g = NewGraph;
 		int n = g.vertices.size();
