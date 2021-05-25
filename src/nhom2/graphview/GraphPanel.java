@@ -286,16 +286,20 @@ public class GraphPanel<V, E> extends Pane{
         return theGraph.TotalEdgesBetween(u, v);
     }
     
+    // be used in menu of edge
     public void deleteWeightedFeature() {
 		if(this.edgesWithWeight == true) {
 			this.edgesWithWeight = false;
 			for(EdgeLine<E,V> edgeline : edgeNodes.values()) {
 	    		this.getChildren().remove(edgeline.getAttachedLabel());
 	    	}
+			this.theGraph.edgeWeight.clear();
+			this.theGraph.isWeighted = false;
 		}
 	}
-
-	public void addWeightedFeature() {
+    
+    // be used in menu of edge
+    public void addWeightedFeature() {
 		deleteWeightedFeature();
 		this.edgesWithWeight = true;
 		this.theGraph.setWeightedFeature();
@@ -306,15 +310,36 @@ public class GraphPanel<V, E> extends Pane{
 			this.getChildren().add(weight);
 		}
 	}
+    
+    // be used in input weight
+    public void displayWeightAttibute() {
+    	// delete old weight-edge
+    	if(this.edgesWithWeight == true) {
+			for(EdgeLine<E,V> edgeline : edgeNodes.values()) {
+	    		this.getChildren().remove(edgeline.getAttachedLabel());
+	    	}
+		}
+    	this.edgesWithWeight = true;
+    	if(this.theGraph.edgeWeight != null) {
+    		for(Edge<E,V> edge : edgeNodes.keySet()) {
+    			EdgeLine<E,V> edgeline = edgeNodes.get(edge);
+    			Label weight = new Label(theGraph.edgeWeight.get(edge).toString());
+    			edgeline.attachLabel(weight);
+    			this.getChildren().add(weight);
+    		}
+    	}
+    }
 	
-	public void addWeightToEdge(EdgeLine<E,V> edgeline, String num) {
+    // be used in menu of edge
+	public void addWeightToEdge(Edge<E,V> edge, EdgeLine<E,V> edgeline, String num) {	
+		this.theGraph.edgeWeight.put(edge, Integer.parseInt(num));
 		if(edgeline.getAttachedLabel() != null) 
 			this.getChildren().remove(edgeline.getAttachedLabel());
 		Label weight = new Label(num);
 		edgeline.attachLabel(weight);
 		this.getChildren().add(weight);
 	}
-    
+
     private EdgeLine CreateAndAddEdge(Edge<E, V> edge, VertexNode<V> graphVertexInbound, VertexNode<V> graphVertexOutbound) {
 
         EdgeLine graphEdge;
@@ -384,7 +409,7 @@ public class GraphPanel<V, E> extends Pane{
 				dialog.showAndWait();
 				String rs = dialog.getEditor().getText();
 				
-				addWeightToEdge(graphEdge, rs);
+				addWeightToEdge(edge, graphEdge, rs);
 //				Label weight = new Label(rs);
 //				graphEdge.attachLabel(weight);
 //			    this.getChildren(). ???
