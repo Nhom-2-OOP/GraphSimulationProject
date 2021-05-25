@@ -1,3 +1,6 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=refs/heads/weightedGraph
 eclipse.preferences.version=1
 encoding//src/nhom2/button/AutoFindPaths.java=UTF-8
 encoding//src/nhom2/button/AutoPlacementButton.java=UTF-8
@@ -8,18 +11,13 @@ encoding//src/nhom2/button/CircularPlacementButton.java=UTF-8
 encoding//src/nhom2/button/DFSButton.java=UTF-8
 encoding//src/nhom2/button/FindPathButton.java=UTF-8
 encoding//src/nhom2/button/FindVertexButton.java=UTF-8
+encoding//src/nhom2/button/InfoButton.java=UTF-8
 encoding//src/nhom2/button/PathFindingButton.java=UTF-8
 encoding//src/nhom2/button/PlacementButton.java=UTF-8
-<<<<<<< HEAD
-encoding//src/nhom2/button/input/InputController.java=UTF-8
-encoding//src/nhom2/coloring/Coloring.java=UTF-8
-encoding//src/nhom2/graphview/GraphPanel.java=UTF-8
-encoding//src/nhom2/graphview/Vertex/VertexNode.java=UTF-8
-=======
 encoding//src/nhom2/button/ShortestPathButton.java=UTF-8
 encoding//src/nhom2/button/addWeight/AddWeightButtonController.java=UTF-8
 encoding//src/nhom2/button/input/InputController.java=UTF-8
 encoding//src/nhom2/coloring/Coloring.java=UTF-8
 encoding//src/nhom2/graphview/GraphPanel.java=UTF-8
->>>>>>> refs/heads/weightedGraph
+encoding//src/nhom2/graphview/Vertex/VertexNode.java=UTF-8
 encoding//src/nhom2/window/Main.java=UTF-8

@@ -31,22 +31,23 @@ public class InfoButton extends Button{
 				t.setFill(Color.WHITE);
 //				t.setStyle("-fx-text-fill: white");
 				t.setText("\n\n" + 
-						"  Nhóm Trưởng:   Phan Đức Anh - 20193981\n\n" + 
-						"  Thành Viên:    \n" + 
-						"	   Đỗ Đức Anh           - 20193976\n" + 
-						"	   Lê Doãn Biên         - 20193992\n" + 
-						"	   Hoàng Khắc Đông  - 20194019\n" + 
-						"	   Lê Huy Dương        - 20194032\n" + 
-						"	   Phùng Bảo Hà        - 20190047\n" + 
-						"	   Lê Trung Kiên        - 20194084\n" + 
-						"	   Chu Nhật Minh       - 20194115\n" + 
-						"	   Nguyễn Hải Minh   - 20194120\n" + 
-						"	   Ngô Thành Nam     - 20194127\n" + 
-						"	   Tạ Tiến Thành        - 20194176");
+						"  Nhóm trưởng:   Phan Đức Anh - 20193981\n\n" + 
+						"  Thành viên:    \n" + 
+						"	   Đỗ Đức Anh              - 20193976\n" + 
+						"	   Lê Doãn Biên            - 20193992\n" + 
+						"	   Hoàng Khắc Đông         - 20194019\n" + 
+						"	   Lê Huy Dương            - 20194032\n" + 
+						"	   Phùng Bảo Hà            - 20190047\n" + 
+						"	   Lê Trung Kiên           - 20194084\n" + 
+						"	   Chu Nhật Minh           - 20194115\n" + 
+						"	   Nguyễn Hải Minh         - 20194120\n" + 
+						"	   Ngô Thành Nam           - 20194127\n" + 
+						"	   Tạ Tiến Thành           - 20194176\n" +
+						"      Github: https://github.com/Nhom-2-OOP/GraphSimulationProject");
 				
 				mainPane.getChildren().add(t);
 				
-				stage.setScene(new Scene(mainPane, 450, 400));
+				stage.setScene(new Scene(mainPane, 670, 470));
 				stage.show();
 			}
 			
