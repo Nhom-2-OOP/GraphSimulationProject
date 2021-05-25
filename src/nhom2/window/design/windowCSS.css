@@ -387,3 +387,8 @@
 	
 } */
 
+.paneInfo{
+	-fx-background-color: rgb(67, 70, 83);
+	-fx-padding: 0 10 20 20;
+}
+
