@@ -205,9 +205,16 @@ public class AddWeightButtonController implements Initializable {
 	    	  Tc[i].setOnEditCommit(new EventHandler<CellEditEvent>() {
 			
 					public void handle(CellEditEvent event) {
-						ObservableList selectedCells = Table.getSelectionModel().getSelectedCells();
-						TablePosition tablePosition = (TablePosition) selectedCells.get(0);
-						updateOnCommit(event,tablePosition.getRow(),tablePosition.getColumn());
+						if(event.getOldValue() == "-") {
+							informError();
+							setTable(Table);
+						}
+						else {
+							ObservableList selectedCells = Table.getSelectionModel().getSelectedCells();
+							TablePosition tablePosition = (TablePosition) selectedCells.get(0);
+							updateOnCommit(event,tablePosition.getRow(),tablePosition.getColumn());
+						}
+						
 					}
 	    	  });
 	    	  Tc[i].setStyle( "-fx-alignment: CENTER;");
@@ -227,6 +234,11 @@ public class AddWeightButtonController implements Initializable {
 		
 		graphView.displayWeightAttibute();
 		
+	}
+	public void informError() {
+		Alert inform = new Alert(Alert.AlertType.INFORMATION);
+		inform.setHeaderText("Cạnh không tồn tại!");
+		inform.showAndWait();
 	}
 	public void setTable(TableView table) {
 		Data = new String[n][n+1];
