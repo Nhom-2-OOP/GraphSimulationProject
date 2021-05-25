@@ -46,8 +46,8 @@ public class InfoButton extends Button{
 						"      Github: https://github.com/Nhom-2-OOP/GraphSimulationProject");
 				
 				mainPane.getChildren().add(t);
-				
-				stage.setScene(new Scene(mainPane, 670, 470));
+				stage.setScene(new Scene(mainPane, 450, 400));
+				stage.setTitle("Thông tin thành viên - Nhóm 2");
 				stage.show();
 			}
 			

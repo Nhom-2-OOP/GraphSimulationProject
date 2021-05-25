@@ -13,6 +13,7 @@ import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Transform;
@@ -25,8 +26,19 @@ public class MiniMap extends GridPane{
 	int size;
 	double height;
 	double width;
+	double w0;
+	double h0;
+
+	double x1;
+	double y1;
+
+	//size graphView after * scale
+	double h1;
+	double w1;
 	
-	
+	//rate graphView after -> minimap
+	double mapScale;
+
 	public MiniMap(GraphPanel<String, String>  graphView) {
 		this.setVisible(false);
 		this.size = 300;
@@ -35,7 +47,7 @@ public class MiniMap extends GridPane{
 		this.height = size/(screen.getVisualBounds().getWidth() - 300) * screen.getVisualBounds().getHeight();
 		this.setTranslateX(screen.getVisualBounds().getWidth() - 339 - size);
 		this.setTranslateY(0);
-		
+
 		Pane nowView = new Pane();
 		SubScene subView = new SubScene(nowView, 70, 70);
 		DoubleProperty viewWidth = new SimpleDoubleProperty(0);
@@ -43,73 +55,93 @@ public class MiniMap extends GridPane{
 		subView.heightProperty().bind(viewHeight);
 		subView.widthProperty().bind(viewWidth);
 		nowView.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); -fx-background-radius: 0;");
-		
+
 		GridPane borderMap = new GridPane();
 		borderMap.add(subView, 0, 0);
 		borderMap.getStyleClass().add("borderMap");
-		
+
 		ImageView img = new ImageView();
-		
-		
+
+
 		Button minimizeMap = new Button();
 		minimizeMap.getStyleClass().add("minimizeMapBut");
 		minimizeMap.setText("-");
-		
+
 		this.setValignment(minimizeMap, VPos.TOP);
 		this.setHgap(10);
-		
+
 		this.add(img, 1, 0);
 		this.add(borderMap, 1, 0);
 		this.add(minimizeMap, 0,0);
-		
-		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.05), ev -> {
+
+		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> {
 			SnapshotParameters sp =  new SnapshotParameters();
-			
-			double w0 = graphView.getWidth();
-			double h0 = graphView.getHeight();
-			
-			double x1 = graphView.getTranslateX();
-			double y1 = - graphView.getTranslateY();
-			
-			//size graphView after * scale
-			double h1 = graphView.getScale() * graphView.getHeight(); 
-			double w1 = graphView.getScale() * graphView.getWidth();
-			
-			//rate graphView after -> minimap
-			double mapScale = width / w1;
-			
-//			if(mapScale <= 1) {
 
-				sp.setTransform(Transform.scale(mapScale, mapScale));
+			w0 = graphView.getWidth();
+			h0 = graphView.getHeight();
 
-				WritableImage writableImage = graphView.snapshot(sp, null);	
-				img.setImage(writableImage);	
+			x1 = graphView.getTranslateX();
+			y1 = - graphView.getTranslateY();
 
-				//size of View
-				viewHeight.set(h0 * mapScale);
-				viewWidth.set(w0 * mapScale);
+			h1 = graphView.getScale() * graphView.getHeight(); 
+			w1 = graphView.getScale() * graphView.getWidth();
+	
+			mapScale = width / w1;
 
-				// x, y of View
-				double xView = (-w0/ 2 - x1 + w1/2)*mapScale;
-				double yView = (h1 / 2 + y1 - h0/2)*mapScale;
+			sp.setTransform(Transform.scale(mapScale, mapScale));
 
-				if(xView < 0) {
-					viewWidth.set(w0 * mapScale + xView);
-					xView = 0;
-				}				
-				if(yView < 0 ) {
-					viewHeight.set(Math.min(height - 10, h0 * mapScale + yView));
-					yView = 0;
-				}
-				else if(yView > height - h0 * mapScale) {
-					
-					viewHeight.set(h0 * mapScale - yView + height - h0 * mapScale - 10);
-				}
-
-				subView.setTranslateX(xView);
-				subView.setTranslateY(yView);
+			WritableImage writableImage = graphView.snapshot(sp, null);	
+			img.setImage(writableImage);	
 			
+			viewHeight.set(h0 * mapScale);
+			viewWidth.set(w0 * mapScale);
+
+			// x, y of View
+			double xView = (-w0/ 2 - x1 + w1/2)*mapScale;
+			double yView = (h1 / 2 + y1 - h0/2)*mapScale;
+			
+			if(xView < 0) {
+				viewWidth.set(w0 * mapScale + xView);
+				xView = 0;
+			}				
+			if(yView < 0 ) {
+				viewHeight.set(Math.min(height - 10, h0 * mapScale + yView));
+				yView = 0;
+			}
+			else if(yView > height - h0 * mapScale) {
+
+				viewHeight.set(h0 * mapScale - yView + height - h0 * mapScale - 10);
+			}
+
+			subView.setTranslateX(xView);
+			subView.setTranslateY(yView);
+
 		}));
+
+		borderMap.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			public void handle(MouseEvent event) {
+
+				if( event.isSecondaryButtonDown())
+					return;
+				
+				double xView = event.getX() - viewWidth.doubleValue() / 2;
+				double yView = event.getY() - viewHeight.doubleValue() / 2;
+				
+				x1 = -(xView/mapScale + w0/2 - w1/2);
+				y1 = yView/mapScale -h1/2 + h0/2;
+				
+				graphView.setTranslateX(x1);
+				graphView.setTranslateY(-y1);
+				
+			}
+
+		});
+
+
+
+
+
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.play();
 
