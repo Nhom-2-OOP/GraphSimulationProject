@@ -38,10 +38,6 @@ public class MiniMap extends GridPane{
 	
 	//rate graphView after -> minimap
 	double mapScale;
-	
-	//size of view in map
-	double hView;
-	double wView;
 
 	public MiniMap(GraphPanel<String, String>  graphView) {
 		this.setVisible(false);
@@ -78,7 +74,7 @@ public class MiniMap extends GridPane{
 		this.add(borderMap, 1, 0);
 		this.add(minimizeMap, 0,0);
 
-		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.05), ev -> {
+		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.1), ev -> {
 			SnapshotParameters sp =  new SnapshotParameters();
 
 			w0 = graphView.getWidth();
@@ -96,12 +92,9 @@ public class MiniMap extends GridPane{
 
 			WritableImage writableImage = graphView.snapshot(sp, null);	
 			img.setImage(writableImage);	
-
-			hView = h0 * mapScale;
-			wView = w0 * mapScale;
 			
-			viewHeight.set(hView);
-			viewWidth.set(wView);
+			viewHeight.set(h0 * mapScale);
+			viewWidth.set(w0 * mapScale);
 
 			// x, y of View
 			double xView = (-w0/ 2 - x1 + w1/2)*mapScale;
@@ -132,8 +125,8 @@ public class MiniMap extends GridPane{
 				if( event.isSecondaryButtonDown())
 					return;
 				
-				double xView = event.getX() - wView / 2;
-				double yView = event.getY() - hView / 2;
+				double xView = event.getX() - viewWidth.doubleValue() / 2;
+				double yView = event.getY() - viewHeight.doubleValue() / 2;
 				
 				x1 = -(xView/mapScale + w0/2 - w1/2);
 				y1 = yView/mapScale -h1/2 + h0/2;
@@ -141,7 +134,6 @@ public class MiniMap extends GridPane{
 				graphView.setTranslateX(x1);
 				graphView.setTranslateY(-y1);
 				
-
 			}
 
 		});
