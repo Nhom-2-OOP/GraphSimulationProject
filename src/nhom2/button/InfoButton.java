@@ -47,6 +47,7 @@ public class InfoButton extends Button{
 				mainPane.getChildren().add(t);
 				
 				stage.setScene(new Scene(mainPane, 450, 400));
+				stage.setTitle("Thông tin thành viên - Nhóm 2 Vô Địch");
 				stage.show();
 			}
 			
