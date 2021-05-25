@@ -39,8 +39,6 @@ public class AddWeightButton extends Button  {
 				AddWeightButton.stage.show();
 			}
 		});
-	
-	
 	}
 	
 	
