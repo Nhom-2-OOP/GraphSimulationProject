@@ -104,7 +104,9 @@ public class AddWeightButtonController implements Initializable {
 			update.setVisible(false);
 			g.isWeighted = false;
 			g.setWeightedFeature(0);
+			
 			setTable(Table);
+			graphView.deleteWeightedFeature();
 		}
 		
 	}
@@ -125,7 +127,7 @@ public class AddWeightButtonController implements Initializable {
 	@FXML
 	private void addRand(ActionEvent e) {
 		g.setWeightedFeature();
-		graphView.displayWeightAttibute();
+		graphView.displayWeightAttribute();
 		informSuccess();
 	}
 	@FXML 
@@ -157,7 +159,7 @@ public class AddWeightButtonController implements Initializable {
 	    	w.add(v);
 	    }
 		g.setWeightedFeature(w);
-		graphView.displayWeightAttibute();
+		graphView.displayWeightAttribute();
 	}
 	private static void informSuccess() {
 	
@@ -268,7 +270,7 @@ public class AddWeightButtonController implements Initializable {
 //		System.out.println(weight);
 		g.setWeightedFeature(weight);
 		
-		graphView.displayWeightAttibute();
+		graphView.displayWeightAttribute();
 		
 	}
 	public void informError() {
