@@ -3,9 +3,11 @@ package nhom2.button;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
@@ -27,9 +29,9 @@ import nhom2.graphview.GraphPanel;
 import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Vertex.VertexNode;
 
-/*Cai 
- 
- */
+//Cai hien thi ket qua neu co endVertex thi se chi hien thi duong di tu dinh dau den dinh cuoi con neu k co thi se hien thi het
+//Cai hien thi tung buoc k dung endVertex
+
 
 public class ShortestPathButton<V,E> extends Button {
 	private Button next = new Button("Next");
@@ -145,12 +147,14 @@ public class ShortestPathButton<V,E> extends Button {
 					if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
 				}
 				reset.setVisible(false);
+				
 				tfStartVertex.commitValue();
 				String dataStart = tfStartVertex.getText();
 				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
 				tfEndVertex.commitValue();
 				String dataEnd = tfEndVertex.getText();
 				Vertex<V> endVertex = graphView.theGraph.vertices.get(dataEnd);
+//				System.out.println(graphView.theGraph.edgeWeight.get(graphView.theGraph.getEdge(startVertex,endVertex)));
 				if (startVertex == null) {
 					Alert alert = new Alert(AlertType.CONFIRMATION);
 					alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
@@ -159,6 +163,7 @@ public class ShortestPathButton<V,E> extends Button {
 				}
 				reset.setVisible(true);
 				shortestPath(graphView,startVertex,endVertex);
+				dijkstraMatrix(graphView,startVertex);
 			}
 		});
 		//button hiển thị từng bước
@@ -166,7 +171,6 @@ public class ShortestPathButton<V,E> extends Button {
 
 			@Override
 			public void handle(ActionEvent event) {
-				stackStep.removeAllElements();
 				lb.setText("");
 				for (VertexNode<V> tmp : graphView.vertexNodes.values())
 					tmp.setStyle("-fx-fill: #96d1cd");
@@ -229,6 +233,9 @@ public class ShortestPathButton<V,E> extends Button {
 	}
 	
 	public void shortestPath(GraphPanel<V, E> graphView, Vertex<V> sourceVertex, Vertex<V> endVertex){
+		distance = new HashMap<>();
+		parent = new HashMap<>();
+		minHeap = new BinaryMinHeap<Vertex<V>>();
         
         //initialize all vertex with infinite distance from source vertex
         for(Vertex<V> vertex : graphView.theGraph.VertexList()){
@@ -315,11 +322,11 @@ public class ShortestPathButton<V,E> extends Button {
 	 }
 	
 	//phần hiển thị từng bước
-	private Stack<Vertex<V>> stackStep = new Stack<>();
 	public void stepDijkstra (GraphPanel<V, E> graphView) {
 		BinaryMinHeap<Vertex<V>>.Node heapNode = minHeap.extractMinNode();
+		System.out.println(heapNode.weight);
         Vertex<V> current = heapNode.key;
-        
+        System.out.println();
         if(heapNode.weight == Integer.MAX_VALUE) {
         	lb.setText("Done!");
 			next.setVisible(false);
@@ -334,29 +341,132 @@ public class ShortestPathButton<V,E> extends Button {
 			if(graphView.theGraph.isDirected==true)
 				edgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
         }
-        //update shortest distance of current vertex from source vertex
         distance.put(current, heapNode.weight);
-
-        //iterate through all edges of current vertex
         for(Edge<E, V> edge : graphView.theGraph.incidentEdges(current)){
-
-            //get the adjacent vertex
             Vertex<V> adjacent = graphView.theGraph.opposite(current, edge);
-
-            //if heap does not contain adjacent vertex means adjacent vertex already has shortest distance from source vertex
             if(!minHeap.containsData(adjacent)){
                 continue;
             }
-
-            //add distance of current vertex to edge weight to get distance of adjacent vertex from source vertex
-            //when it goes through current vertex
             int newDistance = distance.get(current) + graphView.theGraph.edgeWeight.get(edge);
-
-            //see if this above calculated distance is less than current distance stored for adjacent vertex from source vertex
             if(minHeap.getWeight(adjacent) > newDistance) {
                 minHeap.decrease(adjacent, newDistance);
                 parent.put(adjacent, current);
             }
         }
+	}
+	
+	//Phan xuat ra ma tran
+	public String[][] dijkstraMatrix(GraphPanel<V, E> graphView, Vertex<V> sourceVertex){
+		PriorityQueue<String> verticesInTable = new PriorityQueue<>();	//Danh sach cac canh trong ma tran
+		
+		//BFS xac dinh cac dinh trong ma tran
+		Map<Vertex<V>, Vertex<V>> parVertex = new HashMap<>();
+		Map<Vertex<V>,Boolean> IsVisited = new HashMap();
+		for (Vertex<V> v: graphView.theGraph.vertices.values()) IsVisited.put(v, false);
+		ArrayList<Vertex<V>> VisitingOrder = new ArrayList<>();
+		Queue<Vertex<V>> queue = new LinkedList<Vertex<V>>();
+		queue.add(sourceVertex);
+		IsVisited.put(sourceVertex, true);
+		VisitingOrder.add(sourceVertex);
+		while (!queue.isEmpty()) {
+			Vertex v = queue.poll();
+			Set<Vertex<V>> adjVertex = graphView.theGraph.adjList.get(v).keySet();
+			for (Vertex<V> u: adjVertex) {
+				if (IsVisited.get(u) == false) {
+					queue.add(u);
+					IsVisited.put(u, true);
+					VisitingOrder.add(u);
+					parVertex.put(u, v);
+				}
+			}
+		}
+		for(Vertex<V> v : IsVisited.keySet()) 
+			if(IsVisited.get(v) == true) 
+				verticesInTable.add(v.element().toString());
+		
+		//Tao ma tran
+		int numbVertex = verticesInTable.size();
+		String[][] matrix = new String[numbVertex+1][numbVertex+1];
+		for(int i=0;i<numbVertex+1;i++) 
+			for(int j=0;j<numbVertex+1;j++)
+				matrix[i][j] = "_";		
+		Iterator itr = verticesInTable.iterator();
+		for(int i=1; i<numbVertex+1;i++) 
+			matrix[0][i] = (String) itr.next();
+		
+		distance = new HashMap<>();
+		parent = new HashMap<>();
+		minHeap = new BinaryMinHeap<Vertex<V>>();
+		
+		for(Vertex<V> vertex : graphView.theGraph.VertexList()){
+            minHeap.add(Integer.MAX_VALUE, vertex);
+        }
+        minHeap.decrease(sourceVertex, 0);
+        distance.put(sourceVertex, 0);
+        parent.put(sourceVertex, null);
+        int curRow = 1;
+        while(!minHeap.empty()){
+        	Vertex<V> minVertex = minHeap.min();
+            Vertex<V> current = minVertex;
+            if(minHeap.getWeight(minVertex) == Integer.MAX_VALUE)
+            	break;
+            
+            matrix[curRow][0] = String.valueOf(minHeap.getWeight(minVertex)); 
+            //update shortest distance of current vertex from source vertex
+            distance.put(current, minHeap.getWeight(minVertex));
+
+            //iterate through all edges of current vertex
+            for(Edge<E, V> edge : graphView.theGraph.incidentEdges(current)){
+
+                //get the adjacent vertex
+                Vertex<V> adjacent = graphView.theGraph.opposite(current, edge);
+
+                //if heap does not contain adjacent vertex means adjacent vertex already has shortest distance from source vertex
+                if(!minHeap.containsData(adjacent)){
+                    continue;
+                }
+
+                //add distance of current vertex to edge weight to get distance of adjacent vertex from source vertex
+                //when it goes through current vertex
+                int newDistance = distance.get(current) + graphView.theGraph.edgeWeight.get(edge);
+
+                //see if this above calculated distance is less than current distance stored for adjacent vertex from source vertex
+                if(minHeap.getWeight(adjacent) > newDistance) {
+                    minHeap.decrease(adjacent, newDistance);
+                    parent.put(adjacent, current);
+                }
+            }
+            for(Vertex<V> v : parent.keySet()) {
+            	for(int i=1; i<numbVertex+1; i++) {
+            		if(v.element().toString() == matrix[0][i]) {
+            			if(parent.get(v)==null) {
+            				if(minHeap.getWeight(v) == null)
+            					matrix[curRow][i] = "_";
+            				else
+            					matrix[curRow][i] = String.valueOf(minHeap.getWeight(v)) + "/null" ;
+            			}
+            			else {
+            				if(minHeap.getWeight(v) == null)
+            					matrix[curRow][i] = "_";
+            				else
+            					matrix[curRow][i] = String.valueOf(minHeap.getWeight(v)) + "/" + parent.get(v).element().toString();
+            			}
+            			break;
+            		}
+            	}
+            }
+            curRow++;
+            minHeap.extractMinNode();
+        }
+		
+		
+		//Ham in ma tran
+//		for(int i=0;i<numbVertex+1;i++) {
+//			for(int j=0;j<numbVertex+1;j++) 
+//				System.out.print(matrix[i][j] + " ");
+//			System.out.println();
+//		}
+        
+		return matrix;		
 	}
 }
