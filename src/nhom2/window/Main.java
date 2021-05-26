@@ -206,4 +206,7 @@ public class Main extends Application {
 		}
 		graphView.Renew(NewGraph, true); 
 	}
+	public static GraphPanel<String, String> getGraph() {
+		return graphView;
+	}
 }

@@ -39,8 +39,13 @@ public class AddWeightButton extends Button  {
 				AddWeightButton.stage.show();
 			}
 		});
-	
-	
+		
+		this.setOnMouseEntered(mouseEvent -> {
+			this.getStyleClass().add("btnAddWeightEntered");
+		});
+		this.setOnMouseExited(mouseEvent -> {
+			this.getStyleClass().remove(4);
+		});
 	}
 	
 	
