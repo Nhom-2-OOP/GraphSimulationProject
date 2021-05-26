@@ -154,10 +154,10 @@ public class InputController  implements Initializable {
 	}
 	private static void informSuccess() {
 		Alert inform = new Alert(Alert.AlertType.INFORMATION);
-	
 		if( IsDirected ) inform.setHeaderText("Lưu đồ thị (có hướng) thành công!");
 		else inform.setHeaderText("Lưu đồ thị (vô hướng) thành công!");
 		inform.showAndWait();
+		InputButton.stage.close();
 	}
 	private static void informNull() {
 		Alert inform = new Alert(Alert.AlertType.INFORMATION);
