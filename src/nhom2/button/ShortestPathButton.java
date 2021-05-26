@@ -107,7 +107,7 @@ public class ShortestPathButton<V,E> extends Button {
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				if(graphView.theGraph.isWeighted == false) {
-					Alert alert = new Alert(AlertType.CONFIRMATION);
+					Alert alert = new Alert(AlertType.WARNING);
 					alert.setHeaderText("Tính năng chỉ hỗ trợ đồ thị có trọng số");
 					alert.show();
 				}
@@ -152,7 +152,7 @@ public class ShortestPathButton<V,E> extends Button {
 				String dataEnd = tfEndVertex.getText();
 				Vertex<V> endVertex = graphView.theGraph.vertices.get(dataEnd);
 				if (startVertex == null) {
-					Alert alert = new Alert(AlertType.CONFIRMATION);
+					Alert alert = new Alert(AlertType.WARNING);
 					alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
 					alert.show();
 					return;
@@ -178,7 +178,7 @@ public class ShortestPathButton<V,E> extends Button {
 				String dataStart = tfStartVertex.getText();
 				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
 				if (startVertex == null) {
-					Alert alert = new Alert(AlertType.CONFIRMATION);
+					Alert alert = new Alert(AlertType.WARNING);
 					alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
 					alert.show();
 					return;

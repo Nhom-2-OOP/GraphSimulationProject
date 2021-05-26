@@ -154,6 +154,18 @@ public class MinimumSpanningTreeButton<V, E> extends Button{
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
+				if(graphView.theGraph.isWeighted == false) {
+					Alert mess = new Alert(AlertType.WARNING);
+					mess.setHeaderText("Thuật toán không phù hợp với đồ thị không trọng số!");
+					mess.show();
+					return;
+				}
+				if(graphView.theGraph.isDirected == true) {
+					Alert mess = new Alert(AlertType.WARNING);
+					mess.setHeaderText("Thuật toán không phù hợp với đồ thị có hướng!");
+					mess.show();
+					return;
+				}
 				for (VertexNode<V> tmp : graphView.vertexNodes.values())
 					tmp.setStyle("-fx-fill: #96d1cd");
 				for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
