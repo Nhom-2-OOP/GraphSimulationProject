@@ -1,5 +1,6 @@
 package nhom2.window.MulTab;
 
+
 import javafx.scene.SubScene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -25,6 +26,7 @@ public class PaneGraph extends Pane {
 		MiniMap miniMap = new MiniMap(graphView);
 		
 		MapButton mapBut = new MapButton(miniMap);
+		
 		
 		this.resize(screen.getVisualBounds().getWidth() - 300, screen.getVisualBounds().getHeight() - 40);
 		

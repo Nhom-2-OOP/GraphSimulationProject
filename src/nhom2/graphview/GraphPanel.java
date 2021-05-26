@@ -38,6 +38,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
@@ -46,7 +47,10 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -63,6 +67,8 @@ import java.util.concurrent.FutureTask;
 public class GraphPanel<V, E> extends Pane{
 	
 	public PlacementStrategy placementStrategy;
+	
+	public Rectangle Background;
 	
 	public GraphEdgeList<V, E> theGraph;
 	public Map<Vertex<V>, VertexNode<V>> vertexNodes;
@@ -86,15 +92,12 @@ public class GraphPanel<V, E> extends Pane{
     private boolean needLabel;
     DoubleProperty myScale = new SimpleDoubleProperty(1.0);
     
-    
-	
-    
     public GraphPanel(GraphEdgeList<V, E> theGraph) {
         this(theGraph, null, true);
     }
     
 	public GraphPanel(GraphEdgeList<V, E> theGraph, URI cssFile, boolean Label) {
-		
+
 		this.placementStrategy = new RandomPlacementStrategy();
 		this.theGraph = theGraph;
 		
@@ -127,6 +130,7 @@ public class GraphPanel<V, E> extends Pane{
         vertexNodes = new HashMap<>();
         edgeNodes = new HashMap<>(); 
         NumOfEdge = new HashMap<>();
+        initBackground();
         initNodes();
         
         timer = new AnimationTimer() {
@@ -136,8 +140,7 @@ public class GraphPanel<V, E> extends Pane{
                 runLayoutIteration();
             }
         };
-        
-        initHandler();
+       
 	}
 	
     public double getScale() {
@@ -177,46 +180,10 @@ public class GraphPanel<V, E> extends Pane{
         edgeNodes.clear();; 
 		this.getChildren().clear();
        
+		initBackground();
         initNodes();
         this.init();
         
-        initHandler();
-	}
-	
-	private void initHandler() {
-        Handler = new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent mouseEvent) {
-				// TODO Auto-generated method stub
-				if (mouseEvent.getClickCount() == 2) {
-	            	TextInputDialog box = new TextInputDialog("Nhập tên đỉnh");
-	            	box.setHeaderText("Thêm đỉnh mới");
-	            	box.setTitle("Nhập tên đỉnh");
-	            	box.setContentText("Nhập tên đỉnh mới: ");
-	            	Optional<String> result = box.showAndWait();
-	            	if (result.isPresent()) {
-	            		if (theGraph.vertices.get(result.get()) != null) {
-	            			Alert newAlert = new Alert(AlertType.WARNING);
-	            			newAlert.setTitle("Thông báo");
-	            			newAlert.setHeaderText("Thêm đỉnh không thành không");
-	            			newAlert.setContentText("Tên đỉnh mới đã có trong đồ thị");
-	            			newAlert.showAndWait();
-	            		}
-	            		else {
-	            			Insert((V)result.get(), mouseEvent.getX(), mouseEvent.getY());
-	            			Alert alert = new Alert(AlertType.INFORMATION);
-	            			alert.setTitle("Thông báo");
-	            			alert.setHeaderText(null);
-	            			alert.setContentText("Thêm đỉnh thành công!");
-
-	            			alert.showAndWait();
-	            		}
-	            	}
-	            }
-			}
-        };
-        
-        this.setOnMouseClicked(Handler);
 	}
 	
 	private void runLayoutIteration() {
@@ -353,11 +320,11 @@ public class GraphPanel<V, E> extends Pane{
     	  EdgeLine NewEdgeView = new EdgeLine(edge, graphVertexOutbound, graphVertexInbound);
     	  graphEdge = NewEdgeView;
     	
-    	  this.getChildren().add(0, (Node)NewEdgeView);
+    	  this.getChildren().add(1, (Node)NewEdgeView);
       } else {
     	EdgeLine NewEdgeView = new EdgeLine(edge, graphVertexOutbound, graphVertexInbound);
         graphEdge = NewEdgeView;
-        this.getChildren().add(0, (Node)NewEdgeView);
+        this.getChildren().add(1, (Node)NewEdgeView);
       }
       MenuItem item1 = new MenuItem("Xóa cạnh");
       item1.setOnAction(new EventHandler<ActionEvent>() {
@@ -410,32 +377,13 @@ public class GraphPanel<V, E> extends Pane{
 				String rs = dialog.getEditor().getText();
 				
 				addWeightToEdge(edge, graphEdge, rs);
-//				Label weight = new Label(rs);
-//				graphEdge.attachLabel(weight);
-//			    this.getChildren(). ???
 			}
 		}
     	  
       });
       
-      MenuItem item3 = new MenuItem("Bật đồ thị trọng số");
-      item3.setOnAction(new EventHandler<ActionEvent>(){
-			@Override
-			public void handle(ActionEvent arg0) {
-				addWeightedFeature();
-			}
-      	
-      });
       
-      MenuItem item4 = new MenuItem("Tắt đồ thị trọng số");
-      item4.setOnAction(new EventHandler<ActionEvent>(){
-			@Override
-			public void handle(ActionEvent arg0) {
-				deleteWeightedFeature();
-			}
-      });
-      
-      graphEdge.contextMenu.getItems().addAll(item1, item2, item3, item4);
+      graphEdge.contextMenu.getItems().addAll(item1, item2);
       graphEdge.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
             public void handle(ContextMenuEvent event) {
@@ -485,6 +433,76 @@ public class GraphPanel<V, E> extends Pane{
     	theGraph.removeVertex(v.getUnderlyingVertex());
     }
     
+    public void initBackground() {
+    	this.Background = new Rectangle(1062, 672, new Color(0.203, 0.215, 0.274, 1.0));
+    	
+		Background.setX(2);
+		Background.setY(2);
+		Background.getStyleClass().add("rectangle");
+		this.getChildren().add(0,Background);
+		
+		ContextMenu backMenu = new ContextMenu();
+		
+		MenuItem item1 = new MenuItem("Thêm đỉnh");
+		item1.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent arg0) {
+            	TextInputDialog box = new TextInputDialog("Nhập tên đỉnh");
+            	box.setHeaderText("Thêm đỉnh mới");
+            	box.setTitle("Nhập tên đỉnh");
+            	box.setContentText("Nhập tên đỉnh mới: ");
+            	Optional<String> result = box.showAndWait();
+            	if (result.isPresent()) {
+            		if (theGraph.vertices.get(result.get()) != null) {
+            			Alert newAlert = new Alert(AlertType.WARNING);
+            			newAlert.setTitle("Thông báo");
+            			newAlert.setHeaderText("Thêm đỉnh không thành không");
+            			newAlert.setContentText("Tên đỉnh mới đã có trong đồ thị");
+            			newAlert.showAndWait();
+            		}
+            		else {
+            			Insert((V)result.get(), getScene().getX(), getScene().getY());
+            			Alert alert = new Alert(AlertType.INFORMATION);
+            			alert.setTitle("Thông báo");
+            			alert.setHeaderText(null);
+            			alert.setContentText("Thêm đỉnh thành công!");
+
+            			alert.showAndWait();
+            		}
+            	};
+			}
+      	
+		});
+		
+		MenuItem item2 = new MenuItem("Bật đồ thị trọng số");
+		item2.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent arg0) {
+				addWeightedFeature();
+			}
+      	
+		});
+      
+		MenuItem item3 = new MenuItem("Tắt đồ thị trọng số");
+		item3.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent arg0) {
+				deleteWeightedFeature();
+			}
+		});
+		
+		backMenu.getItems().addAll(item1, item2, item3);
+		
+		Background.setOnMouseClicked((MouseEvent mouseEvent) -> {
+			if (mouseEvent.getClickCount() == 2) {
+				backMenu.show(Background, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+			}
+			if (mouseEvent.getClickCount() == 1) {
+				if (backMenu.isShowing()) backMenu.hide();
+			}
+		});
+    }
+    
     private void initNodes() {
         // Them cac vertex vao vertexNodes. DPT O(n + m)
     	if (this.theGraph == null) return;
@@ -525,7 +543,7 @@ public class GraphPanel<V, E> extends Pane{
     	tmp.startYProperty().bind(NewVertexNode.centerYProperty());
     	tmp.setEndX(NewVertexNode.centerXProperty().doubleValue());
         tmp.setEndY(NewVertexNode.centerYProperty().doubleValue());
-    	this.getChildren().add(0, tmp);
+    	this.getChildren().add(1, tmp);
     	
     	EventHandler<MouseEvent> myHandler01 = new EventHandler<MouseEvent>() {
     			@Override
@@ -545,10 +563,11 @@ public class GraphPanel<V, E> extends Pane{
 	    			for (VertexNode v: vertexNodes.values()) {
 	    				if (v.contains(arg0.getX(), arg0.getY())) {
 	    					setOnMouseMoved(null);
-	    					getChildren().remove(0);
+	    					getChildren().remove(1);
 	    					removeEventFilter(MouseEvent.MOUSE_MOVED, myHandler01);
 	    					if (theGraph.areAdjacent(NewVertexNode.getUnderlyingVertex(),v.getUnderlyingVertex() )) {
-	    						setOnMouseClicked(Handler);
+//	    						setOnMouseClicked(Handler);
+	    						setOnMouseClicked(null);
 	    						Alert inform = new Alert(Alert.AlertType.ERROR);
 	    			    		inform.setHeaderText("Đã có cạnh nối!");
 	    			    		inform.showAndWait();
@@ -561,7 +580,8 @@ public class GraphPanel<V, E> extends Pane{
 	    			                getChildren().add(arrow);
 	    			            }
 	    			            edgeNodes.put(edge, graphEdge);
-	    						setOnMouseClicked(Handler);
+//	    						setOnMouseClicked(Handler);
+	    			            setOnMouseClicked(null);
 	    						Alert inform = new Alert(Alert.AlertType.INFORMATION);
 	    			    		inform.setHeaderText("Thêm cạnh thành công!");
 	    			    		inform.showAndWait();

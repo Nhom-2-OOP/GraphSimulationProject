@@ -110,6 +110,18 @@
 	-fx-background-color: #3c3d51;
 }
 
+.btnAddWeight{
+	-fx-background-image: url("addWeightDark.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 70.0%;
+}
+
+.btnAddWeightEntered{
+	-fx-background-image: url("addWeightEntered.png");
+	-fx-background-color: #3c3d51;
+}
+
 .ColoringButton {
 	-fx-background-image: url("colorDark.png");
 	-fx-background-position: center;
@@ -303,34 +315,6 @@
 	
 }
 
-/* .graphTab{
-	-fx-background-color: red;    
-	-fx-alignment: CENTER;
-	-fx-text-fill: red;
-}
-
-.tabPane{
-	-fx-tab-min-height: 30;
-	-fx-tab-max-height: 30;
-	-fx-tab-background-color: red;
-	
-} */
-
-/* .graphTab{
-    -fx-background-insets: 0 1 0 1,0,0;
-
-}
-.tabPane{
-	-fx-tab-min-width:90px;
-
-}
-
-.tabPane .graphTab{
-	-fx-background-color: #e6e6e6;
-}
-.tabPane .graphTab:selected{
-	-fx-background-color: #3c3c3c;
-} */
 
 .tab-pane .tab-header-area .tab-header-background {
     /* -fx-opacity: 0; */
@@ -349,9 +333,6 @@
 	-fx-border-color: #8ce9fd;
 }
 
-.tab{
-    /* -fx-background-insets: 0 1 0 1,0,0; */
-}
 .tab-pane .tab
 {
     -fx-background-color: rgb(40, 42, 54);

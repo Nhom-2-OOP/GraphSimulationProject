@@ -2,6 +2,10 @@
     -fx-background-color: #64719b;    
 }
 
+.rectangle{
+	-fx-background-color: #64719b;    
+}
+
 .vertex {
     -fx-stroke-width:1;
     -fx-stroke: #45597e;

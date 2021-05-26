@@ -1,7 +1,6 @@
 package nhom2.window;
 
 import java.util.ArrayList;
-
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nhom2.button.ButtonAreaVBox;
+import nhom2.button.addWeight.AddWeightButtonController;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 import javafx.scene.layout.RowConstraints;
@@ -102,9 +102,8 @@ public class Main extends Application {
 		listTab.add(0, tab1); // trash tab
 		listTab.add(1, tab1);
 
-		tabPane.getSelectionModel().select(1);;
+		tabPane.getSelectionModel().select(1);
 		graphView = tab1.graphView;
-
 		tabPane.getSelectionModel().selectedItemProperty().addListener(
 				new ChangeListener<Tab>() {
 					@Override
@@ -112,8 +111,9 @@ public class Main extends Application {
 						if(tabPane.getSelectionModel().isSelected(0)) {
 							if(numOfTab < 7) {
 								GraphTab newTab = new GraphTab(new GraphEdgeList<String,String>(false));
-								newTab.setButtonArea();
 								graphView = newTab.graphView;
+								newTab.setButtonArea();
+//								graphView = newTab.graphView;
 								tabPane.getTabs().add(newTab);
 								numOfTab++;
 								listTab.add(newTab);
@@ -189,7 +189,7 @@ public class Main extends Application {
 		g.insertEdge("I", "BB", "ADD1");
 		g.insertEdge("I", "H", "HII");
 		g.insertEdge("C", "H", "HCII");
-		
+
 		g.insertEdge("BB", "H", "BHBB");
 		g.insertEdge("DD", "H", "1");
 		return g;
