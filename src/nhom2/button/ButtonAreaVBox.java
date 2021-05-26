@@ -136,6 +136,12 @@ public class ButtonAreaVBox {
 		Pane btnPathFinding = new Pane(labPathFind);
 		labelBtnArea.getChildren().add(btnPathFinding);
 
+		Label labAddWeight = new Label(" Thêm trọng số đồ thị");
+		labAddWeight.getStyleClass().add("labelOfButtonArea");
+		labAddWeight.setPrefSize(245, sizeButton);
+		Pane btnAddWeight = new Pane(labAddWeight);
+		labelBtnArea.getChildren().add(btnAddWeight);
+		
 		Label labColor= new Label(" Tô màu đồ thị");
 		labColor.getStyleClass().add("labelOfButtonArea");
 		labColor.setPrefSize(245, sizeButton);
