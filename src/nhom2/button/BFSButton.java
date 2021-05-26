@@ -177,7 +177,7 @@ public class BFSButton<V, E> extends Button{
 				String dataStart = tfStartVertex.getText();
 				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
 				if (startVertex == null) {
-					Alert alert = new Alert(AlertType.CONFIRMATION);
+					Alert alert = new Alert(AlertType.WARNING);
 					alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
 					alert.show();
 					return;
@@ -224,7 +224,7 @@ public class BFSButton<V, E> extends Button{
 				String dataStart = tfStartVertex.getText();
 				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
 				if (startVertex == null) {
-					Alert alert = new Alert(AlertType.CONFIRMATION);
+					Alert alert = new Alert(AlertType.WARNING);
 					alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
 					alert.show();
 					return;
