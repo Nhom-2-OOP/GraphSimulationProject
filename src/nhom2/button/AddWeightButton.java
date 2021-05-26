@@ -23,7 +23,11 @@ public class AddWeightButton extends Button  {
 	public static Scene View;
 	public static Stage stage;
 	public AddWeightButton()  {
+<<<<<<< Updated upstream
 
+=======
+		
+>>>>>>> Stashed changes
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 	
