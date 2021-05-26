@@ -64,18 +64,36 @@ public class AddWeightButtonController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		graphView = Main.graphView;
-		g = graphView.theGraph;
-
-		n = g.NumOfVertex();
-		nan.setVisible(false);
-		update.setVisible(false);
-		Input.setVisible(false);
-		Save.setVisible(false);
-	
-		initTable(Table);
-		setTable(Table);
-		Table.setEditable(true);
+//<<<<<<< HEAD
+//		graphView = Main.graphView;
+//		g = graphView.theGraph;
+//
+//		n = g.NumOfVertex();
+//		nan.setVisible(false);
+//		update.setVisible(false);
+//		Input.setVisible(false);
+//		Save.setVisible(false);
+//	
+//		initTable(Table);
+//		setTable(Table);
+//		Table.setEditable(true);
+//=======
+		
+		graphView = Main.getGraph();
+		if(graphView!=null) {
+			g = graphView.theGraph;
+			n = g.NumOfVertex();
+			nan.setVisible(false);
+			update.setVisible(false);
+			Input.setVisible(false);
+			Save.setVisible(false);
+		
+			initTable(Table);
+			setTable(Table);
+			Table.setEditable(true);
+		}
+		
+//>>>>>>> 13d7dbcec673bdbf97de2c619d1748b0db859d96
 	}
 	
 	@FXML

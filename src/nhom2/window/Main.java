@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nhom2.button.ButtonAreaVBox;
+import nhom2.button.addWeight.AddWeightButtonController;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 import javafx.scene.layout.RowConstraints;
@@ -103,7 +104,6 @@ public class Main extends Application {
 
 		tabPane.getSelectionModel().select(1);
 		graphView = tab1.graphView;
-
 		tabPane.getSelectionModel().selectedItemProperty().addListener(
 				new ChangeListener<Tab>() {
 					@Override

@@ -13,7 +13,6 @@
       <Button fx:id="Save" layoutX="254.0" layoutY="301.0" mnemonicParsing="false" onAction="#input" prefHeight="31.0" prefWidth="127.0" text="Lưu" />
       <CheckBox fx:id="yesBox" layoutX="421.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleYesBox" text="Có" />
       <CheckBox fx:id="noBox" layoutX="421.0" layoutY="208.0" mnemonicParsing="false" onAction="#handleNoBox" text="Không" />
-      <Button fx:id="addWeight" layoutX="29.0" layoutY="358.0" mnemonicParsing="false" onAction="#weight" text="Thêm trọng số" />
       <Text layoutX="174.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập đồ thị" />
       <Text layoutX="449.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đồ thị có hướng" />
    </children>
