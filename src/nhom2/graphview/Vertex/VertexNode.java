@@ -88,7 +88,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 
         @Override
         public void handle(ContextMenuEvent event) {
-            returnThis().contextMenu.show(returnThis(), event.getScreenX(), event.getScreenY());;
+            returnThis().contextMenu.show(returnThis(), event.getScreenX(), event.getScreenY());
         }
         });
     }
