@@ -233,7 +233,14 @@ public class GraphPanel<V, E> extends Pane{
     
     // be used in menu of edge
     public void deleteWeightedFeature() {
-		if(this.edgesWithWeight == true) {
+		if(this.theGraph.isWeighted == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setHeaderText("Không thể xóa");
+    		alert.setContentText("Đồ thị hiện tại không trọng số");
+    		alert.showAndWait();
+		}
+		else{
+			this.theGraph.isWeighted = false;
 			this.edgesWithWeight = false;
 			for(EdgeLine<E,V> edgeline : edgeNodes.values()) {
 	    		this.getChildren().remove(edgeline.getAttachedLabel());
@@ -245,15 +252,22 @@ public class GraphPanel<V, E> extends Pane{
     
     // be used in menu of edge
     public void addWeightedFeature() {
-		deleteWeightedFeature();
-		this.edgesWithWeight = true;
-		this.theGraph.setWeightedFeature();
-		for(Edge<E,V> edge : edgeNodes.keySet()) {
-			EdgeLine<E,V> edgeline = edgeNodes.get(edge);
-			Label weight = new Label(theGraph.edgeWeight.get(edge).toString());
-			edgeline.attachLabel(weight);
-			this.getChildren().add(weight);
-		}
+    	if(this.theGraph.isWeighted == true) {
+    		Alert alert = new Alert(AlertType.WARNING);
+			alert.setHeaderText("Không thể tạo");
+    		alert.setContentText("Đồ thị hiện tại đã có trọng số");
+    		alert.showAndWait();
+    	}
+    	else {
+			this.edgesWithWeight = true;
+			this.theGraph.setWeightedFeature();
+			for(Edge<E,V> edge : edgeNodes.keySet()) {
+				EdgeLine<E,V> edgeline = edgeNodes.get(edge);
+				Label weight = new Label(theGraph.edgeWeight.get(edge).toString());
+				edgeline.attachLabel(weight);
+				this.getChildren().add(weight);
+			}
+    	}
 	}
     
     // be used in input weight
@@ -272,6 +286,51 @@ public class GraphPanel<V, E> extends Pane{
     			edgeline.attachLabel(weight);
     			this.getChildren().add(weight);
     		}
+    	}
+    }
+    public void visibleWeightAttribute() {
+    	if(this.theGraph.isWeighted == false) {
+    		Alert alert = new Alert(AlertType.WARNING);
+    		alert.setHeaderText("Không thể hiện thị");
+    		alert.setContentText("Đồ thị chưa hỗ trợ trọng số");
+    		alert.showAndWait();
+    	}
+    	else if(this.edgesWithWeight == true) {
+    		Alert alert = new Alert(AlertType.WARNING);
+    		alert.setHeaderText("Đã hiện thị");
+    		alert.setContentText("Đồ thị đã hiện thị trọng số");
+    		alert.showAndWait();
+    	}
+    	else {
+	    	this.edgesWithWeight = true;
+	    	if(this.theGraph.edgeWeight != null) {
+	    		for(EdgeLine<E,V> edgeline : edgeNodes.values()) {
+	    			this.getChildren().add(edgeline.getAttachedLabel());
+	    		}
+	    	}
+    	}
+    }
+    
+    public void hideWeightAttribute() {
+    	if(this.theGraph.isWeighted == false) {
+    		Alert alert = new Alert(AlertType.WARNING);
+    		alert.setHeaderText("Không thể ẩn");
+    		alert.setContentText("Đồ thị chưa hỗ trợ trọng số");
+    		alert.showAndWait();
+    	}
+    	else if(this.edgesWithWeight == false) {
+    		Alert alert = new Alert(AlertType.WARNING);
+    		alert.setHeaderText("Không thể ẩn");
+    		alert.setContentText("Đồ thị đã ẩn trọng số");
+    		alert.showAndWait();
+    	}
+    	else {
+	    	this.edgesWithWeight = false;
+	    	if(this.theGraph.edgeWeight != null) {
+	    		for(EdgeLine<E,V> edgeline : edgeNodes.values()) {
+	    			this.getChildren().remove(edgeline.getAttachedLabel());
+	    		}
+	    	}
     	}
     }
 	
@@ -460,7 +519,7 @@ public class GraphPanel<V, E> extends Pane{
 		
 		II item1 = new II();
 		
-		MenuItem item2 = new MenuItem("Bật đồ thị trọng số");
+		MenuItem item2 = new MenuItem("Tạo ngẫu nhiên trọng số");
 		item2.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -469,7 +528,7 @@ public class GraphPanel<V, E> extends Pane{
       	
 		});
       
-		MenuItem item3 = new MenuItem("Tắt đồ thị trọng số");
+		MenuItem item3 = new MenuItem("Xóa trọng số");
 		item3.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -477,7 +536,23 @@ public class GraphPanel<V, E> extends Pane{
 			}
 		});
 		
-		backMenu.getItems().addAll(item1, item2, item3);
+		MenuItem item4 = new MenuItem("Hiện thị trọng số");
+		item4.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				visibleWeightAttribute();
+			}	
+		});
+
+		MenuItem item5 = new MenuItem("Ẩn trọng số");
+		item5.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				hideWeightAttribute();
+			}	
+		});
+		
+		backMenu.getItems().addAll(item1, item2, item3, item4, item5);
 		
 		Background.setOnMouseClicked((MouseEvent mouseEvent) -> {
 			if (mouseEvent.getClickCount() == 2) {
