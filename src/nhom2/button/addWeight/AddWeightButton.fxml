@@ -17,6 +17,7 @@
             <Button mnemonicParsing="false" onAction="#activateH" prefHeight="31.0" prefWidth="161.0" text="Nhập ma trận" />
             <Button fx:id="activateTable" mnemonicParsing="false" onAction="#activateTable" prefHeight="31.0" prefWidth="161.0" text="Nhập bảng" />
             <Button fx:id="FromExternal" mnemonicParsing="false" onAction="#inputFromExternal" prefHeight="31.0" prefWidth="161.0" text="Mở file txt" />
+            <Button fx:id="OFF" mnemonicParsing="false" onAction="#off" prefHeight="31.0" text="Tắt Trọng Số" />
          </buttons>
       </ButtonBar>
       <Button fx:id="Save" layoutX="512.0" layoutY="495.0" mnemonicParsing="false" onAction="#input" prefHeight="31.0" prefWidth="127.0" text="Lưu" />

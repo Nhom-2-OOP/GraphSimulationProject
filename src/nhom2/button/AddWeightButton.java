@@ -35,7 +35,6 @@ public class AddWeightButton extends Button  {
 		this.setOnAction(new EventHandler<ActionEvent>() {
 	
 			public void handle(ActionEvent event) {
-				stage = new Stage();
 				AddWeightButton.stage.setScene(AddWeightButton.View);
 				AddWeightButton.stage.show();
 			}

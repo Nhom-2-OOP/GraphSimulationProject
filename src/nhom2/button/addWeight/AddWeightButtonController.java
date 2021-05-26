@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -28,6 +28,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -60,7 +61,8 @@ public class AddWeightButtonController implements Initializable {
 	private Text nan;
 	@FXML
 	private Text update;
-
+	@FXML
+	private Button OFF;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -77,7 +79,17 @@ public class AddWeightButtonController implements Initializable {
 		setTable(Table);
 		Table.setEditable(true);
 	}
-	
+	@FXML
+	private void off(ActionEvent e) {
+		if(informOff()) {
+			nan.setVisible(true);
+			update.setVisible(false);
+			g.isWeighted = false;
+			g.setWeightedFeature(0);
+			setTable(Table);
+		}
+		
+	}
 	@FXML
 	private void activateTable(ActionEvent e) {
 		Input.setVisible(false);
@@ -169,6 +181,12 @@ public class AddWeightButtonController implements Initializable {
 		    dataToGraph(datas);
 			informSuccess();
 		}
+	}
+	private static boolean informOff() {
+		Alert inform = new Alert(Alert.AlertType.CONFIRMATION);
+		inform.setHeaderText("Bạn có chắc muốn tắt trọng số?");
+		Optional<ButtonType> result = inform.showAndWait();
+		return result.get() == ButtonType.OK;
 	}
 	private static void informNull() {
 		Alert inform = new Alert(Alert.AlertType.INFORMATION);

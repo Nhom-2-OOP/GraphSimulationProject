@@ -290,7 +290,13 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 			edgeWeight.put(edge, weight.get(vecLabel.get(label1)).get(vecLabel.get(label2)));
 		}
 	}
-	
+	public void setWeightedFeature(int x) {
+		this.isWeighted = true;
+		edgeWeight = new HashMap<>();
+		for(Edge<E, V> edge : edges.values()) {
+			edgeWeight.put(edge, 0);
+		}
+	}
 	public void setWeightedFeature() {
 		this.isWeighted = true;
 		edgeWeight = new HashMap<>();
