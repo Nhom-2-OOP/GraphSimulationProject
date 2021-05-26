@@ -181,6 +181,16 @@
 	-fx-padding: 0 0.0 0 10;
 }
 
+.FSFinishStep00 {
+	-fx-alignment: center;
+	-fx-background-color: rgb(40, 42, 54);
+	-fx-text-fill: #9aa8d4;
+	-fx-pref-height: 30;
+	-fx-pref-width: 245;
+	-fx-border-color: #425578;
+	-fx-border-width: 2px;
+}
+
 .FSFinishStepEntered {
 	-fx-text-fill: white;
 }
