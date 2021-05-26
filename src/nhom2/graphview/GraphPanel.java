@@ -257,7 +257,7 @@ public class GraphPanel<V, E> extends Pane{
 	}
     
     // be used in input weight
-    public void displayWeightAttibute() {
+    public void displayWeightAttribute() {
     	// delete old weight-edge
     	if(this.edgesWithWeight == true) {
 			for(EdgeLine<E,V> edgeline : edgeNodes.values()) {
