@@ -64,7 +64,7 @@ public class AddWeightButtonController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		graphView = Main.getGraph();
+		graphView = Main.graphView;
 		g = graphView.theGraph;
 
 		n = g.NumOfVertex();
