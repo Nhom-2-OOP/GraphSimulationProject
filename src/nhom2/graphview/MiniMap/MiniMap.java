@@ -67,7 +67,7 @@ public class MiniMap extends GridPane{
 		minimizeMap.getStyleClass().add("minimizeMapBut");
 		minimizeMap.setText("-");
 
-		this.setValignment(minimizeMap, VPos.TOP);
+		setValignment(minimizeMap, VPos.TOP);
 		this.setHgap(10);
 
 		this.add(img, 1, 0);

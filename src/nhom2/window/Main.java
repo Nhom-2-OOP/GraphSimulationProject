@@ -1,7 +1,6 @@
 package nhom2.window;
 
 import java.util.ArrayList;
-
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
