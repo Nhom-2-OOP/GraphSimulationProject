@@ -24,19 +24,21 @@ public class AddWeightButton extends Button  {
 	public static Stage stage;
 	public AddWeightButton()  {
 
-		try {
-			Parent root = FXMLLoader.load(AddWeightButton.class.getResource("addWeight/AddWeightButton.fxml"));
-			AddWeightButton.View = new Scene(root);
-			AddWeightButton.stage = new Stage();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 	
 			public void handle(ActionEvent event) {
+				try {
+					Parent root = FXMLLoader.load(AddWeightButton.class.getResource("addWeight/AddWeightButton.fxml"));
+					AddWeightButton.View = new Scene(root);
+					AddWeightButton.stage = new Stage();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				AddWeightButton.stage.setScene(AddWeightButton.View);
 				AddWeightButton.stage.show();
+				
 			}
 		});
 		
