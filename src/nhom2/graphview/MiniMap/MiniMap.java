@@ -117,6 +117,7 @@ public class MiniMap extends GridPane{
 			subView.setTranslateY(yView);
 
 		}));
+		
 
 		borderMap.setOnMousePressed(new EventHandler<MouseEvent>() {
 

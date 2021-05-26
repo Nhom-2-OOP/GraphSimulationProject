@@ -13,7 +13,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nhom2.button.ButtonAreaVBox;
-import nhom2.button.addWeight.AddWeightButtonController;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 import javafx.scene.layout.RowConstraints;
@@ -113,7 +112,6 @@ public class Main extends Application {
 								GraphTab newTab = new GraphTab(new GraphEdgeList<String,String>(false));
 								graphView = newTab.graphView;
 								newTab.setButtonArea();
-//								graphView = newTab.graphView;
 								tabPane.getTabs().add(newTab);
 								numOfTab++;
 								listTab.add(newTab);
@@ -122,6 +120,9 @@ public class Main extends Application {
 
 						}
 						else {
+							// tranh chay ngam
+							graphView.timer.stop();
+							
 							listTab.get(tabPane.getSelectionModel().getSelectedIndex()).setButtonArea();
 							graphView = listTab.get(tabPane.getSelectionModel().getSelectedIndex()).graphView;
 
