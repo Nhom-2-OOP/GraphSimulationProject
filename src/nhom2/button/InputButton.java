@@ -32,6 +32,14 @@ public class InputButton extends Button  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.setOnAction(new EventHandler<ActionEvent>() {
+	
+			public void handle(ActionEvent event) {
+				AddWeightButton abs = new AddWeightButton();
+				stage.setScene(View);
+				stage.show();
+			}
+		});
 		this.setOnMouseEntered(mouseEvent -> {
 			this.getStyleClass().add("btnInputEntered");
 		});
