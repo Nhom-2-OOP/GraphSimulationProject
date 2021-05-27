@@ -1,4 +1,4 @@
-package nhom2.button;
+package nhom2.minHeap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,8 +12,20 @@ public class BinaryMinHeap<T> {
     private Map<T,Integer> nodePosition = new HashMap<>();
         
     public class Node {
-        int weight;
-        T key;
+        private int weight;
+        private T key;
+		public T getKey() {
+			return key;
+		}
+		public void setKey(T key) {
+			this.key = key;
+		}
+		public int getWeight() {
+			return weight;
+		}
+		public void setWeight(int weight) {
+			this.weight = weight;
+		}
     }
 
     /**
@@ -28,20 +40,20 @@ public class BinaryMinHeap<T> {
      */
     public void add(int weight,T key) {
         Node node = new Node();
-        node.weight = weight;
-        node.key = key;
+        node.setWeight(weight);
+        node.setKey(key);
         allNodes.add(node);
         int size = allNodes.size();
         int current = size - 1;
         int parentIndex = (current - 1) / 2;
-        nodePosition.put(node.key, current);
+        nodePosition.put(node.getKey(), current);
 
         while (parentIndex >= 0) {
             Node parentNode = allNodes.get(parentIndex);
             Node currentNode = allNodes.get(current);
-            if (parentNode.weight > currentNode.weight) {
+            if (parentNode.getWeight() > currentNode.getWeight()) {
                 swap(parentNode,currentNode);
-                updatePositionMap(parentNode.key,currentNode.key,parentIndex,current);
+                updatePositionMap(parentNode.getKey(),currentNode.getKey(),parentIndex,current);
                 current = parentIndex;
                 parentIndex = (parentIndex - 1) / 2;
             } else {
@@ -54,7 +66,7 @@ public class BinaryMinHeap<T> {
      * Get the heap min without extracting the key
      */
     public T min(){
-        return allNodes.get(0).key;
+        return allNodes.get(0).getKey();
     }
 
     /**
@@ -69,12 +81,12 @@ public class BinaryMinHeap<T> {
      */
     public void decrease(T data, int newWeight){
         Integer position = nodePosition.get(data);
-        allNodes.get(position).weight = newWeight;
+        allNodes.get(position).setWeight(newWeight);
         int parent = (position -1 )/2;
         while(parent >= 0){
-            if(allNodes.get(parent).weight > allNodes.get(position).weight){
+            if(allNodes.get(parent).getWeight() > allNodes.get(position).getWeight()){
                 swap(allNodes.get(parent), allNodes.get(position));
-                updatePositionMap(allNodes.get(parent).key,allNodes.get(position).key,parent,position);
+                updatePositionMap(allNodes.get(parent).getKey(),allNodes.get(position).getKey(),parent,position);
                 position = parent;
                 parent = (parent-1)/2;
             }else{
@@ -101,15 +113,15 @@ public class BinaryMinHeap<T> {
     public Node extractMinNode() {
         int size = allNodes.size() -1;
         Node minNode = new Node();
-        minNode.key = allNodes.get(0).key;
-        minNode.weight = allNodes.get(0).weight;
+        minNode.setKey(allNodes.get(0).getKey());
+        minNode.setWeight(allNodes.get(0).getWeight());
 
-        int lastNodeWeight = allNodes.get(size).weight;
-        allNodes.get(0).weight = lastNodeWeight;
-        allNodes.get(0).key = allNodes.get(size).key;
-        nodePosition.remove(minNode.key);
+        int lastNodeWeight = allNodes.get(size).getWeight();
+        allNodes.get(0).setWeight(lastNodeWeight);
+        allNodes.get(0).setKey(allNodes.get(size).getKey());
+        nodePosition.remove(minNode.getKey());
         nodePosition.remove(allNodes.get(0));
-        nodePosition.put(allNodes.get(0).key, 0);
+        nodePosition.put(allNodes.get(0).getKey(), 0);
         allNodes.remove(size);
 
         int currentIndex = 0;
@@ -123,10 +135,10 @@ public class BinaryMinHeap<T> {
             if(right > size){
                 right = left;
             }
-            int smallerIndex = allNodes.get(left).weight <= allNodes.get(right).weight ? left : right;
-            if(allNodes.get(currentIndex).weight > allNodes.get(smallerIndex).weight){
+            int smallerIndex = allNodes.get(left).getWeight() <= allNodes.get(right).getWeight() ? left : right;
+            if(allNodes.get(currentIndex).getWeight() > allNodes.get(smallerIndex).getWeight()){
                 swap(allNodes.get(currentIndex), allNodes.get(smallerIndex));
-                updatePositionMap(allNodes.get(currentIndex).key,allNodes.get(smallerIndex).key,currentIndex,smallerIndex);
+                updatePositionMap(allNodes.get(currentIndex).getKey(),allNodes.get(smallerIndex).getKey(),currentIndex,smallerIndex);
                 currentIndex = smallerIndex;
             }else{
                 break;
@@ -139,7 +151,7 @@ public class BinaryMinHeap<T> {
      */
     public T extractMin(){
         Node node = extractMinNode();
-        return node.key;
+        return node.getKey();
     }
 
     private void printPositionMap(){
@@ -147,14 +159,14 @@ public class BinaryMinHeap<T> {
     }
 
     private void swap(Node node1,Node node2){
-        int weight = node1.weight;
-        T data = node1.key;
+        int weight = node1.getWeight();
+        T data = node1.getKey();
         
-        node1.key = node2.key;
-        node1.weight = node2.weight;
+        node1.setKey(node2.getKey());
+        node1.setWeight(node2.getWeight());
         
-        node2.key = data;
-        node2.weight = weight;
+        node2.setKey(data);
+        node2.setWeight(weight);
     }
 
     private void updatePositionMap(T data1, T data2, int pos1, int pos2){
@@ -166,7 +178,7 @@ public class BinaryMinHeap<T> {
     
     public void printHeap(){
         for(Node n : allNodes){
-            System.out.println(n.weight + " " + n.key);
+            System.out.println(n.getWeight() + " " + n.getKey());
         }
     }
     

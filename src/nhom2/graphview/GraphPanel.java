@@ -1,7 +1,6 @@
 package nhom2.graphview;
 
 import javafx.scene.*;
-import nhom2.coloring.Coloring;
 import nhom2.graph.*;
 import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Edge.EdgeView;
@@ -655,17 +654,5 @@ public class GraphPanel<V, E> extends Pane{
 			}
     	};
     	this.setOnMouseClicked(myHandler02);
-    }
-    
-    public void setColor() {
-    	Coloring coloring = new Coloring();
-    	if(this.isColored==false) {
-    		coloring.greedyColoring(this.theGraph, this.vertexNodes);
-    		this.isColored=true;
-    	}
-    	else {
-    		coloring.returnColor(this.theGraph, this.vertexNodes);
-    		this.isColored=false;
-    	}
     }
 }

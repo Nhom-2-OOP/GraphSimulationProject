@@ -4,19 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
-import java.util.Vector;
-import java.util.Map.Entry;
-
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -25,15 +16,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.util.Callback;
 import nhom2.button.D_TableButton.D_TableButton;
 import nhom2.button.D_TableButton.D_TableButtonController;
 import nhom2.graph.Edge;
@@ -41,6 +27,7 @@ import nhom2.graph.Vertex;
 import nhom2.graphview.GraphPanel;
 import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Vertex.VertexNode;
+import nhom2.minHeap.BinaryMinHeap;
 
 //Cai hien thi ket qua neu co endVertex thi se chi hien thi duong di tu dinh dau den dinh cuoi con neu k co thi se hien thi het
 //Cai hien thi tung buoc k dung endVertex
@@ -49,7 +36,10 @@ import nhom2.graphview.Vertex.VertexNode;
 public class ShortestPathButton<V,E> extends Button {
 	private static int numbVertex;
 	private Button next = new Button("Next");
+	//HM Button
+	private D_TableButton tableShow = new D_TableButton("Xem bảng thuật toán");
 	private Label lb = new Label();
+	private Vertex<V> startVertex = null;
 	private Node gridBack;
 	//heap + map data structure
     public BinaryMinHeap<Vertex<V>> minHeap = new BinaryMinHeap<Vertex<V>>();
@@ -86,8 +76,7 @@ public class ShortestPathButton<V,E> extends Button {
 		tfEndVertex.setPrefWidth(85);
 		tfEndVertex.setMaxWidth(85);
 		
-		//HM Button
-		D_TableButton tableShow = new D_TableButton("Xem bảng thuật toán");
+		
 		tableShow.setVisible(false);
 		next.setVisible(false);
 		Button reset = new Button("Reset");
@@ -170,6 +159,13 @@ public class ShortestPathButton<V,E> extends Button {
 				
 				tfStartVertex.commitValue();
 				String dataStart = tfStartVertex.getText();
+				if(tfStartVertex.getText().isEmpty() == true) {
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setHeaderText("Chưa nhập đỉnh bắt đầu");
+					alert.show();
+					tableShow.setVisible(false);
+					return;
+				}
 				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
 				tfEndVertex.commitValue();
 				String dataEnd = tfEndVertex.getText();
@@ -202,7 +198,14 @@ public class ShortestPathButton<V,E> extends Button {
 				}
 				tfStartVertex.commitValue();
 				String dataStart = tfStartVertex.getText();
-				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
+				if(tfStartVertex.getText().isEmpty() == true) {
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setHeaderText("Chưa nhập đỉnh bắt đầu");
+					alert.show();
+					tableShow.setVisible(false);
+					return;
+				}
+				startVertex = graphView.theGraph.vertices.get(dataStart);
 				if (startVertex == null) {
 					Alert alert = new Alert(AlertType.CONFIRMATION);
 					alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
@@ -249,6 +252,7 @@ public class ShortestPathButton<V,E> extends Button {
 				distance = new HashMap<>();
 				parent = new HashMap<>();
 				minHeap = new BinaryMinHeap<Vertex<V>>();
+				startVertex = null;
 				tableShow.setVisible(false);
 				reset.setVisible(false);
 			}	
@@ -278,13 +282,13 @@ public class ShortestPathButton<V,E> extends Button {
         while(!minHeap.empty()){
             //get the min value from heap node which has vertex and distance of that vertex from source vertex.
             BinaryMinHeap<Vertex<V>>.Node heapNode = minHeap.extractMinNode();
-            Vertex<V> current = heapNode.key;
+            Vertex<V> current = heapNode.getKey();
             
-            if(heapNode.weight == Integer.MAX_VALUE)
+            if(heapNode.getWeight() == Integer.MAX_VALUE)
             	break;
 
             //update shortest distance of current vertex from source vertex
-            distance.put(current, heapNode.weight);
+            distance.put(current, heapNode.getWeight());
 
             //iterate through all edges of current vertex
             for(Edge<E, V> edge : graphView.theGraph.incidentEdges(current)){
@@ -346,13 +350,15 @@ public class ShortestPathButton<V,E> extends Button {
 	
 	//phần hiển thị từng bước
 	public void stepDijkstra (GraphPanel<V, E> graphView) {
+		
 		BinaryMinHeap<Vertex<V>>.Node heapNode = minHeap.extractMinNode();
-		System.out.println(heapNode.weight);
-        Vertex<V> current = heapNode.key;
+        Vertex<V> current = heapNode.getKey();
         System.out.println();
-        if(heapNode.weight == Integer.MAX_VALUE) {
+        if(heapNode.getWeight() == Integer.MAX_VALUE) {
         	lb.setText("Done!");
 			next.setVisible(false);
+			dijkstraMatrix(graphView,startVertex);
+			tableShow.setVisible(true);
 			return;
         }
         graphView.vertexNodes.get(current).setStyle("-fx-fill: red");
@@ -364,7 +370,7 @@ public class ShortestPathButton<V,E> extends Button {
 			if(graphView.theGraph.isDirected==true)
 				edgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
         }
-        distance.put(current, heapNode.weight);
+        distance.put(current, heapNode.getWeight());
         for(Edge<E, V> edge : graphView.theGraph.incidentEdges(current)){
             Vertex<V> adjacent = graphView.theGraph.opposite(current, edge);
             if(!minHeap.containsData(adjacent)){
@@ -375,6 +381,13 @@ public class ShortestPathButton<V,E> extends Button {
                 minHeap.decrease(adjacent, newDistance);
                 parent.put(adjacent, current);
             }
+        }
+        if(minHeap.empty()==true) {
+        	lb.setText("Done!");
+			next.setVisible(false);
+			dijkstraMatrix(graphView,startVertex);
+			tableShow.setVisible(true);
+			return;
         }
 	}
 	
