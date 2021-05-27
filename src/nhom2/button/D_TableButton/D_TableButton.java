@@ -1,4 +1,4 @@
-package nhom2.button;
+package nhom2.button.D_TableButton;
 import javafx.scene.control.Button;
 
 import javafx.event.*;
@@ -19,34 +19,30 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import nhom2.graphview.GraphPanel;
-public class InputButton extends Button  {
-	private static Scene View;
+public class D_TableButton extends Button  {
+	public static Scene View;
 	public static Stage stage;
-	public InputButton(Stage s)  {
-
-		try {
-			Parent root = FXMLLoader.load(InputButton.class.getResource("input/InputButton.fxml"));
-			InputButton.View = new Scene(root);
-			InputButton.stage = s;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public D_TableButton(String text)  {
+		super(text);
 		this.setOnAction(new EventHandler<ActionEvent>() {
-	
+		
 			public void handle(ActionEvent event) {
-				AddWeightButton abs = new AddWeightButton();
-				stage.setScene(View);
-				stage.setTitle("Nhập đồ thị");
-				stage.show();
-				
+				stage = new Stage();
+				try {
+					Parent root = FXMLLoader.load(D_TableButton.class.getResource("D_TableButton.fxml"));
+					D_TableButton.View = new Scene(root);
+					D_TableButton.stage = new Stage();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				stage.setTitle("Bảng chạy thuật toán Dijkstra");
+				D_TableButton.stage.setScene(D_TableButton.View);
+
+				D_TableButton.stage.show();
 			}
 		});
-		this.setOnMouseEntered(mouseEvent -> {
-			this.getStyleClass().add("btnInputEntered");
-		});
-		this.setOnMouseExited(mouseEvent -> {
-			this.getStyleClass().remove(4);
-		});
 	}
+
+
 }

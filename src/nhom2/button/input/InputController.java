@@ -51,8 +51,6 @@ import nhom2.graph.*;
 import nhom2.window.*;
 public class InputController  implements Initializable {
 	@FXML
-	private Button addWeight;
-	@FXML
 	private CheckBox yesBox;
 	@FXML
 	private CheckBox noBox;
@@ -70,12 +68,6 @@ public class InputController  implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		noBox.setSelected(true);
 	}
-	@FXML 
-	private void weight(ActionEvent e) {
-		AddWeightButton.stage.setScene(AddWeightButton.View);
-		AddWeightButton.stage.show();
-	}
-	
 	@FXML 
 	private void input(ActionEvent e) {
 		String data = "";
@@ -154,10 +146,10 @@ public class InputController  implements Initializable {
 	}
 	private static void informSuccess() {
 		Alert inform = new Alert(Alert.AlertType.INFORMATION);
-	
 		if( IsDirected ) inform.setHeaderText("Lưu đồ thị (có hướng) thành công!");
 		else inform.setHeaderText("Lưu đồ thị (vô hướng) thành công!");
 		inform.showAndWait();
+		InputButton.stage.close();
 	}
 	private static void informNull() {
 		Alert inform = new Alert(Alert.AlertType.INFORMATION);

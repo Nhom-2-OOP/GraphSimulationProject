@@ -1,6 +1,7 @@
 package nhom2.graphview.Placement;
 
 import nhom2.graph.*;
+import nhom2.graphview.GraphPanel;
 import nhom2.graphview.Vertex.VertexView;
 
 import java.util.Collection;
@@ -15,11 +16,11 @@ public class RandomPlacementStrategy implements PlacementStrategy {
 
         for (VertexView<V> vertex : vertices) {
             
-            double x = rand.nextDouble() * (width - 20);
-            double y = rand.nextDouble() * (height - 20);
+            double x = rand.nextDouble() * (width - GraphPanel.VertexR*2);
+            double y = rand.nextDouble() * (height -GraphPanel.VertexR*2);
             
-            x += 10;
-            y += 10;
+            x += GraphPanel.VertexR;
+            y += GraphPanel.VertexR;
                         
             vertex.setPosition(x, y);
         }

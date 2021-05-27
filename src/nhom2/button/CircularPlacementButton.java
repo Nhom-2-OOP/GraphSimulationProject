@@ -2,7 +2,6 @@ package nhom2.button;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.text.TextAlignment;
 import nhom2.graphview.GraphPanel;

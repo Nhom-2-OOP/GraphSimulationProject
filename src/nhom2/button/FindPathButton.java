@@ -1,3 +1,4 @@
+
 package nhom2.button;
 
 import java.util.Set;
@@ -200,7 +201,7 @@ public class FindPathButton<V, E> extends Button {
 				endVertex = graphView.theGraph.vertices.get(dataEnd);
 
 				if (startVertex == null || endVertex == null) {
-					Alert alert = new Alert(AlertType.INFORMATION);
+					Alert alert = new Alert(AlertType.WARNING);
 					alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
 					alert.show();
 					return;
@@ -258,7 +259,7 @@ public class FindPathButton<V, E> extends Button {
 
 				// dieu kien rang buoc ket thuc
 				if (countStep > MAX_STEP) {
-					Alert alert = new Alert(AlertType.INFORMATION);
+					Alert alert = new Alert(AlertType.WARNING);
 					alert.setContentText("The path has reached its limit step!");
 					alert.showAndWait();
 					return;
@@ -337,7 +338,7 @@ public class FindPathButton<V, E> extends Button {
 					setListNextVertex(graphView, currentVertex);
 				} 
 				else {
-					Alert alert = new Alert(AlertType.INFORMATION);
+					Alert alert = new Alert(AlertType.WARNING);
 					alert.setContentText("Cannot Back!");
 					alert.showAndWait();
 				}
@@ -348,6 +349,3 @@ public class FindPathButton<V, E> extends Button {
 	}
 }
 
-// the coloring of start and end vertex are always red
-// Current vertex is green
-// Visted vertex is yellow

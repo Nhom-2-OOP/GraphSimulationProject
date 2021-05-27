@@ -1,15 +1,10 @@
 package nhom2.button;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.Stack;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -192,6 +187,18 @@ public class DFSButton<V, E> extends Button{
 		nexResBox.getStyleClass().add("nexResBox");
 		lb.getStyleClass().add("FSlb");
 		
+		EventHandler<ActionEvent> current = backBut.getOnAction();
+		
+		backBut.setOnAction(e -> {
+	        current.handle(e);
+	        for (VertexNode<V> tmp : graphView.vertexNodes.values())
+				tmp.setStyle("-fx-fill: #96d1cd");
+			for (EdgeLine<E, V> tmp : graphView.edgeNodes.values()) {
+				tmp.setStyle("-fx-stroke: #45597e");
+				if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
+			}
+	    });
+		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				for (VertexNode<V> tmp : graphView.vertexNodes.values())
@@ -230,7 +237,7 @@ public class DFSButton<V, E> extends Button{
 						String dataStart = tfStartVertex.getText();
 						Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
 						if (startVertex == null) {
-							Alert alert = new Alert(AlertType.CONFIRMATION);
+							Alert alert = new Alert(AlertType.WARNING);
 							alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
 							alert.show();
 							return;
@@ -257,7 +264,7 @@ public class DFSButton<V, E> extends Button{
 						String dataStart = tfStartVertex.getText();
 						Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
 						if (startVertex == null) {
-							Alert alert = new Alert(AlertType.CONFIRMATION);
+							Alert alert = new Alert(AlertType.WARNING);
 							alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
 							alert.show();
 							return;

@@ -5,20 +5,18 @@ import javafx.geometry.Pos;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nhom2.graphview.GraphPanel;
 
 public class ButtonAreaVBox {
+	
 	int sizeButton = 55;
-	public GridPane area(GraphPanel graphView, SubScene subSceneGraphPanel, Stage stage, GridPane root) {
+	
+	public GridPane area(GraphPanel<String, String> graphView, Stage stage, GridPane root) {
 		GridPane buttonArea = new GridPane();
 
 		//Tao nut Home
@@ -30,7 +28,7 @@ public class ButtonAreaVBox {
 		SubScene subSceneInput = new SubScene(btnInput,sizeButton,sizeButton);
 
 		// Tao nut luu anh do thi
-		CaptureGraphPanel btnCaptureGP = new CaptureGraphPanel(subSceneGraphPanel, stage);
+		CaptureGraphPanel btnCaptureGP = new CaptureGraphPanel(graphView, stage);
 		SubScene subSceneCaptureGP = new SubScene(btnCaptureGP, sizeButton, sizeButton);
 		
 		
@@ -46,6 +44,10 @@ public class ButtonAreaVBox {
 		PathFindingButton btnPathFinding = new PathFindingButton(root, stage, graphView);
 		SubScene subScenePathFinding = new SubScene(btnPathFinding, sizeButton, sizeButton);
 
+		//Nut AddWeightButton
+		AddWeightButton btnAddWeight = new AddWeightButton();
+		SubScene subSceneAddWeight = new SubScene(btnAddWeight, sizeButton, sizeButton);
+		
 		// Tao nut to mau do thi
 		ColoringButton ColoringButton = new ColoringButton(graphView);
 		SubScene subSceneColoring = new SubScene(ColoringButton, sizeButton, sizeButton);
@@ -57,7 +59,7 @@ public class ButtonAreaVBox {
 		
 		// Tao layout VBox
 		VBox buttonAreaTop = new VBox(0);
-		buttonAreaTop.getChildren().addAll(subSceneHome,subSceneInput, subSceneCaptureGP, subSceneFinding, subScenePla, subScenePathFinding, subSceneColoring);
+		buttonAreaTop.getChildren().addAll(subSceneHome,subSceneInput, subSceneCaptureGP, subSceneFinding, subScenePla, subScenePathFinding, subSceneAddWeight, subSceneColoring);
 		buttonAreaTop.setAlignment(Pos.TOP_CENTER);
 		buttonArea.setVgrow(buttonAreaTop, Priority.ALWAYS);
 
@@ -76,6 +78,7 @@ public class ButtonAreaVBox {
 		btnCaptureGP.getStyleClass().add("buttonOfButtonArea");
 		btnPla.getStyleClass().add("buttonOfButtonArea");
 		btnPathFinding.getStyleClass().add("buttonOfButtonArea");
+		btnAddWeight.getStyleClass().add("buttonOfButtonArea");
 		ColoringButton.getStyleClass().add("buttonOfButtonArea");
 		FindingButton.getStyleClass().add("buttonOfButtonArea");
 		InfoButton.getStyleClass().add("buttonOfButtonArea");
@@ -85,6 +88,7 @@ public class ButtonAreaVBox {
 		btnCaptureGP.getStyleClass().add("btnCaptureGP");
 		btnPla.getStyleClass().add("btnPla");
 		btnPathFinding.getStyleClass().add("btnPathFinding");
+		btnAddWeight.getStyleClass().add("btnAddWeight");
 		ColoringButton.getStyleClass().add("ColoringButton");
 		FindingButton.getStyleClass().add("FindingButton");
 		InfoButton.getStyleClass().add("InfoButton");
@@ -132,6 +136,12 @@ public class ButtonAreaVBox {
 		Pane btnPathFinding = new Pane(labPathFind);
 		labelBtnArea.getChildren().add(btnPathFinding);
 
+		Label labAddWeight = new Label(" Thêm trọng số đồ thị");
+		labAddWeight.getStyleClass().add("labelOfButtonArea");
+		labAddWeight.setPrefSize(245, sizeButton);
+		Pane btnAddWeight = new Pane(labAddWeight);
+		labelBtnArea.getChildren().add(btnAddWeight);
+		
 		Label labColor= new Label(" Tô màu đồ thị");
 		labColor.getStyleClass().add("labelOfButtonArea");
 		labColor.setPrefSize(245, sizeButton);

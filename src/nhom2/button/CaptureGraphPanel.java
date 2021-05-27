@@ -2,10 +2,8 @@ package nhom2.button;
 
 import javafx.event.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -24,9 +22,9 @@ import javax.imageio.ImageIO;
 
 
 public class CaptureGraphPanel extends Button{
-	private SubScene View;
-	public CaptureGraphPanel(SubScene view, Stage stage) {
-		this.View = view;
+	private GraphPanel view;
+	public CaptureGraphPanel(GraphPanel graphView, Stage stage) {
+		this.view = graphView;
 		this.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

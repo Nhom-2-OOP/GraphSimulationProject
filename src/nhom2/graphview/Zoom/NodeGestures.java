@@ -12,9 +12,9 @@ public class NodeGestures {
 
     private DragContext nodeDragContext = new DragContext();
 
-    GraphPanel graphView;
+    GraphPanel<String, String> graphView;
 
-    public NodeGestures( GraphPanel graphView) {
+    public NodeGestures( GraphPanel<String, String> graphView) {
         this.graphView = graphView;
 
     }

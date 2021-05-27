@@ -36,8 +36,6 @@ public class UtilitiesPoint2D {
         double factor = attractiveFunction(distance, globalCount, force, scale);
         return vec.multiply(factor);              
     }
-
-
     static double attractiveFunction(double distance, int globalCount, double force, double scale) {
         if (distance < 1) {
             distance = 1;

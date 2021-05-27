@@ -10,7 +10,13 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.Vector;
+import java.util.Map.Entry;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -19,10 +25,17 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
+import nhom2.button.D_TableButton.D_TableButton;
+import nhom2.button.D_TableButton.D_TableButtonController;
 import nhom2.graph.Edge;
 import nhom2.graph.Vertex;
 import nhom2.graphview.GraphPanel;
@@ -34,6 +47,7 @@ import nhom2.graphview.Vertex.VertexNode;
 
 
 public class ShortestPathButton<V,E> extends Button {
+	private static int numbVertex;
 	private Button next = new Button("Next");
 	private Label lb = new Label();
 	private Node gridBack;
@@ -63,15 +77,18 @@ public class ShortestPathButton<V,E> extends Button {
 		TextField tfEndVertex = new TextField();
 		Button finish = new Button("Hiển thị kết quả");
 		Button step = new Button("Hiển thị từng bước");
-		
+
 		tfStartVertex.setPromptText("Nhập đỉnh bắt đầu");
-		tfStartVertex.setPrefWidth(85);
 		tfStartVertex.setMaxWidth(85);
+		tfStartVertex.setPrefWidth(85);
 		
 		tfEndVertex.setPromptText("Nhập đỉnh kết thúc");
 		tfEndVertex.setPrefWidth(85);
 		tfEndVertex.setMaxWidth(85);
 		
+		//HM Button
+		D_TableButton tableShow = new D_TableButton("Xem bảng thuật toán");
+		tableShow.setVisible(false);
 		next.setVisible(false);
 		Button reset = new Button("Reset");
 		reset.setVisible(false);
@@ -84,14 +101,15 @@ public class ShortestPathButton<V,E> extends Button {
 		gridChild.add(tfEndVertex, 0, 3);
 		gridChild.add(finish, 0, 4);
 		gridChild.add(step, 0, 5);
+	
 		HBox nexResBox = new HBox(60);
 		nexResBox.getChildren().addAll(next, reset);
 		gridChild.add(lb, 0, 6);
 		gridChild.add(nexResBox, 0, 6);
-		
+		gridChild.add(tableShow, 0, 7);
 		grid.add(backBut, 0, 0);
 		grid.add(gridChild, 0, 1);
-	
+		
 		gridChild.setPadding(new Insets(30, 10, 0, 10));
 		gridChild.setHalignment(tfStartVertex, HPos.RIGHT);
 		gridChild.setHalignment(tfEndVertex, HPos.RIGHT);
@@ -102,6 +120,7 @@ public class ShortestPathButton<V,E> extends Button {
 		tfEndVertex.getStyleClass().add("tfStartVertexFS");
 		finish.getStyleClass().add("FSFinishStep");
 		step.getStyleClass().add("FSFinishStep");
+		tableShow.getStyleClass().add("FSFinishStep");
 		next.getStyleClass().add("FSNextReset");
 		reset.getStyleClass().add("FSNextReset");
 		nexResBox.getStyleClass().add("nexResBox");
@@ -146,6 +165,7 @@ public class ShortestPathButton<V,E> extends Button {
 					tmp.setStyle("-fx-stroke: #45597e");
 					if(graphView.theGraph.isDirected==true) tmp.getAttachedArrow().setStyle(" -fx-stroke: #45597e");
 				}
+				tableShow.setVisible(true);
 				reset.setVisible(false);
 				
 				tfStartVertex.commitValue();
@@ -159,11 +179,13 @@ public class ShortestPathButton<V,E> extends Button {
 					Alert alert = new Alert(AlertType.CONFIRMATION);
 					alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
 					alert.show();
+					tableShow.setVisible(false);
 					return;
 				}
 				reset.setVisible(true);
 				shortestPath(graphView,startVertex,endVertex);
 				dijkstraMatrix(graphView,startVertex);
+			
 			}
 		});
 		//button hiển thị từng bước
@@ -227,6 +249,7 @@ public class ShortestPathButton<V,E> extends Button {
 				distance = new HashMap<>();
 				parent = new HashMap<>();
 				minHeap = new BinaryMinHeap<Vertex<V>>();
+				tableShow.setVisible(false);
 				reset.setVisible(false);
 			}	
 		});
@@ -356,7 +379,7 @@ public class ShortestPathButton<V,E> extends Button {
 	}
 	
 	//Phan xuat ra ma tran
-	public String[][] dijkstraMatrix(GraphPanel<V, E> graphView, Vertex<V> sourceVertex){
+	public void dijkstraMatrix(GraphPanel<V, E> graphView, Vertex<V> sourceVertex){
 		PriorityQueue<String> verticesInTable = new PriorityQueue<>();	//Danh sach cac canh trong ma tran
 		
 		//BFS xac dinh cac dinh trong ma tran
@@ -368,6 +391,7 @@ public class ShortestPathButton<V,E> extends Button {
 		queue.add(sourceVertex);
 		IsVisited.put(sourceVertex, true);
 		VisitingOrder.add(sourceVertex);
+		
 		while (!queue.isEmpty()) {
 			Vertex v = queue.poll();
 			Set<Vertex<V>> adjVertex = graphView.theGraph.adjList.get(v).keySet();
@@ -385,15 +409,20 @@ public class ShortestPathButton<V,E> extends Button {
 				verticesInTable.add(v.element().toString());
 		
 		//Tao ma tran
-		int numbVertex = verticesInTable.size();
+		numbVertex = verticesInTable.size();
 		String[][] matrix = new String[numbVertex+1][numbVertex+1];
+		String[][] matrix1 = new String[numbVertex+1][numbVertex+1];
 		for(int i=0;i<numbVertex+1;i++) 
-			for(int j=0;j<numbVertex+1;j++)
-				matrix[i][j] = "_";		
+			for(int j=0;j<numbVertex+1;j++) {
+				matrix[i][j] = "-";	
+				matrix1[i][j]="-";
+			}
+					
 		Iterator itr = verticesInTable.iterator();
-		for(int i=1; i<numbVertex+1;i++) 
+		for(int i=1; i<numbVertex+1;i++) { 
 			matrix[0][i] = (String) itr.next();
-		
+			matrix1[0][i] = (String) matrix[0][i];
+		}
 		distance = new HashMap<>();
 		parent = new HashMap<>();
 		minHeap = new BinaryMinHeap<Vertex<V>>();
@@ -410,7 +439,7 @@ public class ShortestPathButton<V,E> extends Button {
             Vertex<V> current = minVertex;
             if(minHeap.getWeight(minVertex) == Integer.MAX_VALUE)
             	break;
-            
+            matrix1[curRow][0] = minVertex.element().toString();
             matrix[curRow][0] = String.valueOf(minHeap.getWeight(minVertex)); 
             //update shortest distance of current vertex from source vertex
             distance.put(current, minHeap.getWeight(minVertex));
@@ -440,16 +469,24 @@ public class ShortestPathButton<V,E> extends Button {
             	for(int i=1; i<numbVertex+1; i++) {
             		if(v.element().toString() == matrix[0][i]) {
             			if(parent.get(v)==null) {
-            				if(minHeap.getWeight(v) == null)
-            					matrix[curRow][i] = "_";
-            				else
+            				if(minHeap.getWeight(v) == null) {
+            					matrix[curRow][i] = "-";
+            					matrix1[curRow][i] = "-";
+            				}
+            				else {
             					matrix[curRow][i] = String.valueOf(minHeap.getWeight(v)) + "/null" ;
+            					matrix1[curRow][i] = String.valueOf(minHeap.getWeight(v)) + "/null" ;
+            				}
             			}
             			else {
-            				if(minHeap.getWeight(v) == null)
-            					matrix[curRow][i] = "_";
-            				else
+            				if(minHeap.getWeight(v) == null) {
+            					matrix[curRow][i] = "-";
+            					matrix1[curRow][i] = "-";
+            				}
+            				else {
             					matrix[curRow][i] = String.valueOf(minHeap.getWeight(v)) + "/" + parent.get(v).element().toString();
+            					matrix1[curRow][i] = matrix[curRow][i];
+            				}
             			}
             			break;
             		}
@@ -460,13 +497,20 @@ public class ShortestPathButton<V,E> extends Button {
         }
 		
 		
-		//Ham in ma tran
-//		for(int i=0;i<numbVertex+1;i++) {
-//			for(int j=0;j<numbVertex+1;j++) 
-//				System.out.print(matrix[i][j] + " ");
-//			System.out.println();
-//		}
-        
-		return matrix;		
+
+		//HM can cai nay
+		Map <Integer, String> vecLabel = new HashMap<Integer, String>();
+		for(int i=1;i<numbVertex+1;i++) {
+			vecLabel.put(i, matrix1[0][i]);
+		}
+		
+	
+		D_TableButtonController.setVecLabel(vecLabel);
+		D_TableButtonController.setData(matrix1);
 	}
+	public static int getNumbVertex() {
+		return numbVertex;
+	}
+	
+	
 }

@@ -273,23 +273,28 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 	
 	public void setWeightedFeature(Vector<Vector <Integer> > weight) {
 		this.isWeighted = true;
-		edgeWeight = new HashMap<>();
-		Vector <String> vecLabel = new Vector<String> ();
-		for (Entry<V, Vertex<V>> entry : this.vertices.entrySet()) {
-			vecLabel.add((String) entry.getKey());
+		this.edgeWeight = new HashMap<>();
+		Map <String, Integer> vecLabel = new HashMap <String, Integer>();
+		
+		int index1 = 0;
+	    for (Entry<V, Vertex<V>> entry : this.vertices.entrySet()) {
+	    	vecLabel.put( (String) entry.getKey(), index1);
+	    	index1++;
+	    }
+
+		for(Edge<E, V> edge : edges.values()) {
+			Vertex<V>[] label = edge.Vertices();
+			String label1 = label[0].element().toString();
+			String label2 = label[1].element().toString();
+//			System.out.println(label1 + " " + label2 + " " + Integer.toString(weight.get(vecLabel.get(label1)).get(vecLabel.get(label2))));
+			edgeWeight.put(edge, weight.get(vecLabel.get(label1)).get(vecLabel.get(label2)));
 		}
-		Set<E> key = edges.keySet();
-		int i =0, j=0;
-		for(String s : vecLabel) {
-		   for(String s1 : vecLabel) {
-			   if(weight.get(i).get(j) != 0) {
-				   if(key.contains(s + " " + s1)) {
-					   edgeWeight.put(edges.get(s + " " + s1), weight.get(i).get(j));
-				   }
-			   }
-			   j++;
-		   }
-		   i++;
+	}
+	public void setWeightedFeature(int x) {
+		this.isWeighted = true;
+		edgeWeight = new HashMap<>();
+		for(Edge<E, V> edge : edges.values()) {
+			edgeWeight.put(edge, 0);
 		}
 	}
 	public void setWeightedFeature() {
@@ -297,7 +302,7 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		edgeWeight = new HashMap<>();
 		Random rd = new Random();
 		for(Edge<E, V> edge : edges.values()) {
-			Integer num = new Integer(rd.nextInt(MAX_WEIGHT));
+			Integer num = new Integer(rd.nextInt(MAX_WEIGHT)+1);
 			edgeWeight.put(edge, num);
 		}
 	}

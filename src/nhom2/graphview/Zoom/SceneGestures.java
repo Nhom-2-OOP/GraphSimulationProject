@@ -27,10 +27,10 @@ public class SceneGestures {
 
 	private DragContext sceneDragContext = new DragContext();
 
-	GraphPanel graphView;
+	GraphPanel<String, String> graphView;
 	ScaleButton scaleBut;
 
-	public SceneGestures(GraphPanel graphView, ScaleButton scaleBut) {
+	public SceneGestures(GraphPanel<String, String>  graphView, ScaleButton scaleBut) {
 		this.graphView = graphView;
 		this.scaleBut = scaleBut;
 	}
@@ -69,7 +69,7 @@ public class SceneGestures {
 		public void handle(MouseEvent event) {
 
 			// right mouse button => panning
-			if( !event.isSecondaryButtonDown())
+			if(! event.isSecondaryButtonDown())
 				return;
 			if(graphView.getScale() == 1 && graphView.getTranslateX() == 0 && graphView.getTranslateY() == 0) {
 				graphView.setStyle("-fx-border-width: 0px;");

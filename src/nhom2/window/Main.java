@@ -1,38 +1,43 @@
 package nhom2.window;
 
+import java.util.ArrayList;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.SubScene;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import nhom2.button.ButtonAreaVBox;
-import nhom2.button.ScaleButton;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import nhom2.graphview.Zoom.SceneGestures;
+import nhom2.window.MulTab.GraphTab;
+//import sun.tools.tree.ThisExpression;
 
 public class Main extends Application {
 	public static GraphEdgeList<String, String> g= build_sample_digraph();
 	public static GraphPanel<String, String> graphView;	
 	public static Node nodeCol1Start;
+	public int numOfTab = 1;
+	public static Stage stage;
+	public static GridPane root;
 
 	@Override
 	public void start(Stage stage) {
+		this.stage = stage;
 
-		// Tao scene bieu dien do thi
-		graphView = new GraphPanel<>(g);
-		
-		
-		SubScene subSceneGraphPanel = new SubScene(graphView,0,0);
-		GridPane root = new GridPane();
+		Screen screen = Screen.getPrimary();
+
+		root = new GridPane();
+		//		this.root = root;
+		root.getStyleClass().add("rootMain");
 
 		//row0
 		RowConstraints r = new RowConstraints();
@@ -51,39 +56,86 @@ public class Main extends Application {
 		c.setPrefWidth(245);
 		c.setHalignment(HPos.LEFT);
 		root.getColumnConstraints().add(c);
+
 		Pane col1Pane = new Pane();
 		VBox labelButton = new ButtonAreaVBox().label();
 		col1Pane.getChildren().add(labelButton);
-		
+
 		//col 2
 		c = new ColumnConstraints();
 		c.setHalignment(HPos.CENTER);
 		root.getColumnConstraints().add(c);
-		Pane graphPane = new Pane(); 
-		
-		Screen screen = Screen.getPrimary();
-		
-		root.setHgrow(graphPane, Priority.ALWAYS);
-		graphPane.resize(screen.getVisualBounds().getWidth() - 300, screen.getVisualBounds().getHeight());
-		
-		
-		ScaleButton scaleBut = new ScaleButton(graphView);	
-		graphPane.getChildren().add(subSceneGraphPanel);
-		graphPane.getChildren().add(scaleBut);
-
-		
-		subSceneGraphPanel.heightProperty().bind(graphPane.heightProperty());
-		subSceneGraphPanel.widthProperty().bind(graphPane.widthProperty());
-		
-		graphView.init();
 
 
-		//buttonArea
-		GridPane buttonArea = new ButtonAreaVBox().area(graphView, subSceneGraphPanel, stage, root);
-		
-		root.add(graphPane, 2, 0);	
+		TabPane tabPane = new TabPane();
+
+		GridPane buttonArea = new ButtonAreaVBox().area(graphView, stage, root);
+
+
+		root.add(tabPane, 2, 0);
 		root.add(buttonArea, 0, 0);
 		root.add(col1Pane, 1, 0);
+
+		ArrayList<GraphTab> listTab = new ArrayList<GraphTab>();
+
+		//add tab button
+		Tab addGraphTabBut = new Tab();
+		addGraphTabBut.setText("+");
+		Label addLabel = new Label();
+		addLabel.setText("+");
+		addGraphTabBut.setGraphic(addLabel);
+		addGraphTabBut.setClosable(false);
+
+		// tab example
+		GraphTab tab1 = new GraphTab(g);
+		tab1.setButtonArea();
+		tab1.setOnCloseRequest(event -> {
+			tabPane.getSelectionModel().selectNext();
+			listTab.remove(tabPane.getSelectionModel().getSelectedIndex());
+			numOfTab--;
+		});
+
+		tabPane.getTabs().add(addGraphTabBut);
+		tabPane.getTabs().add(tab1);
+
+		listTab.add(0, tab1); // trash tab
+		listTab.add(1, tab1);
+
+		tabPane.getSelectionModel().select(1);
+		graphView = tab1.graphView;
+		tabPane.getSelectionModel().selectedItemProperty().addListener(
+				new ChangeListener<Tab>() {
+					@Override
+					public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+						if(tabPane.getSelectionModel().isSelected(0)) {
+							if(numOfTab < 7) {
+								GraphTab newTab = new GraphTab(new GraphEdgeList<String,String>(false));
+								graphView = newTab.graphView;
+								newTab.setButtonArea();
+								tabPane.getTabs().add(newTab);
+								numOfTab++;
+								listTab.add(newTab);
+							}
+							tabPane.getSelectionModel().selectLast();
+
+						}
+						else {
+							// tranh chay ngam
+							graphView.timer.stop();
+							
+							listTab.get(tabPane.getSelectionModel().getSelectedIndex()).setButtonArea();
+							graphView = listTab.get(tabPane.getSelectionModel().getSelectedIndex()).graphView;
+
+							tabPane.getTabs().get(tabPane.getSelectionModel().getSelectedIndex()).setOnCloseRequest(event -> {
+								tabPane.getSelectionModel().selectNext();
+								listTab.remove(tabPane.getSelectionModel().getSelectedIndex());
+								numOfTab--;
+							});
+						}			 
+					}
+				}
+				);
+
 		nodeCol1Start = root.getChildren().get(2);
 
 		Scene scene = new Scene(root);
@@ -92,23 +144,15 @@ public class Main extends Application {
 
 		stage = new Stage();
 		stage.setTitle("Nhóm 2 - OOP - Graph Visualization");
-		
+
 		stage.setMinHeight(screen.getVisualBounds().getHeight());
 		stage.setMinWidth(screen.getVisualBounds().getWidth());
 		stage.setMaximized(true);
 		stage.setScene(scene);
 		stage.show();  
-		
-		root.getStyleClass().add("rootMain");
-		
-		graphPane.getStyleClass().add("graphPane");
-		SceneGestures sceneGestures = new SceneGestures(graphView, scaleBut);
-		subSceneGraphPanel.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
-		subSceneGraphPanel.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
-		subSceneGraphPanel.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
+
 
 	}
-
 
 	public static Node getNodeCol1Start() {
 		return nodeCol1Start;
@@ -117,16 +161,12 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
-
-
 
 	private static GraphEdgeList<String, String> build_sample_digraph() {
 
-		GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(true);
+		GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(false);
 
 		g.insertEdge("A", "B", "AB1");
-//		g.insertEdge("A", "C", "AC");
 		g.insertEdge("A", "G", "AG");
 		g.insertEdge("A", "H", "AH");    
 		g.insertEdge("A", "D", "AD");
@@ -150,14 +190,22 @@ public class Main extends Application {
 		g.insertEdge("I", "BB", "ADD1");
 		g.insertEdge("I", "H", "HII");
 		g.insertEdge("C", "H", "HCII");
+
 		g.insertEdge("BB", "H", "BHBB");
 		g.insertEdge("DD", "H", "1");
 		return g;
 	}
 
-
 	public static void setGraph(GraphEdgeList<String, String> NewGraph) {
 		g = NewGraph;
+		int n = g.vertices.size();
+		if (n > 100) {
+			if (n <= 1000) GraphPanel.VertexR = 10;
+			else GraphPanel.VertexR = 5;
+		}
+		else {
+			GraphPanel.VertexR = 15;
+		}
 		graphView.Renew(NewGraph, true); 
 	}
 	public static GraphPanel<String, String> getGraph() {

@@ -2,6 +2,10 @@
     -fx-background-color: #64719b;    
 }
 
+.rectangle{
+	-fx-background-color: #64719b;    
+}
+
 .vertex {
     -fx-stroke-width:1;
     -fx-stroke: #45597e;
@@ -16,7 +20,7 @@
 
 .edge {
     -fx-stroke-width: 3;
-    -fx-stroke: #61619e;  
+    -fx-stroke: #45597e;
     /*-fx-stroke-dash-array: 2 5 2 5; /* remove for clean edges */  
     -fx-fill: transparent; /*important for curved edges */
     -fx-stroke-line-cap: round;
