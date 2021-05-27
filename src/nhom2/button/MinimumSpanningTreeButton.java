@@ -42,7 +42,7 @@ public class MinimumSpanningTreeButton<V, E> extends Button{
 		for(Vertex<V> iterator : vertex)//đánh dấu đỉnh
 			mark.put(iterator, 0);
 		
-		graphView.addWeightedFeature();///////////////RAMDOM ĐỂ TEST
+		//graphView.addWeightedFeature();///////////////RAMDOM ĐỂ TEST
 		Map<Edge<E, V>, Integer> sortedEdge = sortbyValue(graphView.theGraph.edgeWeight);// sắp xếp
 		//xét từng cạnh theo thứ tự tăng dần
 		for(Edge<E, V> i : sortedEdge.keySet()) {

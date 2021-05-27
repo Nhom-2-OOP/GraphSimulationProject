@@ -125,6 +125,8 @@ public class DFSButton<V, E> extends Button{
 			edgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
 		tmpnext = currVertex;
 		stackStep.pop();
+		while(stackStep.contains(currVertex))
+			stackStep.remove(currVertex);
 		temp = graphView.theGraph.adjList.get(currVertex);
 		adjVertex = temp.keySet();
 		iterator = adjVertex.iterator();
@@ -279,6 +281,7 @@ public class DFSButton<V, E> extends Button{
 							next.setVisible(false);
 							return;
 						}
+						mark.put(startVertex, 1);
 						tmpnext = startVertex;
 					}
 					
@@ -288,8 +291,6 @@ public class DFSButton<V, E> extends Button{
 					@Override
 					public void handle(ActionEvent event) {
 						Vertex<V> currVertex = tmpnext;
-						while(stackStep.contains(currVertex))
-							stackStep.remove(currVertex);
 						DFSstep(currVertex,graphView);
 					}
 					
