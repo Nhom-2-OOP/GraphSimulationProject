@@ -1,6 +1,5 @@
 package nhom2.graphview.Vertex;
 
-import java.util.*;
 import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.*;
@@ -20,12 +19,11 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 
 	public GraphPanel GraphView;
 	private final Vertex<T> underlyingVertex;
-	private final Set<VertexNode<T>> adjacentVertices;
 	private Label attachedLabel = null;
 	public boolean isDragging = false;
 	public ContextMenu contextMenu = new ContextMenu();
 	public double dragDeltaX = 0;
-	public double dragDeltaY = 0;//new Point(0, 0);
+	public double dragDeltaY = 0;
 
 	private class Point{
 
@@ -49,8 +47,6 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 		this.underlyingVertex = v;
 		this.attachedLabel = null;
 		this.isDragging = false;
-
-		this.adjacentVertices = new HashSet<>();
 
 		styleProxy = new StyleImplementing(this);
 		styleProxy.addStyleClass("vertex");
@@ -173,19 +169,6 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 		
 	}
 
-
-	//	public void addAdjacentVertex(VertexNode<T> v) {
-	//        this.adjacentVertices.add(v);
-	//    }
-	//	
-	//	public boolean removeAdjacentVertex(VertexNode<T> v) {
-	//        return this.adjacentVertices.remove(v);
-	//    }
-	//	
-	//	public boolean removeAdjacentVertices(Collection<VertexNode<T>> col) {
-	//        return this.adjacentVertices.removeAll(col);
-	//    }
-
 	public Point2D getPosition() {
 		return new Point2D(getCenterX(), getCenterY());
 	}
@@ -257,13 +240,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 		forceVector.y += y;
 	}
 
-	//	public boolean isAdjacentTo(VertexNode<T> v) {
-	//        return this.adjacentVertices.contains(v);
-	//    }
-
 	public void moveFromForces() {
-
-		//limit movement to parent bounds
 		try {
 			double height = getParent().getLayoutBounds().getHeight();
 			double width = getParent().getLayoutBounds().getWidth();
@@ -276,10 +253,6 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 			//System.out.println(this.getUnderlyingVertex().element());
 		}
 
-		//        updatedPosition.x = boundCenterCoordinate(updatedPosition.x, 0, width);
-		//        updatedPosition.y = boundCenterCoordinate(updatedPosition.y, 0, height);
-		//
-		//        setPosition(updatedPosition.x, updatedPosition.y);
 	}
 
 	@Override

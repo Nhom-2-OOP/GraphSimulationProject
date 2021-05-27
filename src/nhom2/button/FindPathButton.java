@@ -3,7 +3,6 @@ package nhom2.button;
 
 import java.util.Set;
 import java.util.Stack;
-import java.util.HashMap;
 import java.util.Map;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,14 +18,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 import nhom2.graphview.Edge.EdgeLine;
-import nhom2.graphview.Edge.EdgeNode;
 import nhom2.graphview.Vertex.VertexNode;
 
 public class FindPathButton<V, E> extends Button {

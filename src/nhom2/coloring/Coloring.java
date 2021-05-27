@@ -4,9 +4,7 @@ import java.util.*;
 
 import javafx.scene.control.Alert;
 import nhom2.graph.*;
-import nhom2.graphview.GraphPanel;
 import nhom2.graphview.Vertex.VertexNode;
-import nhom2.graphview.Vertex.VertexView;
 
 public class Coloring {
 	private final int MAXCOLORNUMBER = 20;

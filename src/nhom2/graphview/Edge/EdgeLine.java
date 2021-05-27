@@ -7,7 +7,6 @@ import nhom2.graphview.Label.Label;
 import nhom2.graphview.Label.LabelledObject;
 import nhom2.graphview.Styling.StyleImplementing;
 import nhom2.graphview.Vertex.VertexNode;
-import javafx.beans.value.*;
 import javafx.scene.Cursor;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.input.MouseEvent;

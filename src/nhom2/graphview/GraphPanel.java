@@ -40,8 +40,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.geometry.Point2D;
 import java.net.URI;
 
-
-
 public class GraphPanel<V, E> extends Pane{
 	
 	public PlacementStrategy placementStrategy;
@@ -227,9 +225,6 @@ public class GraphPanel<V, E> extends Pane{
         });
     }
     
-    private int getTotalEdgesBetween(Vertex<V> v, Vertex<V> u) {
-        return theGraph.TotalEdgesBetween(u, v);
-    }
     
     // be used in menu of edge
     public void deleteWeightedFeature() {
@@ -346,88 +341,76 @@ public class GraphPanel<V, E> extends Pane{
 
     private EdgeLine<E,V> CreateAndAddEdge(Edge<E, V> edge, VertexNode<V> graphVertexInbound, VertexNode<V> graphVertexOutbound) {
 
-        EdgeLine<E,V> graphEdge;
+    	EdgeLine<E,V> graphEdge;
         
         Vertex<V> inVertex = graphVertexInbound.getUnderlyingVertex();
         Vertex<V> outVertex = graphVertexOutbound.getUnderlyingVertex();
-        
-        int count = getTotalEdgesBetween(graphVertexInbound.getUnderlyingVertex(), graphVertexOutbound.getUnderlyingVertex());
-        
-      if (count > 1 || graphVertexInbound == graphVertexOutbound) {
-    	  EdgeLine<E,V> NewEdgeView = new EdgeLine<E,V>(edge, graphVertexOutbound, graphVertexInbound);
-    	  graphEdge = NewEdgeView;
-    	
-    	  this.getChildren().add(1, (Node)NewEdgeView);
-      } else {
+
     	EdgeLine<E,V> NewEdgeView = new EdgeLine<E,V>(edge, graphVertexOutbound, graphVertexInbound);
         graphEdge = NewEdgeView;
         this.getChildren().add(1, (Node)NewEdgeView);
-      }
-      MenuItem item1 = new MenuItem("Xóa cạnh");
-      item1.setOnAction(new EventHandler<ActionEvent>() {
-          public void handle(ActionEvent e) {
-        	  if (theGraph.isDirected) {
-        		  if (theGraph.areAdjacent(outVertex, inVertex)) {
-        			  Alert alert = new Alert(AlertType.CONFIRMATION);
-        			  alert.setTitle("Chọn hướng cạnh xóa");
-        			  alert.setHeaderText("Hãy chọn hướng cạnh xóa");
-        			  alert.setContentText(null);
+        MenuItem item1 = new MenuItem("Xóa cạnh");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+        	public void handle(ActionEvent e) {
+        		if (theGraph.isDirected) {
+        			if (theGraph.areAdjacent(outVertex, inVertex)) {
+        				Alert alert = new Alert(AlertType.CONFIRMATION);
+        				alert.setTitle("Chọn hướng cạnh xóa");
+        				alert.setHeaderText("Hãy chọn hướng cạnh xóa");
+        				alert.setContentText(null);
 
-        			  ButtonType buttonTypeOne = new ButtonType(inVertex.element() + " đến " + outVertex.element());
-        			  ButtonType buttonTypeTwo = new ButtonType(outVertex.element() + " đến " + inVertex.element());
-        			  ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        				ButtonType buttonTypeOne = new ButtonType(inVertex.element() + " đến " + outVertex.element());
+        				ButtonType buttonTypeTwo = new ButtonType(outVertex.element() + " đến " + inVertex.element());
+        				ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
-        			  alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+        				alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
 
-        			  Optional<ButtonType> result = alert.showAndWait();
-        			  if (result.get() == buttonTypeOne){
-        				  removeEdge(edge, graphEdge);
-        			  } else if (result.get() == buttonTypeTwo) {
-        				  removeEdge(theGraph.adjList.get(outVertex).get(inVertex), edgeNodes.get(theGraph.adjList.get(outVertex).get(inVertex)));
-        			  }
+        				Optional<ButtonType> result = alert.showAndWait();
+        				if (result.get() == buttonTypeOne){
+        					removeEdge(edge, graphEdge);
+        				} else if (result.get() == buttonTypeTwo) {
+        				removeEdge(theGraph.adjList.get(outVertex).get(inVertex), edgeNodes.get(theGraph.adjList.get(outVertex).get(inVertex)));
+        				}
         		  }
         		  else {
         			  removeEdge(edge, graphEdge);
         		  }
-        	  }
-        	  else {
-        		  removeEdge(edge, graphEdge);
-        	  }
-          }
-      });
+        		}
+        		else {
+        			removeEdge(edge, graphEdge);
+        		}
+        	}
+        });
     
-      MenuItem item2 = new MenuItem("Thêm trọng số");
-      item2.setOnAction(new EventHandler<ActionEvent>() {
+        MenuItem item2 = new MenuItem("Thêm trọng số");
+        item2.setOnAction(new EventHandler<ActionEvent>() {
 
-		@Override
-		public void handle(ActionEvent arg0) {
-			if(edgesWithWeight == false) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setContentText("Đồ thị hiện tại không trọng số");
-				alert.showAndWait();
-			}
-			else {
-				TextInputDialog dialog = new TextInputDialog("Trọng số");
-				dialog.setContentText("Nhập trọng số");
-				
-				dialog.showAndWait();
-				String rs = dialog.getEditor().getText();
-				
-				addWeightToEdge(edge, graphEdge, rs);
-			}
-		}
-    	  
-      });
+        	@Override
+        	public void handle(ActionEvent arg0) {
+        		if(edgesWithWeight == false) {
+        			Alert alert = new Alert(AlertType.ERROR);
+        			alert.setContentText("Đồ thị hiện tại không trọng số");
+        			alert.showAndWait();
+        		}
+        		else {
+        			TextInputDialog dialog = new TextInputDialog("Trọng số");
+        			dialog.setContentText("Nhập trọng số");
+        			dialog.showAndWait();
+        			String rs = dialog.getEditor().getText();
+        			addWeightToEdge(edge, graphEdge, rs);
+        		}
+        	}  
+        });
       
       
-      graphEdge.contextMenu.getItems().addAll(item1, item2);
-      graphEdge.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-            @Override
+        graphEdge.contextMenu.getItems().addAll(item1, item2);
+        graphEdge.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+        	@Override
             public void handle(ContextMenuEvent event) {
                 graphEdge.contextMenu.show(graphEdge, event.getScreenX(), event.getScreenY());;
             }
-      });
-      return graphEdge;
+        });
+        return graphEdge;
     }
     
     public void removeEdge(Edge<E,V> edge, EdgeView<E,V> graphEdge) {

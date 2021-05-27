@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import nhom2.graphview.GraphPanel;
-import nhom2.graphview.Placement.RandomPlacementStrategy;
 
 public class AutoPlacementButton extends Button{
 	private GraphPanel graph;

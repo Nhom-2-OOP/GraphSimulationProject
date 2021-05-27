@@ -10,7 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import nhom2.graphview.GraphPanel;
 
 public class InfoButton extends Button{
 	public InfoButton() {

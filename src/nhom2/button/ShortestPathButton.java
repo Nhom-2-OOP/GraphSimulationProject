@@ -1,14 +1,8 @@
 package nhom2.button;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
 import java.util.Stack;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -26,10 +20,6 @@ import nhom2.graph.Vertex;
 import nhom2.graphview.GraphPanel;
 import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Vertex.VertexNode;
-
-/*Cai 
- 
- */
 
 public class ShortestPathButton<V,E> extends Button {
 	private Button next = new Button("Next");
