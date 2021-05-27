@@ -169,11 +169,18 @@ public class ShortestPathButton<V,E> extends Button {
 				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
 				tfEndVertex.commitValue();
 				String dataEnd = tfEndVertex.getText();
+				if(tfEndVertex.getText().isEmpty() == false && graphView.theGraph.vertices.containsKey(tfEndVertex) == false) {
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setHeaderText("Đỉnh kết thúc không tồn tại");
+					alert.show();
+					tableShow.setVisible(false);
+					return;
+				}
 				Vertex<V> endVertex = graphView.theGraph.vertices.get(dataEnd);
 //				System.out.println(graphView.theGraph.edgeWeight.get(graphView.theGraph.getEdge(startVertex,endVertex)));
 				if (startVertex == null) {
 					Alert alert = new Alert(AlertType.CONFIRMATION);
-					alert.setHeaderText("Đỉnh không tồn tại trong đồ thị");
+					alert.setHeaderText("Đỉnh bắt đầu không tồn tại trong đồ thị");
 					alert.show();
 					tableShow.setVisible(false);
 					return;
