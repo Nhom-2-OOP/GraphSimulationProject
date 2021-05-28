@@ -28,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -64,21 +65,7 @@ public class AddWeightButtonController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-//<<<<<<< HEAD
-//		graphView = Main.graphView;
-//		g = graphView.theGraph;
-//
-//		n = g.NumOfVertex();
-//		nan.setVisible(false);
-//		update.setVisible(false);
-//		Input.setVisible(false);
-//		Save.setVisible(false);
-//	
-//		initTable(Table);
-//		setTable(Table);
-//		Table.setEditable(true);
-//=======
-		
+
 		graphView = Main.getGraph();
 		if(graphView!=null) {
 			g = graphView.theGraph;
@@ -93,7 +80,6 @@ public class AddWeightButtonController implements Initializable {
 			Table.setEditable(true);
 		}
 		
-//>>>>>>> 13d7dbcec673bdbf97de2c619d1748b0db859d96
 	}
 	@FXML
 	private void off(ActionEvent e) {

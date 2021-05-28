@@ -1,7 +1,6 @@
 package nhom2.coloring;
 
 import java.util.*;
-
 import javafx.scene.control.Alert;
 import nhom2.graph.*;
 import nhom2.graphview.Vertex.VertexNode;
@@ -40,8 +39,8 @@ public class Coloring {
 						break;
 				if(cr>MAXCOLORNUMBER) {
 					Alert infrom = new Alert(Alert.AlertType.ERROR);
-					infrom.setHeaderText("Số màu cần tô vượt quá khả năng chương trình");
-					infrom.setContentText("Chương trình chỉ có khả năng tô tối đa 20 màu. Đồ thị của bạn cần hơn 20 màu để tô");
+					infrom.setHeaderText("Số màu cần tô vượt quá khả năng của chương trình");
+					infrom.setContentText("Chương trình chỉ hỗ trợ tô tối đa 20 màu");
 					infrom.showAndWait();
 					return;
 				}

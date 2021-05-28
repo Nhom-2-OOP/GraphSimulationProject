@@ -1,5 +1,6 @@
 package nhom2.button;
 
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -41,7 +42,6 @@ public class InfoButton extends Button{
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				
 				stage.show();
 			}
 		});

@@ -1,7 +1,6 @@
 package nhom2.graphview;
 
 import javafx.scene.*;
-import nhom2.coloring.Coloring;
 import nhom2.graph.*;
 import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Edge.EdgeView;
@@ -45,7 +44,7 @@ import java.net.URI;
 public class GraphPanel<V, E> extends Pane{
 	
 	public PlacementStrategy placementStrategy;
-	
+
 	public Rectangle Background = new Rectangle();
 	
 	public GraphEdgeList<V, E> theGraph;
@@ -347,7 +346,6 @@ public class GraphPanel<V, E> extends Pane{
         
         Vertex<V> inVertex = graphVertexInbound.getUnderlyingVertex();
         Vertex<V> outVertex = graphVertexOutbound.getUnderlyingVertex();
-
     	EdgeLine<E,V> NewEdgeView = new EdgeLine<E,V>(edge, graphVertexOutbound, graphVertexInbound);
         graphEdge = NewEdgeView;
         this.getChildren().add(1, (Node)NewEdgeView);
@@ -386,7 +384,6 @@ public class GraphPanel<V, E> extends Pane{
     
         MenuItem item2 = new MenuItem("Thêm trọng số");
         item2.setOnAction(new EventHandler<ActionEvent>() {
-
         	@Override
         	public void handle(ActionEvent arg0) {
         		if(edgesWithWeight == false) {
@@ -403,7 +400,6 @@ public class GraphPanel<V, E> extends Pane{
         		}
         	}  
         });
-      
       
         graphEdge.contextMenu.getItems().addAll(item1, item2);
         graphEdge.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
@@ -455,6 +451,7 @@ public class GraphPanel<V, E> extends Pane{
     	theGraph.removeVertex(v.getUnderlyingVertex());
     }
     
+
     public void initBackground() {   	
     	this.Background.setFill(new Color(0.203, 0.215, 0.274, 1.0));
     	
@@ -650,17 +647,20 @@ public class GraphPanel<V, E> extends Pane{
 			}
     	};
     	this.setOnMouseClicked(myHandler02);
-    }
-    
-    public void setColor() {
-    	Coloring coloring = new Coloring();
-    	if(this.isColored==false) {
-    		coloring.greedyColoring(this.theGraph, this.vertexNodes);
-    		this.isColored=true;
-    	}
-    	else {
-    		coloring.returnColor(this.theGraph, this.vertexNodes);
-    		this.isColored=false;
-    	}
+//<<<<<<< HEAD
+//    }
+//    
+//    public void setColor() {
+//    	Coloring coloring = new Coloring();
+//    	if(this.isColored==false) {
+//    		coloring.greedyColoring(this.theGraph, this.vertexNodes);
+//    		this.isColored=true;
+//    	}
+//    	else {
+//    		coloring.returnColor(this.theGraph, this.vertexNodes);
+//    		this.isColored=false;
+//    	}
+//=======
+//>>>>>>> refs/remotes/origin/weightedGraph
     }
 }

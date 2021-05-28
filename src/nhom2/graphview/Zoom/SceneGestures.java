@@ -64,6 +64,7 @@ public class SceneGestures {
 
 			// right mouse button => panning
 			if(event.isSecondaryButtonDown())
+
 				return;
 			if(graphView.getScale() == 1 && graphView.getTranslateX() == 0 && graphView.getTranslateY() == 0) {
 				graphView.setStyle("-fx-border-width: 0px;");
