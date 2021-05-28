@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
+
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -633,6 +635,24 @@ public class GraphPanel<V, E> extends Pane{
 	    			            	Arrow arrow = new Arrow();
 	    			                graphEdge.attachArrow(arrow);
 	    			                getChildren().add(arrow);
+	    			            }
+	    			            Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
+	    			            if (edgesWithWeight) {  	
+	    			            	TextInputDialog box = new TextInputDialog("Nhập trọng số");
+	    			            	box.setContentText("Nhập trong số: ");
+	    			            	while (true) {
+	    			            		Optional<String> result = box.showAndWait();
+	    			            		if (result.isPresent() && pattern.matcher(result.get()).matches()) {
+		    			            		addWeightToEdge(edge, graphEdge, result.get());
+		    			            		break;
+		    			            	}
+		    			            	else {
+		    			            		Alert inform = new Alert(Alert.AlertType.WARNING);
+		    	    			    		inform.setHeaderText("Sai cú pháp, nhập lại!");
+		    	    			    		inform.showAndWait();
+		    			            	}
+	    			            	}
+	    			            	
 	    			            }
 	    			            edgeNodes.put(edge, graphEdge);
 //	    						setOnMouseClicked(Handler);

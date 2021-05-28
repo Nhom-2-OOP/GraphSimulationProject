@@ -33,6 +33,7 @@ public class AutoFindPaths<V,E> extends Button {
 	protected String start;
 	protected String finish;
 	protected int numPath;
+	protected long currentTime;
 	public AutoFindPaths(GraphPanel graphView) {   
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -72,10 +73,11 @@ public class AutoFindPaths<V,E> extends Button {
 							BFS();
 							SetUp(begin, end);
 							int n = minPath.size();
-							//System.out.println(n);
 							Find(start,finish,n);	
 							paths.clear();
-							if (result.size() != 0 ) {
+							if (minPath.size() == 1) message ("Không có đường đi giữa hai đỉnh!!!");
+							else if (result.size() == 0) result.add(minPath);
+							if (result.size() > 0) {
 								paths.appendText("Các đường đi ngắn nhất giữa hai đỉnh đã cho : \n");
 								for (int i = 1; i<=result.size(); i++) {
 									paths.appendText("Đường đi thứ " + i + " : " + result.get(i-1).get(0));
@@ -84,7 +86,6 @@ public class AutoFindPaths<V,E> extends Button {
 									paths.appendText("\n");
 								}  
 							}
-							else message ("Không có đường đi giữa hai đỉnh!!!");
 						}
 						else message ("Đỉnh nhập vào không tồn tại! \nVui lòng nhập lại");
 					}
@@ -102,8 +103,13 @@ public class AutoFindPaths<V,E> extends Button {
 						else if (checkVertexExist(start, finish) ) {
 							result.clear();
 							Reset(graphView);
-							Find(start,finish,Adj.size());	
+							minPath.clear();
+							BFS();
+							SetUp(begin, end);
+							if (minPath.size() != 1) Find(start,finish,Adj.size());	
 							paths.clear();
+							if (minPath.size() == 1) message ("Không có đường đi giữa hai đỉnh!!!");
+							else if (result.size() == 0 ) result.add(minPath);
 							if (result.size() != 0 ) {
 								paths.appendText("Các đường đi giữa hai đỉnh đã cho (" + result.size() +" đường) : \n");
 								if (result.size() == 500000) {
@@ -119,7 +125,6 @@ public class AutoFindPaths<V,E> extends Button {
 								}  
 								if (k<result.size()) paths.appendText("To be continue ... ");
 							}
-							else message ("Không có đường đi giữa hai đỉnh!!!");
 						}
 						else message ("Đỉnh nhập vào không tồn tại! \nVui lòng nhập lại");
 					}
@@ -180,6 +185,8 @@ public class AutoFindPaths<V,E> extends Button {
 	}
 		
 	public void SetUp (TextField text1, TextField text2) {
+		Adj.clear();
+		checked.clear();
 		text1.commitValue();
 		text2.commitValue();
 		start = text1.getText();
@@ -201,12 +208,15 @@ public class AutoFindPaths<V,E> extends Button {
 	
 	// Tìm các đường đi giữa hai đỉnh 
 	public void Find (String start, String end, int n) {
-        if (Adj.size() > 20) message("Số đỉnh lớn có thể tốn rất nhiều thời gian!!!");
+        if (Adj.size() >= 20) message("Số đỉnh lớn có thể tốn rất nhiều thời gian!!!");
+        currentTime = System.currentTimeMillis();
         TryFind (start, end, n);
         numPath = result.size();
 	}
 	public void TryFind (String s, String end, int n) {
 		for (int i = 0; i< Adj.get(s).size(); i++) {
+			long time = System.currentTimeMillis();
+			if (time - currentTime > 4000) break;
 			String tmp = Adj.get(s).get(i);
 			if (tmp.equals(end)) {
 				Traces.add(tmp);
