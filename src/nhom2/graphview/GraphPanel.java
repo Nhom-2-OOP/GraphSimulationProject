@@ -37,6 +37,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
 import javafx.geometry.Point2D;
 import java.net.URI;
 
@@ -454,8 +455,12 @@ public class GraphPanel<V, E> extends Pane{
     }
     
     public void initBackground() {
-    	this.Background = new Rectangle(1062, 672, new Color(0.203, 0.215, 0.274, 1.0));
-    	
+    	Screen screen = Screen.getPrimary();
+    	double width = screen.getVisualBounds().getWidth();
+    	double height = screen.getVisualBounds().getHeight();
+    	double xa = 1.0*1062/1366;
+    	double ya = 1.0*672/728;
+    	this.Background = new Rectangle(width*xa, height*ya, new Color(0.203, 0.215, 0.274, 1.0));
 		Background.setX(2);
 		Background.setY(2);
 		Background.getStyleClass().add("rectangle");
