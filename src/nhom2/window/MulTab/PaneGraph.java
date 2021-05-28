@@ -41,9 +41,9 @@ public class PaneGraph extends Pane {
 				
 		this.getStyleClass().add("graphPane");
 		SceneGestures sceneGestures = new SceneGestures(graphView, scaleBut);
-		subSceneGraphPanel.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
-		subSceneGraphPanel.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
-		subSceneGraphPanel.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
+		graphView.Background.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
+		graphView.Background.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
+		graphView.Background.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
 		graphView.init();
 
 	}

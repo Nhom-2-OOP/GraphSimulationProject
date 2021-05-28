@@ -542,13 +542,20 @@ public class GraphPanel<V, E> extends Pane{
 		
 		backMenu.getItems().addAll(item1, item2, item3, item4, item5);
 		
+		Background.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+			@Override
+			public void handle(ContextMenuEvent event) {
+				// TODO Auto-generated method stub
+				item1.X = event.getX();
+				item1.Y = event.getY();
+				backMenu.show(Background, event.getSceneX(), event.getSceneY());
+			}           	
+		}
+		);
+		
 		Background.setOnMouseClicked((MouseEvent mouseEvent) -> {
-			if (mouseEvent.getClickCount() == 2) {
-				item1.X = mouseEvent.getX();
-				item1.Y = mouseEvent.getY();
-				backMenu.show(Background, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-			}
-			if (mouseEvent.getClickCount() == 1) {
+			if (!mouseEvent.isSecondaryButtonDown()) {
 				if (backMenu.isShowing()) backMenu.hide();
 			}
 		});

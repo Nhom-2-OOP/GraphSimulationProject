@@ -339,7 +339,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 				contextMenu.show((Node)returnThis(), event.getScreenX(), event.getScreenY());
 			}           	
 		}
-				);
+		);
 	}
 
 	public VertexNode returnThis() {
