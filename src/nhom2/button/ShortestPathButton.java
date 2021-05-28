@@ -169,7 +169,7 @@ public class ShortestPathButton<V,E> extends Button {
 				Vertex<V> startVertex = graphView.theGraph.vertices.get(dataStart);
 				tfEndVertex.commitValue();
 				String dataEnd = tfEndVertex.getText();
-				if(tfEndVertex.getText().isEmpty() == false && graphView.theGraph.vertices.containsKey(tfEndVertex) == false) {
+				if(tfEndVertex.getText().isEmpty() == false && graphView.theGraph.vertices.containsKey(tfEndVertex.getText()) == false) {
 					Alert alert = new Alert(AlertType.CONFIRMATION);
 					alert.setHeaderText("Đỉnh kết thúc không tồn tại");
 					alert.show();
