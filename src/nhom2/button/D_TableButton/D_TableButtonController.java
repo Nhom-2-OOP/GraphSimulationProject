@@ -56,14 +56,20 @@ public class D_TableButtonController implements Initializable {
 		                    setText(null);
 		                } else {
 		                    setText(item.toString());
+		                    if(item.toString().equals(Character.toString('\u221E'))) {
+		           
+		                    	this.setStyle("-fx-text-fill:#ac1818");
+		                    }
 		                    int colIndex = this.getTableView().getColumns().indexOf(this.getTableColumn());
 		                    if(color.get(this.getIndex()) == colIndex  ) {
 		                    	
-		                    	this.setStyle("-fx-background-color: #aa2222; -fx-text-fill:white");
+		                    	this.setStyle("-fx-background-color: #18ab38; -fx-text-fill:white");
 		                    	
 		 
 		                    }
-		                    else this.setStyle(null);
+		                    else if(!item.toString().equals(Character.toString('\u221E'))){
+		                    	this.setStyle(null);
+		                    }
 		                }
 		               
 		            }
