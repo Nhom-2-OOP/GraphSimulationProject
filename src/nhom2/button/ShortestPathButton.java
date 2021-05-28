@@ -248,6 +248,7 @@ public class ShortestPathButton<V,E> extends Button {
 		reset.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				
 				lb.setText("");
 				next.setVisible(false);
 				for (VertexNode<V> tmp : graphView.vertexNodes.values())
@@ -434,8 +435,8 @@ public class ShortestPathButton<V,E> extends Button {
 		String[][] matrix1 = new String[numbVertex+1][numbVertex+1];
 		for(int i=0;i<numbVertex+1;i++) 
 			for(int j=0;j<numbVertex+1;j++) {
-				matrix[i][j] = "-";	
-				matrix1[i][j]="-";
+				matrix[i][j] = Character.toString('\u221E');	
+				matrix1[i][j]=Character.toString('\u221E');
 			}
 					
 		Iterator itr = verticesInTable.iterator();
@@ -454,9 +455,16 @@ public class ShortestPathButton<V,E> extends Button {
         distance.put(sourceVertex, 0);
         parent.put(sourceVertex, null);
         int curRow = 1;
+        int marked[] = new int [numbVertex+1];
         while(!minHeap.empty()){
         	Vertex<V> minVertex = minHeap.min();
             Vertex<V> current = minVertex;
+            int count =1;
+            for(String s : verticesInTable) {
+            	
+            	if(s.equals(current.element().toString())) marked[count] = 1;
+            	count++;
+            }
             if(minHeap.getWeight(minVertex) == Integer.MAX_VALUE)
             	break;
             matrix1[curRow][0] = minVertex.element().toString();
@@ -490,8 +498,14 @@ public class ShortestPathButton<V,E> extends Button {
             		if(v.element().toString() == matrix[0][i]) {
             			if(parent.get(v)==null) {
             				if(minHeap.getWeight(v) == null) {
-            					matrix[curRow][i] = "-";
-            					matrix1[curRow][i] = "-";
+            					if(marked[i] == 1) {
+            						matrix[curRow][i] = "-";
+                					matrix1[curRow][i] = "-";
+            					}
+            					else {
+	            					matrix[curRow][i] = Character.toString('\u221E');
+	            					matrix1[curRow][i] = Character.toString('\u221E');
+            					}
             				}
             				else {
             					matrix[curRow][i] = String.valueOf(minHeap.getWeight(v)) + "/null" ;
@@ -500,8 +514,14 @@ public class ShortestPathButton<V,E> extends Button {
             			}
             			else {
             				if(minHeap.getWeight(v) == null) {
-            					matrix[curRow][i] = "-";
-            					matrix1[curRow][i] = "-";
+            					if(marked[i] == 1) {
+            						matrix[curRow][i] = "-";
+                					matrix1[curRow][i] = "-";
+            					}
+            					else {
+            						matrix[curRow][i] = Character.toString('\u221E');
+	            					matrix1[curRow][i] = Character.toString('\u221E');
+            					}
             				}
             				else {
             					matrix[curRow][i] = String.valueOf(minHeap.getWeight(v)) + "/" + parent.get(v).element().toString();

@@ -27,7 +27,6 @@ import nhom2.window.Main;
 
 public class D_TableButtonController implements Initializable {
 	private static int n;
-	private static String alertColor;
 	private static String[][] data = null ;	
 	private static Map<Integer, Integer> color;
 	private static Map <Integer, String> vecLabel;
@@ -58,10 +57,15 @@ public class D_TableButtonController implements Initializable {
 		                } else {
 		                    setText(item.toString());
 		                    int colIndex = this.getTableView().getColumns().indexOf(this.getTableColumn());
-		                    if(color.get(this.getIndex()) == colIndex ) {
+		                    if(color.get(this.getIndex()) == colIndex  ) {
+		                    	
 		                    	this.setStyle("-fx-background-color: #aa2222; -fx-text-fill:white");
+		                    	
+		 
 		                    }
+		                    else this.setStyle(null);
 		                }
+		               
 		            }
 		        };
 		    }
@@ -112,7 +116,7 @@ public class D_TableButtonController implements Initializable {
 					data1[i-1][j] = data[i][j];
 				}
 			}
-
+		
 			ObservableList<String[]> Data = FXCollections.observableArrayList(data1);
 			Table.setItems(Data);
 		}
