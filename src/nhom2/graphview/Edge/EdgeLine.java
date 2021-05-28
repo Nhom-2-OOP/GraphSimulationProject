@@ -68,8 +68,8 @@ public class EdgeLine<E,V> extends Line implements EdgeView<E,V>, LabelledObject
 		// TODO Auto-generated method stub
 		label.addStyleClass("edge-weighted");
 		this.attachedLabel = label;
-        label.xProperty().bind(startXProperty().add(endXProperty()).divide(2).subtract(label.getLayoutBounds().getWidth()));
-        label.yProperty().bind(startYProperty().add(endYProperty()).divide(2).add(label.getLayoutBounds().getHeight()));
+        label.xProperty().bind(startXProperty().multiply(2.0).add(endXProperty()).divide(3).subtract(label.getLayoutBounds().getWidth()));
+        label.yProperty().bind(startYProperty().multiply(2.0).add(endYProperty()).divide(3).add(label.getLayoutBounds().getHeight()));
 	}
 
 	@Override

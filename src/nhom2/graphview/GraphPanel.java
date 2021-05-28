@@ -371,7 +371,7 @@ public class GraphPanel<V, E> extends Pane{
         				if (result.get() == buttonTypeOne){
         					removeEdge(edge, graphEdge);
         				} else if (result.get() == buttonTypeTwo) {
-        				removeEdge(theGraph.adjList.get(outVertex).get(inVertex), edgeNodes.get(theGraph.adjList.get(outVertex).get(inVertex)));
+        					removeEdge(theGraph.adjList.get(outVertex).get(inVertex), edgeNodes.get(theGraph.adjList.get(outVertex).get(inVertex)));
         				}
         		  }
         		  else {
@@ -381,6 +381,9 @@ public class GraphPanel<V, E> extends Pane{
         		else {
         			removeEdge(edge, graphEdge);
         		}
+        		Alert inform = new Alert(Alert.AlertType.INFORMATION);
+          	  	inform.setHeaderText("Xóa cạnh thành công");
+          	  	inform.showAndWait();
         	}
         });
     
@@ -419,9 +422,6 @@ public class GraphPanel<V, E> extends Pane{
   	  	if (theGraph.isDirected) getChildren().remove(graphEdge.getAttachedArrow());
   	  	if (theGraph.isWeighted) getChildren().remove(graphEdge.getAttachedLabel());
   	  	edgeNodes.remove(edge);
-  	  	Alert inform = new Alert(Alert.AlertType.INFORMATION);
-  	  	inform.setHeaderText("Xóa cạnh thành công");
-  	  	inform.showAndWait();
     }
     
     public void init(){
@@ -440,14 +440,7 @@ public class GraphPanel<V, E> extends Pane{
     		if (e.Vertices()[0] == v.getUnderlyingVertex() || e.Vertices()[1] == v.getUnderlyingVertex()){
     			deleteList.add(e);
     		}
-    	for (Edge e: deleteList)
-    		{
-    			if (theGraph.isDirected) {
-    				this.getChildren().remove(edgeNodes.get(e).getAttachedArrow());
-    			}
-    			this.getChildren().remove(edgeNodes.get(e));
-    			edgeNodes.remove(e);
-    		}
+    	for (Edge e: deleteList) this.removeEdge(e, edgeNodes.get(e));
     	deleteList.removeAll(deleteList);
     	vertexNodes.remove(v.getUnderlyingVertex());
     	theGraph.removeVertex(v.getUnderlyingVertex());
