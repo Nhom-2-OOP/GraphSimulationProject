@@ -455,12 +455,16 @@ public class GraphPanel<V, E> extends Pane{
     }
     
     public void initBackground() {
-    	Screen screen = Screen.getPrimary();
-    	double width = screen.getVisualBounds().getWidth();
-    	double height = screen.getVisualBounds().getHeight();
-    	double xa = 1.0*1062/1366;
-    	double ya = 1.0*672/728;
-    	this.Background = new Rectangle(width*xa, height*ya, new Color(0.203, 0.215, 0.274, 1.0));
+//    	Screen screen = Screen.getPrimary();
+//    	double width = screen.getVisualBounds().getWidth();
+//    	double height = screen.getVisualBounds().getHeight();
+//    	double xa = 1.0*1062/1366;
+//    	double ya = 1.0*672/728;
+//    	this.Background = new Rectangle(width*xa, height*ya, new Color(0.203, 0.215, 0.274, 1.0));
+    	this.Background = new Rectangle();
+    	this.Background.setFill(new Color(0.203, 0.215, 0.274, 1.0));
+    	this.Background.widthProperty().bind(this.widthProperty());
+    	this.Background.heightProperty().bind(this.heightProperty());
 		Background.setX(2);
 		Background.setY(2);
 		Background.getStyleClass().add("rectangle");

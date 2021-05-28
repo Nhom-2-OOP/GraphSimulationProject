@@ -14,41 +14,43 @@ import nhom2.button.info.Guide;
 import nhom2.button.info.Member;
 
 public class InfoButton extends Button{
-	protected GridPane GridPane;
-
 	public InfoButton() {
-		
+
 		Stage stage = new Stage();
-		
+
 		HBox root = new HBox(20);
-		
+
 		Guide guideBut = new Guide();
 		SubScene subSceneGuide = new SubScene (guideBut, 200, 50);
-		
+
 		Member memBut = new Member(stage) ;
 		SubScene subSceneMem = new SubScene (memBut, 200, 50);
-		
+
 		root.getChildren().add(subSceneGuide);
 		root.getChildren().add(subSceneMem);
 
 		root.setAlignment(Pos.CENTER);
-						
+
 		stage.setScene(new Scene(root, 450, 70));
 		stage.setResizable(false);
 		stage.initStyle(StageStyle.UTILITY);
-		
+
 		this.setOnAction(new EventHandler<ActionEvent>() {
-			
+
 			@Override
 			public void handle(ActionEvent arg0) {
-				
-				stage.show();
+				if(stage.isShowing()) {
+					stage.close();
+				}
+				else {
+					stage.show();
+				}
 			}
 		});
-		
-		
-		
-		
+
+
+
+
 		this.setOnMouseEntered(mouseEvent -> {
 			this.getStyleClass().add("InfoButtonEntered");
 		});
@@ -57,9 +59,5 @@ public class InfoButton extends Button{
 		});
 	}
 
-	protected Object getRowConstraints() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+
 }
