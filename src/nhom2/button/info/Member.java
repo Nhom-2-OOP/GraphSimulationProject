@@ -2,27 +2,19 @@ package nhom2.button.info;
 
 import java.io.InputStream;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import nhom2.window.Main;
+
 
 public class Member extends Button {
 
@@ -90,8 +82,6 @@ public class Member extends Button {
 
 		rootMem.setAlignment(Pos.CENTER);
 
-		Screen screen = Screen.getPrimary();
-
 		stage.setScene(new Scene(rootMem, 550, 830));
 		stage.setTitle("Thông tin nhóm 2");
 		stage.setResizable(false);
@@ -103,12 +93,14 @@ public class Member extends Button {
 				infoStage.close();
 				
 				stage.show();
-//				if(stage.isShowing()) {
-//					stage.close();
-//				}
-//				else {
-//					stage.show();
-//				}
+				if(stage.isShowing()) {
+					stage.close();
+					stage.show();
+
+				}
+				else {
+					stage.show();
+				}
 			}
 		});
 	}
