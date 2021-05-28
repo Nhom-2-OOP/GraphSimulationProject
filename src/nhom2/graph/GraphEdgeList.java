@@ -3,14 +3,11 @@ package nhom2.graph;
 import java.util.*;
 import java.util.Map.Entry;
 
-import nhom2.graph.*;
-
 public class GraphEdgeList<V,E> implements Graph<V,E>{
 	private final int MAX_WEIGHT = 20;
 	public Map<V, Vertex<V>> vertices;
 	public Map<E, Edge<E, V>> edges;
 	public Map<Vertex<V>, Map<Vertex<V>,Edge<E,V>>> adjList;
-	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
 	public Map<Edge<E,V>, Integer> edgeWeight;
 	public boolean isDirected;
 	public boolean isWeighted;
@@ -20,7 +17,6 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
     	this.vertices = new HashMap<>();
     	this.edges = new HashMap<>();
     	this.adjList = new HashMap<>();
-    	this.NumOfEdge = new HashMap<>();
     	this.isDirected = isDirectedGraph;
     }
 	
@@ -116,7 +112,6 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
 		Map<Vertex<V>,Edge<E,V>> newMapOne = new HashMap<>();
 		adjList.put(NewVertex, newMapOne);
 		Map<Vertex<V>, Integer> newMapTwo = new HashMap<>();
-		NumOfEdge.put(NewVertex, newMapTwo);
 		return NewVertex;
 	}
 	
@@ -165,20 +160,7 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
         if (adjList.get(outVertex).get(inVertex) != null) return null;
         
         MyEdge newEdge = new MyEdge(edgeElement, outVertex, inVertex);
-        if (NumOfEdge.get(outVertex).get(inVertex) == null) {
-        	Integer NewNum = new Integer(1);
-        	NumOfEdge.get(outVertex).put(inVertex, NewNum);
-        	NumOfEdge.get(inVertex).put(outVertex, NewNum);
-        }
-        else {
-        	Integer NewNum = new Integer(NumOfEdge.get(outVertex).get(inVertex).intValue() + 1);
-        	NumOfEdge.get(outVertex).put(inVertex, NewNum);
-        	NumOfEdge.get(inVertex).put(outVertex, NewNum);
-        }
         
-//        if (outVertex.element().equals("44")) {
-//        	System.out.println("adj:" + outVertex.element() + " " + inVertex.element());
-//        }
         adjList.get(outVertex).put(inVertex, newEdge);
         if (!this.isDirected) {
         	adjList.get(inVertex).put(outVertex, newEdge);
@@ -187,15 +169,6 @@ public class GraphEdgeList<V,E> implements Graph<V,E>{
         edges.put(edgeElement, newEdge);
 
         return newEdge;
-	}
-
-	// Tra ve so luong canh giua 2 dinh
-	
-	public int TotalEdgesBetween(Vertex<V> u, Vertex<V> v) {
-		// DPT O(1)
-		Integer Pointer = NumOfEdge.get(u).get(v);
-		if (Pointer == null) return 0;
-		else return Pointer.intValue();
 	}
 	
 	public void removeVertex(Vertex v) {

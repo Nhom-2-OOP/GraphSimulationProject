@@ -1,36 +1,18 @@
 package nhom2.button;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.SubScene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-import javafx.scene.Node;
-
 import nhom2.graph.*;
 import nhom2.graphview.*;
-import nhom2.graphview.Edge.EdgeLine;
-import nhom2.graphview.Edge.EdgeNode;
 import nhom2.graphview.Vertex.VertexNode;
 import nhom2.window.Main;
 

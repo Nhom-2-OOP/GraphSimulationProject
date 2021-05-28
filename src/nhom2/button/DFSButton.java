@@ -10,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -20,11 +19,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-
 import nhom2.graph.*;
 import nhom2.graphview.*;
 import nhom2.graphview.Edge.EdgeLine;
-import nhom2.graphview.Edge.EdgeNode;
 import nhom2.graphview.Vertex.VertexNode;
 
 public class DFSButton<V, E> extends Button{
@@ -128,6 +125,8 @@ public class DFSButton<V, E> extends Button{
 			edgeNode.getAttachedArrow().setStyle("-fx-stroke: blue");
 		tmpnext = currVertex;
 		stackStep.pop();
+		while(stackStep.contains(currVertex))
+			stackStep.remove(currVertex);
 		temp = graphView.theGraph.adjList.get(currVertex);
 		adjVertex = temp.keySet();
 		iterator = adjVertex.iterator();
@@ -282,6 +281,7 @@ public class DFSButton<V, E> extends Button{
 							next.setVisible(false);
 							return;
 						}
+						mark.put(startVertex, 1);
 						tmpnext = startVertex;
 					}
 					
@@ -291,8 +291,6 @@ public class DFSButton<V, E> extends Button{
 					@Override
 					public void handle(ActionEvent event) {
 						Vertex<V> currVertex = tmpnext;
-						while(stackStep.contains(currVertex))
-							stackStep.remove(currVertex);
 						DFSstep(currVertex,graphView);
 					}
 					

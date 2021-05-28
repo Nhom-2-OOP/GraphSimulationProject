@@ -19,7 +19,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.geometry.HPos;
 import nhom2.window.MulTab.GraphTab;
-//import sun.tools.tree.ThisExpression;
+
 
 public class Main extends Application {
 	public static GraphEdgeList<String, String> g= build_sample_digraph();

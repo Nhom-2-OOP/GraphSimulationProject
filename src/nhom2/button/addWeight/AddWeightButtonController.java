@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Vector;
-
 import nhom2.button.AddWeightButton;
 import nhom2.button.InputButton;
 import nhom2.graph.*;
@@ -29,7 +28,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -104,7 +102,9 @@ public class AddWeightButtonController implements Initializable {
 			update.setVisible(false);
 			g.isWeighted = false;
 			g.setWeightedFeature(0);
+			
 			setTable(Table);
+			graphView.deleteWeightedFeature();
 		}
 		
 	}
@@ -125,7 +125,7 @@ public class AddWeightButtonController implements Initializable {
 	@FXML
 	private void addRand(ActionEvent e) {
 		g.setWeightedFeature();
-		graphView.displayWeightAttibute();
+		graphView.displayWeightAttribute();
 		informSuccess();
 	}
 	@FXML 
@@ -157,7 +157,7 @@ public class AddWeightButtonController implements Initializable {
 	    	w.add(v);
 	    }
 		g.setWeightedFeature(w);
-		graphView.displayWeightAttibute();
+		graphView.displayWeightAttribute();
 	}
 	private static void informSuccess() {
 	
@@ -268,7 +268,7 @@ public class AddWeightButtonController implements Initializable {
 //		System.out.println(weight);
 		g.setWeightedFeature(weight);
 		
-		graphView.displayWeightAttibute();
+		graphView.displayWeightAttribute();
 		
 	}
 	public void informError() {

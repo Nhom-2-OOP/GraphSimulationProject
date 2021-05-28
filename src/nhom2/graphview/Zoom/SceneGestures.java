@@ -4,14 +4,8 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import nhom2.graphview.GraphPanel;
-import nhom2.graphview.Zoom.DragContext;
 import nhom2.button.ScaleButton;
 
-
-
-/*
- * Listeners for making the scene's canvas draggable and zoomable
- */
 public class SceneGestures {
 
 	private static final double MAX_SCALE = 10.0d;

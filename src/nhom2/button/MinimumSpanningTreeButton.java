@@ -2,13 +2,11 @@ package nhom2.button;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -44,7 +42,7 @@ public class MinimumSpanningTreeButton<V, E> extends Button{
 		for(Vertex<V> iterator : vertex)//đánh dấu đỉnh
 			mark.put(iterator, 0);
 		
-		graphView.addWeightedFeature();///////////////RAMDOM ĐỂ TEST
+		//graphView.addWeightedFeature();///////////////RAMDOM ĐỂ TEST
 		Map<Edge<E, V>, Integer> sortedEdge = sortbyValue(graphView.theGraph.edgeWeight);// sắp xếp
 		//xét từng cạnh theo thứ tự tăng dần
 		for(Edge<E, V> i : sortedEdge.keySet()) {
