@@ -1,6 +1,5 @@
 package nhom2.button.info;
 
-import java.io.File;
 import java.io.InputStream;
 
 import javafx.beans.property.IntegerProperty;
@@ -14,152 +13,94 @@ import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import nhom2.window.Main;
 
 public class Member extends Button {
 
-	public Member() {
+	public Member(Stage infoStage) {
 		this.setText("Member Information");
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent arg0) {
+				infoStage.close();
 				Stage stage = new Stage();
-				VBox root = new VBox();
-				//				root.setSpacing(10);
-				root.setPadding(new Insets(15,20,10,10));
+				VBox rootMem = new VBox(20);
 				
-				Class<?> clazz = this.getClass();
-
-
-
-//				Button imgTeamBut = new Button();
-//				SubScene subImg = new SubScene(imgTeamBut, 500, 500);
-//				imgTeamBut.getStyleClass().add("imgTeamBut");
-				
-				InputStream input = clazz.getResourceAsStream("/nhom2/window/design/team.png");
+				InputStream input = this.getClass().getResourceAsStream("/nhom2/window/design/team.png");
 				Image image = new Image(input);
 				ImageView imageView = new ImageView(image);
 				imageView.setFitHeight(300);
 				imageView.setFitWidth(300);
 				
-				root.getChildren().add(imageView);
+				rootMem.getChildren().add(imageView);	
+				rootMem.setStyle("-fx-background-color: WHITE");
+				
+				GridPane mem = new GridPane();
+				rootMem.getChildren().add(mem);
 
+				mem.add(new TextMem("Phan Đức Anh"), 0, 0);
+				mem.add(new TextMem(" 20193981 "), 1, 0);
 
-				GridPane phanh = new GridPane();
-				phanh.add(new Text("Phan Đức Anh"), 0, 0);
-				phanh.add(new Text(" 20193981 "), 1, 0);
-				phanh.setGridLinesVisible(true);
-				root.getChildren().add(phanh);
+				mem.add(new TextMem("Đỗ Đức Anh"), 0, 1);
+				mem.add(new TextMem(" 20193976 "), 1, 1);
 
-				GridPane danh = new GridPane();
-				danh.add(new Text("Đỗ Đức Anh"), 0, 0);
-				danh.add(new Text(" 20193976 "), 1, 0);
-				danh.setGridLinesVisible(true);
-				root.getChildren().add(danh);
+				mem.add(new TextMem("Lê Doãn Biên"), 0, 2);
+				mem.add(new TextMem(" 20193992 "), 1, 2);
 
-				GridPane bien = new GridPane();
-				bien.add(new Text("Lê Doãn Biên"), 0, 0);
-				bien.add(new Text(" 20193992 "), 1, 0);
-				bien.setGridLinesVisible(true);
-				root.getChildren().add(bien);
+				mem.add(new TextMem("Hoàng Khắc Đông"), 0, 3);
+				mem.add(new TextMem(" 20194019 "), 1, 3);
 
-				GridPane dong = new GridPane();
-				dong.add(new Text("Hoàng Khắc Đông"), 0, 0);
-				dong.add(new Text(" 20194019 "), 1, 0);
-				dong.setGridLinesVisible(true);
-				root.getChildren().add(dong);
+				mem.add(new TextMem("Lê Huy Dương"), 0, 4);
+				mem.add(new TextMem(" 20194032 "), 1, 4);
 
-				GridPane duong = new GridPane();
-				duong.add(new Text("Lê Huy Dương"), 0, 0);
-				duong.add(new Text(" 20194032 "), 1, 0);
-				duong.setGridLinesVisible(true);
-				root.getChildren().add(duong);
+				mem.add(new TextMem("Phùng Bảo Hà"), 0, 5);
+				mem.add(new TextMem(" 20190047 "), 1, 5);
 
-				GridPane ha = new GridPane();
-				ha.add(new Text("Phùng Bảo Hà"), 0, 0);
-				ha.add(new Text(" 20190047 "), 1, 0);
-				ha.setGridLinesVisible(true);
-				root.getChildren().add(ha);
+				mem.add(new TextMem("Lê Trung Kiên"), 0, 6);
+				mem.add(new TextMem(" 20194084 "), 1, 6);
 
-				GridPane kien = new GridPane();
-				kien.add(new Text("Lê Trung Kiên"), 0, 0);
-				kien.add(new Text(" 20194084 "), 1, 0);
-				kien.setGridLinesVisible(true);
-				root.getChildren().add(kien);
+				mem.add(new TextMem("Chu Nhật Minh"), 0, 7);
+				mem.add(new TextMem(" 20194115 "), 1, 7);
 
-				GridPane minh1 = new GridPane();
-				minh1.add(new Text("Chu Nhật Minh"), 0, 0);
-				minh1.add(new Text(" 20194115 "), 1, 0);
-				minh1.setGridLinesVisible(true);
-				root.getChildren().add(minh1);
+				mem.add(new TextMem("Nguyễn Hải Minh"), 0, 8);
+				mem.add(new TextMem(" 20194120 "), 1, 8);
 
-				GridPane minh2 = new GridPane();
-				minh2.add(new Text("Nguyễn Hải Minh"), 0, 0);
-				minh2.add(new Text(" 20194120 "), 1, 0);
-				minh2.setGridLinesVisible(true);
-				root.getChildren().add(minh2);
+				mem.add(new TextMem("Ngô Thành Nam"), 0, 9);
+				mem.add(new TextMem(" 20194127 "), 1, 9);
 
-				GridPane nam = new GridPane();
-				nam.add(new Text("Ngô Thành Nam"), 0, 0);
-				nam.add(new Text(" 20194127 "), 1, 0);
-				nam.setGridLinesVisible(true);
-				root.getChildren().add(nam);
+				mem.add(new TextMem("Tạ Tiến Thành"), 0, 10);
+				mem.add(new TextMem(" 20194176 "), 1, 10);
 
-				GridPane thanh = new GridPane();
-				thanh.add(new Text("Tạ Tiến Thành"), 0, 0);
-				thanh.add(new Text(" 20194176 "), 1, 0);
-				thanh.setGridLinesVisible(true);
-				root.getChildren().add(thanh);
-
-				RowConstraints r = new RowConstraints();
-				r.setPrefHeight(30);
 				ColumnConstraints c = new ColumnConstraints();
-				c.setPrefWidth(150);
-				phanh.getRowConstraints().add(r);
-				phanh.getColumnConstraints().add(c);
+				c.setPrefWidth(250);
+				mem.getColumnConstraints().add(c);
+				
+				for(int i = 0; i <= 11; i++) {
+					RowConstraints r = new RowConstraints();
+					r.setMinHeight(40);
+					mem.getRowConstraints().add(r);
+				}
+				
+				mem.setAlignment(Pos.CENTER);
 
-				danh.getRowConstraints().add(r);
-				danh.getColumnConstraints().add(c);
+				rootMem.setAlignment(Pos.CENTER);
 
-				bien.getRowConstraints().add(r);
-				bien.getColumnConstraints().add(c);
+				Screen screen = Screen.getPrimary();
 
-				dong.getRowConstraints().add(r);
-				dong.getColumnConstraints().add(c);
-
-				duong.getRowConstraints().add(r);
-				duong.getColumnConstraints().add(c);
-
-				ha.getRowConstraints().add(r);
-				ha.getColumnConstraints().add(c);
-
-				kien.getRowConstraints().add(r);
-				kien.getColumnConstraints().add(c);
-
-				minh1.getRowConstraints().add(r);
-				minh1.getColumnConstraints().add(c);
-
-				minh2.getRowConstraints().add(r);
-				minh2.getColumnConstraints().add(c);
-
-				nam.getRowConstraints().add(r);
-				nam.getColumnConstraints().add(c);
-
-				thanh.getRowConstraints().add(r);
-				thanh.getColumnConstraints().add(c);
-
-				root.setAlignment(Pos.CENTER);
-
-				stage.setScene(new Scene(root, 800, 600));
+				stage.setScene(new Scene(rootMem, 550, 0.8 * screen.getVisualBounds().getHeight()));
 				stage.setTitle("Thông tin nhóm 2");
+				stage.setResizable(false);
 				stage.show();
 			}
 		});
