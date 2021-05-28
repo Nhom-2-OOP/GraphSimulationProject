@@ -33,6 +33,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -559,6 +560,7 @@ public class GraphPanel<V, E> extends Pane{
 				if (backMenu.isShowing()) backMenu.hide();
 			}
 		});
+		
     }
     
     private void initNodes() {
