@@ -74,7 +74,7 @@
     -fx-stroke-width: 2;
     -fx-stroke: #45597e;
     -fx-stroke-type: inside; /* you should keep this if using arrows */
-    -fx-fill: #FFD1B9;
+    -fx-fill: #ffd3c8;
 }
 
 .vertexcolor4 {

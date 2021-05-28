@@ -1,7 +1,6 @@
 package nhom2.graphview;
 
 import javafx.scene.*;
-import nhom2.coloring.Coloring;
 import nhom2.graph.*;
 import nhom2.graphview.Edge.EdgeLine;
 import nhom2.graphview.Edge.EdgeView;
@@ -33,6 +32,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -44,8 +44,8 @@ import java.net.URI;
 public class GraphPanel<V, E> extends Pane{
 	
 	public PlacementStrategy placementStrategy;
-	
-	public Rectangle Background;
+
+	public Rectangle Background = new Rectangle();
 	
 	public GraphEdgeList<V, E> theGraph;
 	public Map<Vertex<V>, VertexNode<V>> vertexNodes;
@@ -346,7 +346,6 @@ public class GraphPanel<V, E> extends Pane{
         
         Vertex<V> inVertex = graphVertexInbound.getUnderlyingVertex();
         Vertex<V> outVertex = graphVertexOutbound.getUnderlyingVertex();
-
     	EdgeLine<E,V> NewEdgeView = new EdgeLine<E,V>(edge, graphVertexOutbound, graphVertexInbound);
         graphEdge = NewEdgeView;
         this.getChildren().add(1, (Node)NewEdgeView);
@@ -385,7 +384,6 @@ public class GraphPanel<V, E> extends Pane{
     
         MenuItem item2 = new MenuItem("Thêm trọng số");
         item2.setOnAction(new EventHandler<ActionEvent>() {
-
         	@Override
         	public void handle(ActionEvent arg0) {
         		if(edgesWithWeight == false) {
@@ -402,7 +400,6 @@ public class GraphPanel<V, E> extends Pane{
         		}
         	}  
         });
-      
       
         graphEdge.contextMenu.getItems().addAll(item1, item2);
         graphEdge.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
@@ -454,20 +451,15 @@ public class GraphPanel<V, E> extends Pane{
     	theGraph.removeVertex(v.getUnderlyingVertex());
     }
     
-    public void initBackground() {
-//    	Screen screen = Screen.getPrimary();
-//    	double width = screen.getVisualBounds().getWidth();
-//    	double height = screen.getVisualBounds().getHeight();
-//    	double xa = 1.0*1062/1366;
-//    	double ya = 1.0*672/728;
-//    	this.Background = new Rectangle(width*xa, height*ya, new Color(0.203, 0.215, 0.274, 1.0));
-    	this.Background = new Rectangle();
+
+    public void initBackground() {   	
     	this.Background.setFill(new Color(0.203, 0.215, 0.274, 1.0));
-    	this.Background.widthProperty().bind(this.widthProperty());
-    	this.Background.heightProperty().bind(this.heightProperty());
+    	
+    	Background.heightProperty().bind(this.heightProperty().subtract(4));
+    	Background.widthProperty().bind(this.widthProperty().subtract(4));
 		Background.setX(2);
 		Background.setY(2);
-		Background.getStyleClass().add("rectangle");
+
 		this.getChildren().add(0,Background);
 		
 		ContextMenu backMenu = new ContextMenu();
@@ -546,16 +538,24 @@ public class GraphPanel<V, E> extends Pane{
 		
 		backMenu.getItems().addAll(item1, item2, item3, item4, item5);
 		
+		Background.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+			@Override
+			public void handle(ContextMenuEvent event) {
+				// TODO Auto-generated method stub
+				item1.X = event.getX();
+				item1.Y = event.getY();
+				backMenu.show(Background, event.getSceneX(), event.getSceneY());
+			}           	
+		}
+		);
+		
 		Background.setOnMouseClicked((MouseEvent mouseEvent) -> {
-			if (mouseEvent.getClickCount() == 2) {
-				item1.X = mouseEvent.getX();
-				item1.Y = mouseEvent.getY();
-				backMenu.show(Background, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-			}
-			if (mouseEvent.getClickCount() == 1) {
+			if (!mouseEvent.isSecondaryButtonDown()) {
 				if (backMenu.isShowing()) backMenu.hide();
 			}
 		});
+		
     }
     
     private void initNodes() {
@@ -647,17 +647,20 @@ public class GraphPanel<V, E> extends Pane{
 			}
     	};
     	this.setOnMouseClicked(myHandler02);
-    }
-    
-    public void setColor() {
-    	Coloring coloring = new Coloring();
-    	if(this.isColored==false) {
-    		coloring.greedyColoring(this.theGraph, this.vertexNodes);
-    		this.isColored=true;
-    	}
-    	else {
-    		coloring.returnColor(this.theGraph, this.vertexNodes);
-    		this.isColored=false;
-    	}
+//<<<<<<< HEAD
+//    }
+//    
+//    public void setColor() {
+//    	Coloring coloring = new Coloring();
+//    	if(this.isColored==false) {
+//    		coloring.greedyColoring(this.theGraph, this.vertexNodes);
+//    		this.isColored=true;
+//    	}
+//    	else {
+//    		coloring.returnColor(this.theGraph, this.vertexNodes);
+//    		this.isColored=false;
+//    	}
+//=======
+//>>>>>>> refs/remotes/origin/weightedGraph
     }
 }

@@ -1,5 +1,6 @@
 package nhom2.button;
 
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -19,7 +20,7 @@ public class InfoButton extends Button{
 
 		HBox root = new HBox(20);
 
-		Guide guideBut = new Guide();
+		Guide guideBut = new Guide(stage);
 		SubScene subSceneGuide = new SubScene (guideBut, 200, 50);
 
 		Member memBut = new Member(stage) ;
@@ -44,6 +45,7 @@ public class InfoButton extends Button{
 				else {
 					stage.show();
 				}
+
 			}
 		});
 

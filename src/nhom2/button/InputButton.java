@@ -24,7 +24,9 @@ public class InputButton extends Button  {
 	
 			public void handle(ActionEvent event) {
 				stage.setScene(View);
+				stage.setTitle("Nhập đồ thị");
 				stage.show();
+				
 			}
 		});
 		this.setOnMouseEntered(mouseEvent -> {

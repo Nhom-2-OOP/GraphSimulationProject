@@ -44,7 +44,7 @@ public class MiniMap extends GridPane{
 		this.size = 300;
 		Screen screen = Screen.getPrimary();
 		this.width = size;
-		this.height = size/(screen.getVisualBounds().getWidth() - 300) * screen.getVisualBounds().getHeight();
+		this.height = size/(screen.getVisualBounds().getWidth() - 300) * (screen.getVisualBounds().getHeight() - 35);
 		this.setTranslateX(screen.getVisualBounds().getWidth() - 339 - size);
 		this.setTranslateY(0);
 

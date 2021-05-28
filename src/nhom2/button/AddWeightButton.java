@@ -24,6 +24,7 @@ public class AddWeightButton extends Button  {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				stage.setTitle("Thêm trọng số");
 				AddWeightButton.stage.setScene(AddWeightButton.View);
 				AddWeightButton.stage.show();
 

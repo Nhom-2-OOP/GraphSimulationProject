@@ -25,6 +25,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 	public double dragDeltaX = 0;
 	public double dragDeltaY = 0;
 
+
 	private class Point{
 
 		double x, y;
@@ -50,6 +51,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 
 		styleProxy = new StyleImplementing(this);
 		styleProxy.addStyleClass("vertex");
+
 
 		if (allowMove) {
 			enableDrag();
@@ -339,7 +341,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 				contextMenu.show((Node)returnThis(), event.getScreenX(), event.getScreenY());
 			}           	
 		}
-				);
+		);
 	}
 
 	public VertexNode returnThis() {
