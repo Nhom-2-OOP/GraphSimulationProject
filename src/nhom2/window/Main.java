@@ -1,11 +1,15 @@
 package nhom2.window;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -32,6 +36,13 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		this.stage = stage;
+		
+		Stage test = new Stage();
+		test.setScene(new Scene(new Button("testBut")));
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+		Date date = new Date(System.currentTimeMillis());
+		System.out.println(formatter.format(date));
+		test.show();
 
 		Screen screen = Screen.getPrimary();
 
@@ -149,6 +160,13 @@ public class Main extends Application {
 		stage.setMinWidth(screen.getVisualBounds().getWidth());
 		stage.setMaximized(true);
 		stage.setScene(scene);
+		
+		
+		formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+		date = new Date(System.currentTimeMillis());
+		System.out.println(formatter.format(date));
+		
+		
 		stage.show();  
 
 
