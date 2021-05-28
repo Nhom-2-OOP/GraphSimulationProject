@@ -455,6 +455,10 @@ public class GraphPanel<V, E> extends Pane{
     }
     
     public void initBackground() {
+    	this.Background = new Rectangle();
+    	
+    	this.Background.setFill(new Color(0.203, 0.215, 0.274, 1.0));
+    	
     	Background.heightProperty().bind(this.heightProperty().subtract(4));
     	Background.widthProperty().bind(this.widthProperty().subtract(4));
 		Background.setX(2);
