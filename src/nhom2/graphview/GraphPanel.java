@@ -46,7 +46,7 @@ public class GraphPanel<V, E> extends Pane{
 	
 	public PlacementStrategy placementStrategy;
 	
-	public Rectangle Background;
+	public Rectangle Background = new Rectangle();
 	
 	public GraphEdgeList<V, E> theGraph;
 	public Map<Vertex<V>, VertexNode<V>> vertexNodes;
@@ -455,9 +455,7 @@ public class GraphPanel<V, E> extends Pane{
     	theGraph.removeVertex(v.getUnderlyingVertex());
     }
     
-    public void initBackground() {
-    	this.Background = new Rectangle();
-    	
+    public void initBackground() {   	
     	this.Background.setFill(new Color(0.203, 0.215, 0.274, 1.0));
     	
     	Background.heightProperty().bind(this.heightProperty().subtract(4));
