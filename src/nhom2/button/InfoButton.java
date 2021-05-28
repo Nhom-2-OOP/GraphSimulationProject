@@ -3,6 +3,7 @@ package nhom2.button;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -23,15 +24,19 @@ public class InfoButton extends Button{
 				
 				HBox root = new HBox(20);
 				
-				Member memBut = new Member() ;
 				Guide guideBut = new Guide();
+				SubScene subSceneGuide = new SubScene (guideBut, 200, 50);
 				
-				root.getChildren().add(memBut);
-				root.getChildren().add(guideBut);
+				Member memBut = new Member() ;
+				SubScene subSceneMem = new SubScene (memBut, 200, 50);
+				
+				root.getChildren().add(subSceneGuide);
+				root.getChildren().add(subSceneMem);
 
 				root.setAlignment(Pos.CENTER);
 				
-				stage.setScene(new Scene(root, 800, 600));
+				stage.setScene(new Scene(root, 400, 200));
+			
 //				stage.setTitle("Thông tin nhóm 2");
 				stage.show();
 			}

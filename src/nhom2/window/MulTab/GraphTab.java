@@ -33,10 +33,6 @@ public class GraphTab extends Tab{
 		this.buttonArea = new ButtonAreaVBox().area(graphView, stage, root);
 		PaneGraph graphPane = new PaneGraph(graphView);
 		this.setContent(graphPane);
-		
-		this.setOnClosed(event -> {
-			
-		});
 
 		nameTab.set(name);
 	
