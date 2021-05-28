@@ -1,5 +1,8 @@
 package nhom2.window;
 
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +23,9 @@ import nhom2.button.ButtonAreaVBox;
 import nhom2.graph.*;
 import nhom2.graphview.*;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.geometry.HPos;
 import nhom2.window.MulTab.GraphTab;
@@ -36,13 +42,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		this.stage = stage;
-		
-		Stage test = new Stage();
-		test.setScene(new Scene(new Button("testBut")));
-		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-		Date date = new Date(System.currentTimeMillis());
-		System.out.println(formatter.format(date));
-		test.show();
 
 		Screen screen = Screen.getPrimary();
 
@@ -133,7 +132,7 @@ public class Main extends Application {
 						else {
 							// tranh chay ngam
 							graphView.timer.stop();
-							
+
 							listTab.get(tabPane.getSelectionModel().getSelectedIndex()).setButtonArea();
 							graphView = listTab.get(tabPane.getSelectionModel().getSelectedIndex()).graphView;
 
@@ -160,13 +159,13 @@ public class Main extends Application {
 		stage.setMinWidth(screen.getVisualBounds().getWidth());
 		stage.setMaximized(true);
 		stage.setScene(scene);
-		
-		
-		formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-		date = new Date(System.currentTimeMillis());
-		System.out.println(formatter.format(date));
-		
-		
+
+
+		//		formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+		//		date = new Date(System.currentTimeMillis());
+		//		System.out.println(formatter.format(date));
+
+
 		stage.show();  
 
 
