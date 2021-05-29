@@ -63,20 +63,7 @@ public class EdgeLine<E,V> extends Line implements EdgeView<E,V>, LabelledObject
         this.endYProperty().bind(inbound.centerYProperty());
     }
     
-	@Override
-	public void attachLabel(Label label) {
-		// TODO Auto-generated method stub
-		label.addStyleClass("edge-weighted");
-		this.attachedLabel = label;
-        label.xProperty().bind(startXProperty().multiply(2.0).add(endXProperty()).divide(3).subtract(label.getLayoutBounds().getWidth()));
-        label.yProperty().bind(startYProperty().multiply(2.0).add(endYProperty()).divide(3).add(label.getLayoutBounds().getHeight()));
-	}
-
-	@Override
-	public Label getAttachedLabel() {
-		// TODO Auto-generated method stub
-		return attachedLabel;
-	}
+	
 
 	@Override
 	public Edge<E, V> getUnderlyingEdge() {
@@ -116,6 +103,21 @@ public class EdgeLine<E,V> extends Line implements EdgeView<E,V>, LabelledObject
 	}
 
 	@Override
+	public void attachLabel(Label label) {
+		// TODO Auto-generated method stub
+		label.addStyleClass("edge-weighted");
+		this.attachedLabel = label;
+        label.xProperty().bind(startXProperty().multiply(2.0).add(endXProperty()).divide(3).subtract(label.getLayoutBounds().getWidth()));
+        label.yProperty().bind(startYProperty().multiply(2.0).add(endYProperty()).divide(3).add(label.getLayoutBounds().getHeight()));
+	}
+
+	@Override
+	public Label getAttachedLabel() {
+		// TODO Auto-generated method stub
+		return attachedLabel;
+	}
+	
+	@Override
 	public void setStyleClass(String cssClass) {
 		// TODO Auto-generated method stub
 		styleProxy.setStyleClass(cssClass);
@@ -131,7 +133,5 @@ public class EdgeLine<E,V> extends Line implements EdgeView<E,V>, LabelledObject
 	public boolean removeStyleClass(String cssClass) {
 		// TODO Auto-generated method stub
 		return styleProxy.removeStyleClass(cssClass);
-	}
-	
-	
+	}	
 }
