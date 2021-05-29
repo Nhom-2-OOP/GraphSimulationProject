@@ -20,7 +20,7 @@ public class RandomPlacementButton extends Button{
 				AutoPlacementButton.Check = false;
 				//System.out.println(graph.theGraph.vertices.size());
 				graph.placementStrategy = new RandomPlacementStrategy();
-				graph.init();
+				graph.initPlacement();
 			}
 			
 		});
