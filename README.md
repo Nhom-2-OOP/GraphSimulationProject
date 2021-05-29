@@ -18,14 +18,14 @@ Main.java
 2. Placement circularly
 3. Placement using force-directed algorithm in real-time
 
-### Algorithm Available
+
+### Feature and Algorithm Available
 1. Path Finding
 2. Auto Path Finding
-3. BFS
-4. DFS
-5. Dijkstra
-6. Kruskal's MST
-7. Coloring Graph
+3. Traversal Graph ( BFS and DFS Algorithm)
+4. Shortest Path ( Dijkstra Algorithm)
+5. Minimum Spanning Tree ( Kruskal Algorithm)
+6. Coloring Graph ( Greedy Algorithm )
 
 ## Team information
 
