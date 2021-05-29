@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
@@ -30,15 +31,27 @@ public class D_TableButtonController implements Initializable {
 	private static String[][] data = null ;	
 	private static Map<Integer, Integer> color;
 	private static Map <Integer, String> vecLabel;
+	private static int[] show;
+	private static int showing = 1;
 	@FXML 
 	private TableView Table;
-
+	@FXML
+	private Button next;
+	@FXML
+	private Button back;
+	@FXML
+	private Button showAll;
+	@FXML
+	private Button Res;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		n=ShortestPathButton.getNumbVertex();
+		show = new int[n+1];
+		show[0] = 1;
 		initTable();
 		setTable();
+		back.setVisible(false);
+		Res.setVisible(false);
 	}
 	 Callback factory = new Callback<TableColumn<String[], String>, TableCell<String[], String>>(){
 		    public TableCell<String[], String> call(TableColumn<String[], String> param) {
@@ -55,6 +68,8 @@ public class D_TableButtonController implements Initializable {
 		                if (empty || item == null) {
 		                    setText(null);
 		                } else {
+		                	if(show[this.getIndex()] == 0)
+		                		this.setVisible(false);
 		                    setText(item.toString());
 		                    if(item.toString().equals(Character.toString('\u221E'))) {
 		           
@@ -65,7 +80,6 @@ public class D_TableButtonController implements Initializable {
 		                    	
 		                    	this.setStyle("-fx-background-color: #18ab38; -fx-text-fill:white");
 		                    	
-		 
 		                    }
 		                    else if(!item.toString().equals(Character.toString('\u221E'))){
 		                    	this.setStyle(null);
@@ -126,6 +140,42 @@ public class D_TableButtonController implements Initializable {
 			ObservableList<String[]> Data = FXCollections.observableArrayList(data1);
 			Table.setItems(Data);
 		}
+	}
+	@FXML 
+	private void Next() {
+		show[showing] = 1;
+		showing ++;
+		Table.refresh();
+		if(showing == n ) {
+			next.setVisible(false);
+			Res.setVisible(true);
+		}
+		if(showing > 1) back.setVisible(true);
+	}
+	@FXML
+	private void Back() {
+		showing --;
+		show[showing] = 0;
+		Table.refresh();
+		if(showing <= 1) back.setVisible(false);
+		if(showing < n) next.setVisible(true);
+	}
+	@FXML 
+	private void showAll() {
+		for(int i=0;i<=n;i++) show[i] = 1;
+		Table.refresh();
+		next.setVisible(false);
+		back.setVisible(false);
+		Res.setVisible(true);
+	}
+	@FXML
+	private void res() {
+		show = new int[n+1];
+		show[0] = 1;
+		back.setVisible(false);
+		Table.refresh();
+		Res.setVisible(false);
+		next.setVisible(true);
 	}
 	public static void setData(String[][] s) {
 		data = s;
