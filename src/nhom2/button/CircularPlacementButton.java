@@ -21,7 +21,7 @@ public class CircularPlacementButton extends Button{
 				graph.timer.stop();
 				AutoPlacementButton.Check = false;
 				graph.placementStrategy = new CircularSortedPlacementStrategy();
-				graph.init();
+				graph.initPlacement();
 			}
 			
 		});
