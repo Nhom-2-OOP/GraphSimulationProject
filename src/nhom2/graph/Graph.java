@@ -30,10 +30,15 @@ public interface Graph<V, E> {
 	public Vertex<V> insertVertex(V vElement);
 	// Them 1 dinh vao do thi va tra ve reference cua dinh vua them vao
 	
-//	public Edge<E, V> insertEdge(Vertex<V> u, Vertex<V> v, E edgeElement);
 	public Edge<E, V> insertEdge(V vElement1, V vElement2, E edgeElement);
 	// Them 1 canh vao do thi va tra ve reference cua canh vua them vao
 	
-	// Xoa canh se bo sung sau
+	public Edge<E,V> getEdge(Vertex<V> u, Vertex<V> v);
+	// Lay ra canh
 	
+	public void removeVertex(Vertex<V> v);
+	// Xoa dinh
+	
+	public void removeEdge(Edge<E, V> e);
+	// Xoa canh
 }
