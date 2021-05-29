@@ -44,7 +44,7 @@ public class PaneGraph extends Pane {
 		graphView.Background.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
 		graphView.Background.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
 		graphView.Background.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
-		graphView.init();
+		graphView.initPlacement();
 
 	}
 
