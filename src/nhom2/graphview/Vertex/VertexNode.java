@@ -78,7 +78,7 @@ public class VertexNode<T> extends Circle implements VertexView<T>, LabelledObje
 		MenuItem item3 = new MenuItem("Thêm cạnh");
 		item3.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {	
-				GraphView.add(returnThis());
+				GraphView.addEdgeFromVertex(returnThis());
 			}
 		});
 		this.contextMenu.getItems().addAll(item1, item2, item3);
