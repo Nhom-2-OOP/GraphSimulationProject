@@ -303,7 +303,8 @@ public class GraphPanel<V, E> extends Pane{
 	    	this.edgesWithWeight = true;
 	    	if(this.theGraph.edgeWeight != null) {
 	    		for(EdgeLine<E,V> edgeline : edgeNodes.values()) {
-	    			this.getChildren().add(edgeline.getAttachedLabel());
+	    			if(edgeline.getAttachedLabel() != null)
+	    				this.getChildren().add(edgeline.getAttachedLabel());
 	    		}
 	    	}
     	}
@@ -339,7 +340,8 @@ public class GraphPanel<V, E> extends Pane{
 			this.getChildren().remove(edgeline.getAttachedLabel());
 		Label weight = new Label(num);
 		edgeline.attachLabel(weight);
-		this.getChildren().add(weight);
+		if(edgesWithWeight == true)
+			this.getChildren().add(weight);
 	}
 
     private EdgeLine<E,V> CreateAndAddEdge(Edge<E, V> edge, VertexNode<V> graphVertexInbound, VertexNode<V> graphVertexOutbound) {
@@ -391,7 +393,7 @@ public class GraphPanel<V, E> extends Pane{
         item2.setOnAction(new EventHandler<ActionEvent>() {
         	@Override
         	public void handle(ActionEvent arg0) {
-        		if(edgesWithWeight == false) {
+        		if(theGraph.isWeighted == false) {
         			Alert alert = new Alert(AlertType.ERROR);
         			alert.setContentText("Đồ thị hiện tại không trọng số");
         			alert.showAndWait();
@@ -630,13 +632,14 @@ public class GraphPanel<V, E> extends Pane{
 	    			                getChildren().add(arrow);
 	    			            }
 	    			            Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
-	    			            if (edgesWithWeight) {  	
+	    			            if (theGraph.isWeighted) {  	
 	    			            	TextInputDialog box = new TextInputDialog("Nhập trọng số");
 	    			            	box.setContentText("Nhập trong số: ");
 	    			            	while (true) {
 	    			            		Optional<String> result = box.showAndWait();
 	    			            		if (result.isPresent() && pattern.matcher(result.get()).matches()) {
 		    			            		addWeightToEdge(edge, graphEdge, result.get());
+		    		
 		    			            		break;
 		    			            	}
 		    			            	else {
