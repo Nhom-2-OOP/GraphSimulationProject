@@ -44,31 +44,31 @@ import javafx.geometry.Point2D;
 import java.net.URI;
 
 public class GraphPanel<V, E> extends Pane{
-	
-	public PlacementStrategy placementStrategy;
 
+	public PlacementStrategy placementStrategy;
 	public Rectangle Background = new Rectangle();
-	
+
 	public GraphEdgeList<V, E> theGraph;
 	public Map<Vertex<V>, VertexNode<V>> vertexNodes;
 	public Map<Edge<E, V>, EdgeLine<E,V>> edgeNodes;
 	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
 	
+	// regarding vertex and edge 's attribute
 	public static double VertexR = 15;
-	
 	public boolean isColored = false;
-	
+	public boolean edgesWithArrows;
+    private boolean edgesWithWeight;
+    private boolean needLabelVertex;
+    
 	public EventHandler<MouseEvent> Handler;
-	
 	public AnimationTimer timer;
 	
+	// about force
 	private final double repulsionForce;
 	private final double attractionForce;
     private final double attractionScale;
     
-    public boolean edgesWithArrows;
-    private boolean edgesWithWeight;
-    private boolean needLabel;
+   
     DoubleProperty myScale = new SimpleDoubleProperty(1.0);
     
     public GraphPanel(GraphEdgeList<V, E> theGraph) {
@@ -81,7 +81,7 @@ public class GraphPanel<V, E> extends Pane{
 		this.theGraph = theGraph;
 		
 		if (theGraph != null) edgesWithArrows = theGraph.isDirected;
-		needLabel = Label;
+		needLabelVertex = Label;
 
 		// Doc file css va add vao style
         try {
@@ -136,100 +136,108 @@ public class GraphPanel<V, E> extends Pane{
     }
 	
 	
-	public void Insert(V v, double x, double y) {
+	private void runLayoutIteration() {
+	    for (int i = 0; i < 10; i++) {
+	        resetForces();
+	        computeForces();
+	        updateForces();
+	    }
+	    applyForces();
+	    updateEdges();
+	}
+
+	private void computeForces() {
+	        for (VertexNode<V> v : vertexNodes.values()) {
+	            for (VertexNode<V> other : vertexNodes.values()) {
+	                if (v == other) {
+	                    continue; 
+	                }
+	                Point2D repellingForce = repellingForce(v.getUpdatedPosition(), other.getUpdatedPosition(), this.repulsionForce);
+	
+	                double deltaForceX = 0, deltaForceY = 0;
+	
+	                if (areAdjacent(v, other)) {
+	                    Point2D attractiveForce = attractiveForce(v.getUpdatedPosition(), other.getUpdatedPosition(),
+	                            vertexNodes.size(), this.attractionForce, this.attractionScale);
+	
+	                    deltaForceX = attractiveForce.getX() + repellingForce.getX();
+	                    deltaForceY = attractiveForce.getY() + repellingForce.getY();
+	                } else {
+	//                	Point2D attractiveForce = attractiveForce(v.getUpdatedPosition(), other.getUpdatedPosition(),vertexNodes.size(), 1, 2);
+	                	deltaForceX += repellingForce.getX();
+	                    deltaForceY += repellingForce.getY();
+	                }
+	                
+	                v.addForceVector(deltaForceX, deltaForceY);
+	            }
+	        }
+	    }
+
+	private void updateForces() {
+	    vertexNodes.values().forEach((v) -> {
+	        v.updateDelta();
+	    });
+	}
+
+	private void applyForces() {
+	    vertexNodes.values().forEach((v) -> {
+	    	//if (v.getUnderlyingVertex().element().equals("E")) System.out.println("yes");
+	        v.moveFromForces();
+	    });
+	}
+
+	private void resetForces() {
+	    vertexNodes.values().forEach((v) -> {
+	        v.resetForces();
+	    });
+	}
+
+	public void initPlacement(){
+	    this.placementStrategy.place(this.widthProperty().doubleValue(), this.heightProperty().doubleValue(), this.theGraph,this.vertexNodes.values());
+	}
+
+	public void start_automatic_layout() {
+		timer.start();
+	}
+
+	public void InsertVertexFromV(V v, double x, double y) {
 		Vertex<V> vertex = this.theGraph.insertVertex(v);
 		VertexNode<V> NewVertexNode = new VertexNode<V>(vertex, x, y, this.VertexR, true, this);
         vertexNodes.put(vertex, NewVertexNode);
         this.getChildren().add(NewVertexNode);
-        if (needLabel) {
+        if (needLabelVertex) {
         	Label label = new Label((String)vertex.element());
             this.getChildren().add(label);
             NewVertexNode.attachLabel(label);
         }
 	}
 	
-	public void Renew(GraphEdgeList<V, E> theGraph, boolean Label) {
+	public void renewGraph(GraphEdgeList<V, E> theGraph, boolean Label) {
 		timer.stop();
 		this.placementStrategy = new RandomPlacementStrategy();
 		this.theGraph = theGraph;
 		
 		edgesWithArrows = theGraph.isDirected;
-		needLabel = Label;
+		needLabelVertex = Label;
 		vertexNodes.clear();;
         edgeNodes.clear();; 
 		this.getChildren().clear();
        
 		initBackground();
         initNodes();
-        this.init();
+        this.initPlacement();
         
 	}
-	
-	private void runLayoutIteration() {
-        for (int i = 0; i < 10; i++) {
-            resetForces();
-            computeForces();
-            updateForces();
-        }
-        applyForces();
-        updateEdges();
-    }
 	
 	private void updateEdges() {
 		
 	}
+	
 	private boolean areAdjacent(VertexNode<V> v, VertexNode<V> u) {
         return this.theGraph.areAdjacent(v.getUnderlyingVertex(), u.getUnderlyingVertex()) || this.theGraph.areAdjacent(u.getUnderlyingVertex(), v.getUnderlyingVertex());
     }
 	
-	private void computeForces() {
-        for (VertexNode<V> v : vertexNodes.values()) {
-            for (VertexNode<V> other : vertexNodes.values()) {
-                if (v == other) {
-                    continue; 
-                }
-                Point2D repellingForce = repellingForce(v.getUpdatedPosition(), other.getUpdatedPosition(), this.repulsionForce);
-
-                double deltaForceX = 0, deltaForceY = 0;
-
-                if (areAdjacent(v, other)) {
-                    Point2D attractiveForce = attractiveForce(v.getUpdatedPosition(), other.getUpdatedPosition(),
-                            vertexNodes.size(), this.attractionForce, this.attractionScale);
-
-                    deltaForceX = attractiveForce.getX() + repellingForce.getX();
-                    deltaForceY = attractiveForce.getY() + repellingForce.getY();
-                } else {
-//                	Point2D attractiveForce = attractiveForce(v.getUpdatedPosition(), other.getUpdatedPosition(),vertexNodes.size(), 1, 2);
-                	deltaForceX += repellingForce.getX();
-                    deltaForceY += repellingForce.getY();
-                }
-                
-                v.addForceVector(deltaForceX, deltaForceY);
-            }
-        }
-    }
-	
-	private void updateForces() {
-        vertexNodes.values().forEach((v) -> {
-            v.updateDelta();
-        });
-    }
-
-    private void applyForces() {
-        vertexNodes.values().forEach((v) -> {
-        	//if (v.getUnderlyingVertex().element().equals("E")) System.out.println("yes");
-            v.moveFromForces();
-        });
-    }
-
-    private void resetForces() {
-        vertexNodes.values().forEach((v) -> {
-            v.resetForces();
-        });
-    }
-    
-    
-    // be used in menu of edge
+	// be used in menu of graph
     public void deleteWeightedFeature() {
 		if(this.theGraph.isWeighted == false) {
 			Alert alert = new Alert(AlertType.WARNING);
@@ -248,7 +256,7 @@ public class GraphPanel<V, E> extends Pane{
 		}
 	}
     
-    // be used in menu of edge
+    // be used in menu of graph
     public void addWeightedFeature() {
     	if(this.theGraph.isWeighted == true) {
     		Alert alert = new Alert(AlertType.WARNING);
@@ -286,6 +294,8 @@ public class GraphPanel<V, E> extends Pane{
     		}
     	}
     }
+    
+    // be used in menu of graph
     public void visibleWeightAttribute() {
     	if(this.theGraph.isWeighted == false) {
     		Alert alert = new Alert(AlertType.WARNING);
@@ -310,6 +320,7 @@ public class GraphPanel<V, E> extends Pane{
     	}
     }
     
+    // be used in menu of graph
     public void hideWeightAttribute() {
     	if(this.theGraph.isWeighted == false) {
     		Alert alert = new Alert(AlertType.WARNING);
@@ -333,7 +344,6 @@ public class GraphPanel<V, E> extends Pane{
     	}
     }
 	
-    // be used in menu of edge
 	public void addWeightToEdge(Edge<E,V> edge, EdgeLine<E,V> edgeline, String num) {	
 		this.theGraph.edgeWeight.put(edge, Integer.parseInt(num));
 		if(edgeline.getAttachedLabel() != null) 
@@ -345,9 +355,9 @@ public class GraphPanel<V, E> extends Pane{
 	}
 
     private EdgeLine<E,V> CreateAndAddEdge(Edge<E, V> edge, VertexNode<V> graphVertexInbound, VertexNode<V> graphVertexOutbound) {
-
+    	
     	EdgeLine<E,V> graphEdge;
-        
+       
         Vertex<V> inVertex = graphVertexInbound.getUnderlyingVertex();
         Vertex<V> outVertex = graphVertexOutbound.getUnderlyingVertex();
     	EdgeLine<E,V> NewEdgeView = new EdgeLine<E,V>(edge, graphVertexOutbound, graphVertexInbound);
@@ -395,11 +405,11 @@ public class GraphPanel<V, E> extends Pane{
         	public void handle(ActionEvent arg0) {
         		if(theGraph.isWeighted == false) {
         			Alert alert = new Alert(AlertType.ERROR);
-        			alert.setContentText("Đồ thị hiện tại không trọng số");
+        			alert.setContentText("Đồ thị hiện tại không tương thích với trọng số");
         			alert.showAndWait();
         		}
         		else {
-        			TextInputDialog dialog = new TextInputDialog("Trọng số");
+        			TextInputDialog dialog = new TextInputDialog("0");
         			dialog.setContentText("Nhập trọng số");
         			dialog.showAndWait();
         			String rs = dialog.getEditor().getText();
@@ -424,13 +434,6 @@ public class GraphPanel<V, E> extends Pane{
   	  	if (theGraph.isDirected) getChildren().remove(graphEdge.getAttachedArrow());
   	  	if (theGraph.isWeighted) getChildren().remove(graphEdge.getAttachedLabel());
   	  	edgeNodes.remove(edge);
-    }
-    
-    public void init(){
-        this.placementStrategy.place(this.widthProperty().doubleValue(), this.heightProperty().doubleValue(), this.theGraph,this.vertexNodes.values());
-      }
-    public void start_automatic_layout() {
-    	timer.start();
     }
     
     public void deleteVertex(VertexNode<V> v) {
@@ -483,7 +486,7 @@ public class GraphPanel<V, E> extends Pane{
 		            			newAlert.showAndWait();
 		            		}
 		            		else {
-		            			Insert((V)result.get(), X, Y);
+		            			InsertVertexFromV((V)result.get(), X, Y);
 		            			Alert alert = new Alert(AlertType.INFORMATION);
 		            			alert.setTitle("Thông báo");
 		            			alert.setHeaderText(null);
@@ -562,7 +565,7 @@ public class GraphPanel<V, E> extends Pane{
     		VertexNode<V> NewVertexNode = new VertexNode(vertex, 0, 0, this.VertexR, true, this);
             vertexNodes.put(vertex, NewVertexNode);
             this.getChildren().add(NewVertexNode);
-            if (needLabel) {
+            if (needLabelVertex) {
             	Label label = new Label((String)vertex.element());
                 this.getChildren().add(label);
                 NewVertexNode.attachLabel(label);
@@ -587,7 +590,7 @@ public class GraphPanel<V, E> extends Pane{
             edgeNodes.put(edge, graphEdge);
     	}
     }
-    public void add(VertexNode NewVertexNode) {
+    public void addEdgeFromVertex(VertexNode NewVertexNode) {
     	Line tmp = new Line();  	
     	tmp.setStyle("-fx-stroke-width: 2; -fx-stroke: #ebaf2f; -fx-stroke-dash-array: 2 5 2 5;");
     	double diffX = 300, diffY = 0;
