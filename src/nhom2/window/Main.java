@@ -164,7 +164,7 @@ public class Main extends Application {
 
 	private static GraphEdgeList<String, String> build_sample_digraph() {
 
-		GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(false);
+		GraphEdgeList<String,String> g = new GraphEdgeList<String,String>(true);
 
 		g.insertEdge("A", "B", "AB1");
 		g.insertEdge("A", "G", "AG");
@@ -187,6 +187,7 @@ public class Main extends Application {
 		g.insertEdge("DD", "JJ", "DJ1");
 
 		g.insertEdge("BB", "B", "BBB2");
+		g.insertEdge("B", "BB", "BBBB2");
 		g.insertEdge("I", "BB", "ADD1");
 		g.insertEdge("I", "H", "HII");
 		g.insertEdge("C", "H", "HCII");
