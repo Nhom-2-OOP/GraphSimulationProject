@@ -148,6 +148,7 @@ public class D_TableButtonController implements Initializable {
 		Table.refresh();
 		if(showing == n ) {
 			next.setVisible(false);
+			showAll.setVisible(false);
 			Res.setVisible(true);
 		}
 		if(showing > 1) back.setVisible(true);
@@ -158,14 +159,18 @@ public class D_TableButtonController implements Initializable {
 		show[showing] = 0;
 		Table.refresh();
 		if(showing <= 1) back.setVisible(false);
-		if(showing < n) next.setVisible(true);
+		if(showing < n) {
+			showAll.setVisible(true);
+			next.setVisible(true);
+		}
 	}
 	@FXML 
 	private void showAll() {
 		for(int i=0;i<=n;i++) show[i] = 1;
 		Table.refresh();
 		next.setVisible(false);
-		back.setVisible(false);
+		showAll.setVisible(false);
+		showing = n;
 		Res.setVisible(true);
 	}
 	@FXML
@@ -176,6 +181,7 @@ public class D_TableButtonController implements Initializable {
 		Table.refresh();
 		Res.setVisible(false);
 		next.setVisible(true);
+		showAll.setVisible(true);
 		showing = 1;
 	}
 	public static void setData(String[][] s) {
