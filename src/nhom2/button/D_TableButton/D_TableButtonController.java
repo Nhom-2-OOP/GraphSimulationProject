@@ -176,6 +176,7 @@ public class D_TableButtonController implements Initializable {
 		Table.refresh();
 		Res.setVisible(false);
 		next.setVisible(true);
+		showing = 1;
 	}
 	public static void setData(String[][] s) {
 		data = s;
