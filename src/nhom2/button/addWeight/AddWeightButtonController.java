@@ -129,7 +129,6 @@ public class AddWeightButtonController implements Initializable {
 		data = Input.getText();
 	    Input.clear();
 	    dataToGraph(data);
-	    informSuccess();
 	}
 
 	private void dataToGraph(String data) {
@@ -150,8 +149,21 @@ public class AddWeightButtonController implements Initializable {
 	    	}
 	    	w.add(v);
 	    }
-		g.setWeightedFeature(w);
-		graphView.displayWeightAttribute();
+		try {
+			g.setWeightedFeature(w);
+			graphView.displayWeightAttribute();
+		    informSuccess();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			informInputError();
+		}
+	}
+	private static void informInputError() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setHeaderText("Không thể thêm trọng số");
+		alert.setContentText("Ma trận không khớp!");
+		alert.showAndWait();
 	}
 	private static void informSuccess() {
 	
@@ -191,7 +203,6 @@ public class AddWeightButtonController implements Initializable {
 			datas = Input.getText();
 		    Input.clear();
 		    dataToGraph(datas);
-			informSuccess();
 		}
 	}
 	private static boolean informOff() {
