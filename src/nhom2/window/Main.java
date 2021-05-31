@@ -187,8 +187,6 @@ public class Main extends Application {
 		g.insertEdge("DD", "JJ", "DJ1");
 
 		g.insertEdge("BB", "B", "BBB2");
-		g.insertEdge("B", "BB", "BBBB2");
-		g.insertEdge("I", "BB", "ADD1");
 		g.insertEdge("I", "H", "HII");
 		g.insertEdge("C", "H", "HCII");
 

@@ -16,11 +16,11 @@ public class RandomPlacementStrategy implements PlacementStrategy {
 
         for (VertexView<V> vertex : vertices) {
             
-            double x = rand.nextDouble() * (width - GraphPanel.VertexR*2);
-            double y = rand.nextDouble() * (height -GraphPanel.VertexR*2);
+            double x = rand.nextDouble() * (width - GraphPanel.VertexR*4);
+            double y = rand.nextDouble() * (height - GraphPanel.VertexR*4);
             
-            x += GraphPanel.VertexR;
-            y += GraphPanel.VertexR;
+            x += GraphPanel.VertexR*2;
+            y += GraphPanel.VertexR*2;
                         
             vertex.setPosition(x, y);
         }
