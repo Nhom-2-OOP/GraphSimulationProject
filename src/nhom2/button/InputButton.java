@@ -4,7 +4,6 @@ import javafx.scene.control.Button;
 import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import nhom2.window.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 

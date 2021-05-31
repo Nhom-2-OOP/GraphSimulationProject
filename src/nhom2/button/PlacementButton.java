@@ -13,7 +13,7 @@ import nhom2.window.Main;
 public class PlacementButton extends Button{
 	
 
-	public PlacementButton( GridPane root, GraphPanel graphView) {
+	public PlacementButton( GridPane root, GraphPanel<String, String> graphView) {
 		GridPane grid = new GridPane();
 
 		//BackButton

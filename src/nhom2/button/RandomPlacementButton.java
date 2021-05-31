@@ -7,8 +7,8 @@ import nhom2.graphview.GraphPanel;
 import nhom2.graphview.Placement.RandomPlacementStrategy;
 
 public class RandomPlacementButton extends Button{
-	private GraphPanel graph;
-	public RandomPlacementButton(GraphPanel GraphView) {
+	private GraphPanel<String, String> graph;
+	public RandomPlacementButton(GraphPanel<String, String> GraphView) {
 		this.graph = GraphView;
 		
 		this.setOnAction(new EventHandler<ActionEvent>() {

@@ -4,9 +4,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Vector;
-import java.util.Map.Entry;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,15 +13,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import nhom2.button.ShortestPathButton;
-import nhom2.graph.Edge;
-import nhom2.graph.Vertex;
-import nhom2.window.Main;
+
 
 public class D_TableButtonController implements Initializable {
 	private static int n;

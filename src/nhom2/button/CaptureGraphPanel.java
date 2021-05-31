@@ -16,8 +16,8 @@ import javax.imageio.ImageIO;
 
 
 public class CaptureGraphPanel extends Button{
-	private GraphPanel view;
-	public CaptureGraphPanel(GraphPanel graphView, Stage stage) {
+	private GraphPanel<String, String> view;
+	public CaptureGraphPanel(GraphPanel<String, String> graphView, Stage stage) {
 		this.view = graphView;
 		this.setOnAction(new EventHandler<ActionEvent>() {
 
