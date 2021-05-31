@@ -249,6 +249,7 @@ public class GraphPanel<V, E> extends Pane{
 	    		this.getChildren().remove(edgeline.getAttachedLabel());
 	    	}
 			this.theGraph.edgeWeight.clear();
+			this.theGraph.setWeightedFeature(0);
 			this.theGraph.isWeighted = false;
 		}
 	}

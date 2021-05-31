@@ -32,6 +32,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -70,7 +71,8 @@ public class AddWeightButtonController implements Initializable {
 		if(graphView!=null) {
 			g = graphView.theGraph;
 			n = g.NumOfVertex();
-			nan.setVisible(false);
+			if(g.isWeighted == true)
+				nan.setVisible(false);
 			update.setVisible(false);
 			Input.setVisible(false);
 			Save.setVisible(false);
@@ -83,7 +85,13 @@ public class AddWeightButtonController implements Initializable {
 	}
 	@FXML
 	private void off(ActionEvent e) {
-		if(informOff()) {
+		if(g.isWeighted == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setHeaderText("Không thể xóa");
+    		alert.setContentText("Đồ thị hiện tại không trọng số");
+    		alert.showAndWait();
+		}
+		else if(informOff()) {
 			nan.setVisible(true);
 			update.setVisible(false);
 			g.isWeighted = false;
