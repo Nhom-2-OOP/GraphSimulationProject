@@ -138,9 +138,9 @@ public class AddWeightButtonController implements Initializable {
 		for(String s: split){
 		   rows.add(s);
 		}
-		Vector<Integer> v = new Vector<Integer> () ;
+		
 		for(String s: rows)  {
-			v.clear();
+			Vector<Integer> v = new Vector<Integer> () ;
 	    	String[] t = s.split(" ");
 	    	
 	    	int size = t.length;
@@ -149,6 +149,7 @@ public class AddWeightButtonController implements Initializable {
 	    	}
 	    	w.add(v);
 	    }
+		System.out.println(w);
 		try {
 			g.setWeightedFeature(w);
 			graphView.displayWeightAttribute();
