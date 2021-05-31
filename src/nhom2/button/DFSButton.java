@@ -48,6 +48,7 @@ public class DFSButton<V, E> extends Button{
 		Vertex<V> tmpstart = currVertex;
 		VertexNode<V> startVertexNode = graphView.vertexNodes.get(currVertex);
 		startVertexNode.setStyle("-fx-fill: red");
+		mark.put(currVertex, 1);
 		Map<Vertex<V>, Edge<E, V>> tempstart = graphView.theGraph.adjList.get(currVertex);
 		Set<Vertex<V>> adjStartVertex = tempstart.keySet();
 		Iterator iteratorStart = adjStartVertex.iterator();
