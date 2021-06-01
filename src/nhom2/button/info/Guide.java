@@ -30,7 +30,7 @@ public class Guide extends Button{
 
 
 				stage.setScene(new Scene(root, 800, 600));
-				stage.setTitle("Hướng dẫn sử dụng");
+				stage.setTitle("HƯỚNG DẪN SỬ DỤNG");
 				stage.show();
 			}
 		});

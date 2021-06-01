@@ -48,7 +48,6 @@ public class GraphPanel<V, E> extends Pane{
 	public GraphEdgeList<V, E> theGraph;
 	public Map<Vertex<V>, VertexNode<V>> vertexNodes;
 	public Map<Edge<E, V>, EdgeLine<E,V>> edgeNodes;
-	public Map<Vertex<V>, Map<Vertex<V>, Integer>> NumOfEdge;
 	
 	// regarding vertex and edge 's attribute
 	public static double VertexR = 15;
@@ -105,7 +104,6 @@ public class GraphPanel<V, E> extends Pane{
         
         vertexNodes = new HashMap<>();
         edgeNodes = new HashMap<>(); 
-        NumOfEdge = new HashMap<>();
         initBackground();
         initNodes();
         
