@@ -1,4 +1,4 @@
-package nhom2.button;
+package nhom2.button.utilities;
 
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;

@@ -1,4 +1,4 @@
-package nhom2.button;
+package nhom2.button.graphAlgo;
 
 import java.util.ArrayList;  
 import java.util.HashMap;
@@ -112,7 +112,7 @@ public class AutoFindPaths<V,E> extends Button {
 							else if (result.size() == 0 ) result.add(minPath);
 							if (result.size() != 0 ) {
 								paths.appendText("Các đường đi giữa hai đỉnh đã cho (" + result.size() +" đường) : \n");
-								if (result.size() == 500000) {
+								if (result.size() == 5000) {
 									Alert inform = new Alert(Alert.AlertType.INFORMATION);
 						    		inform.setHeaderText("Số lượng đường đi lớn nên chỉ tìm giới hạn số lượng đường đi!!! \n Giới hạn : 500000 đường");
 						    		inform.showAndWait();
@@ -222,7 +222,7 @@ public class AutoFindPaths<V,E> extends Button {
 				Traces.add(tmp);
 				ArrayList<String> cloneArr = new ArrayList<>();
 				cloneArr = (ArrayList<String>)Traces.clone();
-				if (result.size() < 500000) result.add(cloneArr); 
+				if (result.size() < 5000) result.add(cloneArr); 
 				else break;
 				Traces.remove(tmp);
 			}
@@ -230,7 +230,7 @@ public class AutoFindPaths<V,E> extends Button {
 				if (checked.get(tmp) == true) {
 					Traces.add(tmp);
 					checked.replace(tmp, false);
-					if (Traces.size() < n && result.size() < 500000) TryFind (tmp , end, n);
+					if (Traces.size() < n && result.size() < 5000) TryFind (tmp , end, n);
 					Traces.remove(tmp);
 					checked.replace(tmp, true);
 				}

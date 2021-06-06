@@ -1,4 +1,4 @@
-package nhom2.button;
+package nhom2.button.graphAlgo;
 
 import java.util.ArrayList;
 import java.util.Arrays;

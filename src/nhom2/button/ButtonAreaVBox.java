@@ -10,6 +10,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import nhom2.button.addWeight.AddWeightButton;
+import nhom2.button.graphAlgo.ColoringButton;
+import nhom2.button.graphAlgo.PathFindingButton;
+import nhom2.button.info.InfoButton;
+import nhom2.button.placement.PlacementButton;
+import nhom2.button.utilities.HomeButton;
 import nhom2.graphview.GraphPanel;
 
 public class ButtonAreaVBox {

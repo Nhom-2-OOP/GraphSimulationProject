@@ -1,4 +1,4 @@
-package nhom2.button;
+package nhom2.button.info;
 
 
 import java.io.InputStream;
@@ -16,7 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
-import nhom2.button.info.TextMem;
 
 public class InfoButton extends Button{
 	private Stage stage = new Stage();

@@ -16,7 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
-import nhom2.button.ShortestPathButton;
+import nhom2.button.graphAlgo.ShortestPathButton;
 
 
 public class D_TableButtonController implements Initializable {
