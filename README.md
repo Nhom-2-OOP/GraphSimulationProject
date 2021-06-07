@@ -14,8 +14,8 @@ Main.java
 ## Usage :
 
 ### Vertex Placement Mode:
-1. Placement randomly
-2. Placement circularly
+1. Random Placement 
+2. Circular Placement 
 3. Placement using force-directed algorithm in real-time
 
 
